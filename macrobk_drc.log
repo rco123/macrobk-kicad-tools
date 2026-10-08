@@ -79,3 +79,55 @@
 [07:54:32] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
 [07:54:32] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
 [07:54:39] [MacroBK] Plugin Manager opened
+[08:01:58] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:02:02] [MacroBK] plugin bridge starting
+[08:02:02] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[08:02:02] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[08:02:12] [MacroBK] Plugin Manager opened
+[08:10:13] [MacroBK] plugin bridge starting
+[08:10:13] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[08:10:13] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[08:11:39] [MacroBK] plugin bridge starting
+[08:11:39] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[08:11:39] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[08:11:45] [MacroBK] Plugin Manager opened
+[08:14:18] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:14:18] [MacroBK] Register requested shortcut=Ctrl + Win + F12
+[08:14:18] [MacroBK] hotkey stop message failed error=1444
+[08:14:18] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=37604
+[08:19:25] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:20:09] [MacroBK] plugin bridge starting
+[08:20:09] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Win + F12 error=1409 conflict=true
+[08:20:09] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+WIN:F12
+[08:20:19] [MacroBK] Plugin Manager opened
+[08:28:23] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:28:28] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:28:35] [MacroBK] plugin bridge starting
+[08:28:35] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[08:28:35] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[08:28:41] [MacroBK] Plugin Manager opened
+[08:31:09] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:32:15] [MacroBK] plugin bridge starting
+[08:32:15] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[08:32:15] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[08:32:20] [MacroBK] Plugin Manager opened
+[08:37:35] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:37:42] [MacroBK] plugin bridge starting
+[08:37:42] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Win + F12 error=1409 conflict=true
+[08:37:42] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+WIN:F12
+[08:37:49] [MacroBK] Plugin Manager opened
+[08:41:58] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:42:09] [MacroBK] plugin bridge starting
+[08:42:09] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Win + F12 error=1409 conflict=true
+[08:42:09] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+WIN:F12
+[08:42:14] [MacroBK] Plugin Manager opened
+[08:42:59] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[08:42:59] [MacroBK] Register requested shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2
+[08:42:59] [MacroBK] hotkey stop message failed error=1444
+[08:42:59] [MacroBK] RegisterHotKey skipped shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2 reason=multi-key phone-trigger
+[08:44:25] [MacroBK] TEST RUN source=test
+[08:44:25] [MacroBK] stdout: hello
+[08:44:25] [MacroBK] SUCCESS source=test
+[08:44:30] [MacroBK] TEST RUN source=test
+[08:44:30] [MacroBK] stdout: hello
+[08:44:30] [MacroBK] SUCCESS source=test

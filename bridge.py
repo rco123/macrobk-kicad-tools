@@ -35,6 +35,7 @@ DEFAULT_CONFIG = {
         "alt": False,
         "shift": False,
         "key": "F12",
+        "keys": ["F12"],
     },
     "phone": {
         "host": "127.0.0.1",
@@ -712,13 +713,54 @@ def open_drc_window(source="unknown", show_error=True):
 
 def virtual_key_code(name):
     value = str(name).upper().strip()
+
+    special = {
+        "ENTER": 0x0D,
+        "TAB": 0x09,
+        "ESC": 0x1B,
+        "ESCAPE": 0x1B,
+        "SPACE": 0x20,
+        "BACKSPACE": 0x08,
+        "DELETE": 0x2E,
+        "INSERT": 0x2D,
+        "HOME": 0x24,
+        "END": 0x23,
+        "PAGEUP": 0x21,
+        "PAGEDOWN": 0x22,
+        "LEFT": 0x25,
+        "UP": 0x26,
+        "RIGHT": 0x27,
+        "DOWN": 0x28,
+    }
+    if value in special:
+        return special[value]
+
     if value.startswith("F") and value[1:].isdigit():
         number = int(value[1:])
         if 1 <= number <= 24:
             return 0x70 + number - 1
+
     if len(value) == 1:
         return ord(value)
+
     return None
+
+
+def trigger_keys(trigger):
+    """Return 1-4 non-modifier keys while keeping old single-key configs compatible."""
+    values = trigger.get("keys")
+    if isinstance(values, list):
+        keys = [str(value).upper().strip() for value in values if str(value).strip()]
+    else:
+        key = str(trigger.get("key", "")).upper().strip()
+        keys = [key] if key else []
+
+    # Preserve order for display, remove duplicates, and cap at four keys.
+    unique = []
+    for key in keys:
+        if key not in unique:
+            unique.append(key)
+    return unique[:4]
 
 
 def hotkey_description(trigger):
@@ -731,7 +773,8 @@ def hotkey_description(trigger):
         names.append("Shift")
     if trigger.get("win", False):
         names.append("Win")
-    names.append(str(trigger.get("key", "F12")).upper().strip())
+
+    names.extend(trigger_keys(trigger))
     return " + ".join(names)
 
 
@@ -748,8 +791,7 @@ def trigger_id(trigger):
         modifiers.append("WIN")
     modifiers = sorted(set(modifiers))
 
-    key = str(trigger.get("key", "F12")).upper().strip()
-    keys = sorted({key}) if key else []
+    keys = sorted(set(trigger_keys(trigger)))
     return "{}:{}".format("+".join(modifiers), ",".join(keys))
 
 
@@ -757,6 +799,7 @@ def parse_hotkey_description(value):
     tokens = [token.strip() for token in str(value).split("+") if token.strip()]
     if not tokens:
         raise ValueError("Trigger key is empty")
+
     trigger = {
         "enabled": True,
         "ctrl": False,
@@ -764,7 +807,9 @@ def parse_hotkey_description(value):
         "alt": False,
         "shift": False,
         "key": "",
+        "keys": [],
     }
+
     for token in tokens:
         normalized = token.lower()
         if normalized in ("ctrl", "control"):
@@ -775,12 +820,20 @@ def parse_hotkey_description(value):
             trigger["alt"] = True
         elif normalized == "shift":
             trigger["shift"] = True
-        elif not trigger["key"]:
-            trigger["key"] = token.upper()
         else:
-            raise ValueError("Only one non-modifier key is allowed")
-    if virtual_key_code(trigger["key"]) is None:
-        raise ValueError("Supported keys are F1-F24 or one character")
+            key = token.upper()
+            if virtual_key_code(key) is None:
+                raise ValueError("Unsupported trigger key: {}".format(token))
+            if key not in trigger["keys"]:
+                trigger["keys"].append(key)
+
+    if not trigger["keys"]:
+        raise ValueError("Select at least one trigger key")
+    if len(trigger["keys"]) > 4:
+        raise ValueError("Up to 4 trigger keys can be registered")
+
+    # Old code/config paths still read trigger["key"].
+    trigger["key"] = trigger["keys"][0]
     return trigger
 
 
@@ -808,7 +861,20 @@ def hotkey_worker(trigger, generation):
         return
 
     shortcut = hotkey_description(trigger)
-    virtual_key = virtual_key_code(trigger.get("key", "F12"))
+    keys = trigger_keys(trigger)
+
+    # Windows RegisterHotKey supports modifiers + one ordinary key only.
+    # Multi-key triggers are still valid for the phone/Studio UDP path.
+    if len(keys) != 1:
+        set_keyboard_status("Phone Only")
+        log(
+            "RegisterHotKey skipped shortcut={} reason=multi-key phone-trigger".format(
+                shortcut
+            )
+        )
+        return
+
+    virtual_key = virtual_key_code(keys[0])
     if virtual_key is None:
         set_keyboard_status("Error")
         log("RegisterHotKey failed shortcut={} reason=unsupported-key".format(shortcut))
@@ -1068,6 +1134,400 @@ def udp_worker():
     sock.close()
 
 
+class TriggerKeyPickerDialog(wx.Dialog):
+    """Compact aligned trigger palette. Supports modifiers + up to four keys."""
+
+    MAX_KEYS = 4
+    GRID_COLUMNS = 9
+    CELL_WIDTH = 42
+    CELL_HEIGHT = 25
+    GAP = 4
+
+    def __init__(self, parent, current_value):
+        super().__init__(
+            parent,
+            title="Select Key",
+            style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER,
+        )
+
+        # Width is matched to the 9-column LETTER grid.
+        # Vertical scrolling remains available for the lower sections.
+        self.SetMinSize((460, 430))
+        self.SetSize((470, 520))
+
+        self.modifier_checks = {}
+        self.selected_keys = []
+        self.key_buttons = {}
+
+        root = wx.BoxSizer(wx.VERTICAL)
+
+        preview_box = wx.StaticBox(self, label=" Selected Trigger ")
+        preview_sizer = wx.StaticBoxSizer(preview_box, wx.VERTICAL)
+        self.preview = wx.StaticText(preview_box, label="")
+        preview_font = self.preview.GetFont()
+        preview_font.SetWeight(wx.FONTWEIGHT_BOLD)
+        preview_font.SetPointSize(10)
+        self.preview.SetFont(preview_font)
+        preview_sizer.Add(self.preview, 0, wx.ALL, 6)
+        root.Add(
+            preview_sizer,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
+            6,
+        )
+
+        scroll = wx.ScrolledWindow(self, style=wx.VSCROLL)
+        scroll.SetScrollRate(0, 10)
+        body = wx.BoxSizer(wx.VERTICAL)
+
+        # Every section is laid out on the same 9-column baseline.
+        self._add_modifier_section(scroll, body)
+
+        self._add_rows_section(
+            scroll,
+            body,
+            "LETTERS",
+            self._single_key_rows(list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")),
+        )
+        self._add_rows_section(
+            scroll,
+            body,
+            "NUMBERS",
+            self._single_key_rows(list("0123456789")),
+        )
+        self._add_equal_five_section(
+            scroll,
+            body,
+            "SPECIAL",
+            [
+                ["Enter", "Space", "Tab", "Esc", "Delete"],
+                ["Backspace"],
+            ],
+        )
+        self._add_equal_five_section(
+            scroll,
+            body,
+            "ARROWS / NAVIGATION",
+            [
+                ["Left", "Up", "Down", "Right", "Home"],
+                ["End", "PageUp", "PageDown", "Insert"],
+            ],
+        )
+        self._add_rows_section(
+            scroll,
+            body,
+            "FUNCTION",
+            self._single_key_rows(
+                ["F{}".format(i) for i in range(1, 25)]
+            ),
+        )
+
+        scroll.SetSizer(body)
+        scroll.FitInside()
+        root.Add(scroll, 1, wx.EXPAND | wx.ALL, 6)
+
+        footer = wx.BoxSizer(wx.HORIZONTAL)
+        self.selection_count = wx.StaticText(self, label="0 / 4 keys")
+        self.selection_count.SetForegroundColour(
+            system_colour(wx.SYS_COLOUR_GRAYTEXT)
+        )
+        footer.Add(self.selection_count, 0, wx.ALIGN_CENTER_VERTICAL)
+        footer.AddStretchSpacer(1)
+
+        apply_button = wx.Button(self, wx.ID_OK, "Apply", size=(70, 27))
+        cancel_button = wx.Button(self, wx.ID_CANCEL, "Cancel", size=(70, 27))
+        apply_button.Bind(wx.EVT_BUTTON, self.on_apply)
+
+        footer.Add(apply_button, 0, wx.RIGHT, 5)
+        footer.Add(cancel_button, 0)
+
+        root.Add(
+            footer,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+            6,
+        )
+
+        self.SetSizer(root)
+
+        self._load_current(current_value)
+        self.update_preview()
+
+        # Keep the complete 9-column width visible on the current monitor.
+        display_index = wx.Display.GetFromWindow(parent)
+        if display_index == wx.NOT_FOUND:
+            display_index = 0
+
+        work_area = wx.Display(display_index).GetClientArea()
+        target_width = min(470, max(460, work_area.GetWidth() - 30))
+        target_height = min(520, max(430, work_area.GetHeight() - 80))
+        self.SetSize((target_width, target_height))
+        self.CentreOnParent()
+
+    def _section_title(self, parent, text):
+        label = wx.StaticText(parent, label=text)
+        font = label.GetFont()
+        font.SetPointSize(7)
+        font.SetWeight(wx.FONTWEIGHT_BOLD)
+        label.SetFont(font)
+        label.SetForegroundColour(
+            system_colour(wx.SYS_COLOUR_GRAYTEXT)
+        )
+        return label
+
+    def _span_width(self, span):
+        return (
+            self.CELL_WIDTH * span
+            + self.GAP * max(0, span - 1)
+        )
+
+    def _single_key_rows(self, keys):
+        rows = []
+        for start in range(0, len(keys), self.GRID_COLUMNS):
+            chunk = keys[start:start + self.GRID_COLUMNS]
+            rows.append([(key, 1) for key in chunk])
+        return rows
+
+    def _add_modifier_section(self, parent, sizer):
+        sizer.Add(
+            self._section_title(parent, "MODIFIERS"),
+            0,
+            wx.LEFT | wx.TOP,
+            6,
+        )
+
+        row = wx.BoxSizer(wx.HORIZONTAL)
+
+        for index, (key, label) in enumerate(
+            (
+                ("ctrl", "Ctrl"),
+                ("alt", "Alt"),
+                ("shift", "Shift"),
+                ("win", "Win"),
+            )
+        ):
+            button = wx.ToggleButton(
+                parent,
+                label=label,
+                size=(self._span_width(2), self.CELL_HEIGHT),
+            )
+            button.Bind(
+                wx.EVT_TOGGLEBUTTON,
+                self.on_modifier_changed,
+            )
+            self.modifier_checks[key] = button
+            row.Add(button, 0)
+
+            if index < 3:
+                row.AddSpacer(self.GAP)
+
+        sizer.Add(
+            row,
+            0,
+            wx.LEFT | wx.TOP | wx.BOTTOM,
+            6,
+        )
+
+    def _add_rows_section(self, parent, sizer, title, rows):
+        sizer.Add(
+            self._section_title(parent, title),
+            0,
+            wx.LEFT | wx.TOP,
+            6,
+        )
+
+        section = wx.BoxSizer(wx.VERTICAL)
+
+        for row_items in rows:
+            row = wx.BoxSizer(wx.HORIZONTAL)
+            used_columns = 0
+
+            for item_index, (key, span) in enumerate(row_items):
+                span = max(1, min(self.GRID_COLUMNS, int(span)))
+                used_columns += span
+
+                button = wx.ToggleButton(
+                    parent,
+                    label=key,
+                    size=(
+                        self._span_width(span),
+                        self.CELL_HEIGHT,
+                    ),
+                )
+                button.Bind(
+                    wx.EVT_TOGGLEBUTTON,
+                    self.on_key_clicked,
+                )
+                self.key_buttons[key.upper()] = button
+                row.Add(button, 0)
+
+                if item_index < len(row_items) - 1:
+                    row.AddSpacer(self.GAP)
+
+            # Preserve the common 9-column baseline even on short final rows.
+            remaining = self.GRID_COLUMNS - used_columns
+            if remaining > 0:
+                if row_items:
+                    row.AddSpacer(self.GAP)
+                row.AddSpacer(self._span_width(remaining))
+
+            section.Add(row, 0, wx.BOTTOM, self.GAP)
+
+        sizer.Add(
+            section,
+            0,
+            wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            6,
+        )
+
+    def _add_equal_five_section(self, parent, sizer, title, rows):
+        """Lay out each row as five equal-width slots across the common content width."""
+        sizer.Add(
+            self._section_title(parent, title),
+            0,
+            wx.LEFT | wx.TOP,
+            6,
+        )
+
+        section = wx.BoxSizer(wx.VERTICAL)
+
+        # Match the overall width of the 9-column LETTER grid.
+        total_width = (
+            self.CELL_WIDTH * self.GRID_COLUMNS
+            + self.GAP * (self.GRID_COLUMNS - 1)
+        )
+        cell_width = (
+            total_width - self.GAP * 4
+        ) // 5
+
+        for row_items in rows:
+            row = wx.BoxSizer(wx.HORIZONTAL)
+
+            for index in range(5):
+                if index < len(row_items):
+                    key = row_items[index]
+                    button = wx.ToggleButton(
+                        parent,
+                        label=key,
+                        size=(cell_width, self.CELL_HEIGHT),
+                    )
+                    button.Bind(
+                        wx.EVT_TOGGLEBUTTON,
+                        self.on_key_clicked,
+                    )
+                    self.key_buttons[key.upper()] = button
+                    row.Add(button, 0)
+                else:
+                    row.AddSpacer(cell_width)
+
+                if index < 4:
+                    row.AddSpacer(self.GAP)
+
+            section.Add(row, 0, wx.BOTTOM, self.GAP)
+
+        sizer.Add(
+            section,
+            0,
+            wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            6,
+        )
+
+    def _load_current(self, current_value):
+        try:
+            trigger = parse_hotkey_description(current_value)
+        except Exception:
+            trigger = {
+                "ctrl": False,
+                "alt": False,
+                "shift": False,
+                "win": False,
+                "keys": [],
+            }
+
+        for name, button in self.modifier_checks.items():
+            button.SetValue(bool(trigger.get(name, False)))
+
+        self.selected_keys = []
+
+        for key in trigger_keys(trigger):
+            if (
+                key in self.key_buttons
+                and len(self.selected_keys) < self.MAX_KEYS
+            ):
+                self.selected_keys.append(key)
+                self.key_buttons[key].SetValue(True)
+
+    def on_modifier_changed(self, _event):
+        self.update_preview()
+
+    def on_key_clicked(self, event):
+        clicked = event.GetEventObject()
+        key = clicked.GetLabel().upper()
+
+        if clicked.GetValue():
+            if key not in self.selected_keys:
+                if len(self.selected_keys) >= self.MAX_KEYS:
+                    clicked.SetValue(False)
+                    wx.MessageBox(
+                        "Up to 4 keys can be selected.",
+                        "Select Key",
+                        wx.OK | wx.ICON_INFORMATION,
+                        self,
+                    )
+                    return
+                self.selected_keys.append(key)
+        else:
+            if key in self.selected_keys:
+                self.selected_keys.remove(key)
+
+        self.update_preview()
+
+    def get_trigger(self):
+        if not self.selected_keys:
+            raise ValueError("Select at least one trigger key")
+
+        keys = list(self.selected_keys[: self.MAX_KEYS])
+
+        return {
+            "enabled": True,
+            "ctrl": self.modifier_checks["ctrl"].GetValue(),
+            "alt": self.modifier_checks["alt"].GetValue(),
+            "shift": self.modifier_checks["shift"].GetValue(),
+            "win": self.modifier_checks["win"].GetValue(),
+            "key": keys[0],
+            "keys": keys,
+        }
+
+    def update_preview(self):
+        self.selection_count.SetLabel(
+            "{} / {} keys".format(
+                len(self.selected_keys),
+                self.MAX_KEYS,
+            )
+        )
+
+        try:
+            self.preview.SetLabel(
+                hotkey_description(self.get_trigger())
+            )
+        except Exception:
+            self.preview.SetLabel("Select 1-4 keys")
+
+    def on_apply(self, _event):
+        try:
+            self.get_trigger()
+        except Exception as exc:
+            wx.MessageBox(
+                str(exc),
+                "Select Key",
+                wx.OK | wx.ICON_INFORMATION,
+                self,
+            )
+            return
+
+        self.EndModal(wx.ID_OK)
+
+
 class MacroBKPluginManager(wx.Frame):
     def __init__(self, parent):
         super().__init__(parent, title="MacroBK Plugin Manager", size=(1000, 660))
@@ -1082,6 +1542,7 @@ class MacroBKPluginManager(wx.Frame):
         panel_background = system_colour(wx.SYS_COLOUR_BTNFACE)
         text_colour = system_colour(wx.SYS_COLOUR_WINDOWTEXT)
         muted_colour = system_colour(wx.SYS_COLOUR_GRAYTEXT)
+        divider_colour = system_colour(wx.SYS_COLOUR_3DSHADOW)
 
         root_panel = wx.Panel(self)
         root_panel.SetBackgroundColour(background)
@@ -1134,7 +1595,7 @@ class MacroBKPluginManager(wx.Frame):
         self.action_list.SetMinSize((336, 130))
         self.action_list.AssignImageList(self.action_images, wx.IMAGE_LIST_SMALL)
         self.action_list.InsertColumn(0, "Name", width=150)
-        self.action_list.InsertColumn(1, "Trigger", width=160)
+        self.action_list.InsertColumn(1, "Trigger", width=180)
         self.action_list.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_action_selected)
         self.action_list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_action_rename)
         left_sizer.Add(self.action_list, 1, wx.EXPAND | wx.ALL, 10)
@@ -1167,11 +1628,44 @@ class MacroBKPluginManager(wx.Frame):
         monitor_sizer.Add(self.signal_source, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
         left_sizer.Add(monitor_sizer, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
 
-        left_sizer.Add(wx.StaticText(left_panel, label="Trigger Key"), 0, wx.LEFT | wx.RIGHT | wx.TOP, 12)
-        self.trigger_text = wx.TextCtrl(left_panel)
-        self.trigger_text.SetMinSize((-1, 30))
-        left_sizer.Add(self.trigger_text, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, 10)
-        register_button = style_button(wx.Button(left_panel, label="Register"), "keyboard", 100)
+        left_sizer.Add(
+            wx.StaticText(left_panel, label="Trigger Key"),
+            0,
+            wx.LEFT | wx.RIGHT | wx.TOP,
+            12,
+        )
+
+        trigger_row = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.trigger_picker_button = style_button(
+            wx.Button(left_panel, label=""),
+            "keyboard",
+            44,
+        )
+        self.trigger_picker_button.SetToolTip("Select trigger key")
+        self.trigger_picker_button.Bind(wx.EVT_BUTTON, self.on_select_trigger_key)
+
+        self.trigger_text = wx.TextCtrl(
+            left_panel,
+            style=wx.TE_READONLY,
+        )
+        self.trigger_text.SetMinSize((-1, 32))
+
+        trigger_row.Add(self.trigger_picker_button, 0, wx.RIGHT, 6)
+        trigger_row.Add(self.trigger_text, 1, wx.EXPAND)
+
+        left_sizer.Add(
+            trigger_row,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
+            10,
+        )
+
+        register_button = style_button(
+            wx.Button(left_panel, label="Register"),
+            "keyboard",
+            100,
+        )
         register_button.Bind(wx.EVT_BUTTON, self.on_register)
         left_sizer.Add(register_button, 0, wx.EXPAND | wx.ALL, 10)
         left_panel.SetSizer(left_sizer)
@@ -1189,16 +1683,30 @@ class MacroBKPluginManager(wx.Frame):
         right_sizer.Add(self.action_title, 0, wx.LEFT | wx.RIGHT | wx.TOP, 16)
         right_sizer.Add(self.action_trigger_summary, 0, wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM, 16)
 
-        self.notebook = wx.Notebook(right_panel)
-        notebook_images = wx.ImageList(16, 16)
-        execute_image = notebook_images.Add(icon_bitmap("execute", 16))
-        result_image = notebook_images.Add(icon_bitmap("result", 16))
-        self.notebook.AssignImageList(notebook_images)
-        self.notebook_images = notebook_images
-        execute_panel = wx.Panel(self.notebook)
-        result_panel = wx.Panel(self.notebook)
-        self.notebook.AddPage(execute_panel, "Execute", True, execute_image)
-        self.notebook.AddPage(result_panel, "Result", False, result_image)
+        # Python Script and Result are visible at the same time.
+        # The center divider can be dragged left/right.
+        #
+        # Design:
+        # - outer border is thin and subdued
+        # - center divider uses the same system shadow tone
+        # - top/bottom inset keeps the center divider from touching the frame
+        work_frame = wx.Panel(right_panel, style=wx.BORDER_SIMPLE)
+        work_frame.SetBackgroundColour(background)
+        work_frame_sizer = wx.BoxSizer(wx.VERTICAL)
+
+        self.work_splitter = wx.SplitterWindow(
+            work_frame,
+            style=wx.SP_LIVE_UPDATE | wx.BORDER_NONE,
+        )
+        self.work_splitter.SetBackgroundColour(divider_colour)
+        self.work_splitter.SetMinimumPaneSize(180)
+        # wx.SplitterWindow on KiCad's wxPython build does not provide SetSashSize().
+        # Keep the native sash thickness for compatibility.
+
+        execute_panel = wx.Panel(self.work_splitter)
+        result_panel = wx.Panel(self.work_splitter)
+        execute_panel.SetBackgroundColour(background)
+        result_panel.SetBackgroundColour(background)
 
         execute_sizer = wx.BoxSizer(wx.VERTICAL)
         script_title = wx.StaticText(execute_panel, label="Python Script")
@@ -1206,40 +1714,125 @@ class MacroBKPluginManager(wx.Frame):
         script_title_font.SetWeight(wx.FONTWEIGHT_BOLD)
         script_title.SetFont(script_title_font)
         execute_sizer.Add(script_title, 0, wx.ALL, 12)
+
         self.script_text = stc.StyledTextCtrl(execute_panel, style=wx.BORDER_SIMPLE)
         self.configure_python_editor(self.script_text)
-        execute_sizer.Add(self.script_text, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 12)
+        execute_sizer.Add(
+            self.script_text,
+            1,
+            wx.EXPAND | wx.LEFT | wx.RIGHT,
+            12,
+        )
+
         execute_controls = wx.BoxSizer(wx.HORIZONTAL)
-        test_button = style_button(wx.Button(execute_panel, label="Run Test"), "play", 120)
+        test_button = style_button(
+            wx.Button(execute_panel, label="Run Test"),
+            "play",
+            120,
+        )
         test_button.Bind(wx.EVT_BUTTON, self.on_test_run)
         test_button.SetDefault()
-        self.test_status_icon = wx.StaticBitmap(execute_panel, bitmap=icon_bitmap("execute", 18))
+
+        self.test_status_icon = wx.StaticBitmap(
+            execute_panel,
+            bitmap=icon_bitmap("execute", 18),
+        )
         self.test_status_label = wx.StaticText(execute_panel, label="READY")
         status_font = self.test_status_label.GetFont()
         status_font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.test_status_label.SetFont(status_font)
+
         execute_controls.Add(test_button, 0, wx.RIGHT, 14)
-        execute_controls.Add(self.test_status_icon, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 6)
-        execute_controls.Add(self.test_status_label, 0, wx.ALIGN_CENTER_VERTICAL)
+        execute_controls.Add(
+            self.test_status_icon,
+            0,
+            wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
+            6,
+        )
+        execute_controls.Add(
+            self.test_status_label,
+            0,
+            wx.ALIGN_CENTER_VERTICAL,
+        )
         execute_sizer.Add(execute_controls, 0, wx.ALL, 12)
         execute_panel.SetSizer(execute_sizer)
 
         result_sizer = wx.BoxSizer(wx.VERTICAL)
-        self.result_text = stc.StyledTextCtrl(result_panel, style=wx.BORDER_SIMPLE)
+
+        result_title = wx.StaticText(result_panel, label="Result")
+        result_title_font = result_title.GetFont()
+        result_title_font.SetWeight(wx.FONTWEIGHT_BOLD)
+        result_title.SetFont(result_title_font)
+        result_sizer.Add(result_title, 0, wx.ALL, 12)
+
+        self.result_text = stc.StyledTextCtrl(
+            result_panel,
+            style=wx.BORDER_SIMPLE,
+        )
         self.configure_log_editor(self.result_text)
-        result_sizer.Add(self.result_text, 1, wx.EXPAND | wx.ALL, 12)
+        result_sizer.Add(
+            self.result_text,
+            1,
+            wx.EXPAND | wx.LEFT | wx.RIGHT,
+            12,
+        )
+
         result_controls = wx.BoxSizer(wx.HORIZONTAL)
         result_controls.AddStretchSpacer(1)
-        copy_button = style_button(wx.Button(result_panel, label="Copy"), "copy", 84)
-        clear_button = style_button(wx.Button(result_panel, label="Clear"), "clear", 84)
+
+        copy_button = style_button(
+            wx.Button(result_panel, label="Copy"),
+            "copy",
+            84,
+        )
+        clear_button = style_button(
+            wx.Button(result_panel, label="Clear"),
+            "clear",
+            84,
+        )
+
         copy_button.Bind(wx.EVT_BUTTON, self.on_copy)
         clear_button.Bind(wx.EVT_BUTTON, self.on_clear)
+
         result_controls.Add(copy_button, 0, wx.RIGHT, 8)
         result_controls.Add(clear_button, 0)
-        result_sizer.Add(result_controls, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 12)
+
+        result_sizer.Add(
+            result_controls,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            12,
+        )
         result_panel.SetSizer(result_sizer)
 
-        right_sizer.Add(self.notebook, 1, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 12)
+        self.work_splitter.SplitVertically(
+            execute_panel,
+            result_panel,
+        )
+        self.work_splitter.SetSashGravity(0.5)
+
+        def set_initial_split():
+            width = self.work_splitter.GetClientSize().GetWidth()
+            if width > 0:
+                self.work_splitter.SetSashPosition(width // 2)
+
+        wx.CallAfter(set_initial_split)
+
+        # Top/bottom spacing shortens the visible center divider.
+        work_frame_sizer.Add(
+            self.work_splitter,
+            1,
+            wx.EXPAND | wx.TOP | wx.BOTTOM,
+            8,
+        )
+        work_frame.SetSizer(work_frame_sizer)
+
+        right_sizer.Add(
+            work_frame,
+            1,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+            12,
+        )
         right_panel.SetSizer(right_sizer)
         content_sizer.Add(left_panel, 0, wx.EXPAND)
         content_sizer.Add(wx.StaticLine(root_panel, style=wx.LI_VERTICAL), 0, wx.EXPAND)
@@ -1283,6 +1876,7 @@ class MacroBKPluginManager(wx.Frame):
             "Error": wx.Colour(192, 57, 43),
             "Port Error": wx.Colour(192, 57, 43),
             "Disabled": wx.Colour(127, 140, 141),
+            "Phone Only": wx.Colour(52, 152, 219),
         }
         control.SetForegroundColour(colours.get(str(status), wx.Colour(127, 140, 141)))
 
@@ -1472,7 +2066,8 @@ class MacroBKPluginManager(wx.Frame):
         self.status_bar.SetStatusText("{} Actions".format(len(self.actions)), 3)
 
     def show_result_tab(self):
-        self.notebook.SetSelection(1)
+        # Result pane is always visible.
+        pass
 
     def blink_input_signal(self, source):
         led = self.keyboard_led if source == "keyboard" else self.phone_led
@@ -1486,6 +2081,17 @@ class MacroBKPluginManager(wx.Frame):
         self.set_led_colour(self.keyboard_led, _keyboard_status)
         self.set_led_colour(self.phone_led, _phone_status)
         self.signal_source.SetLabel("Waiting for input")
+
+    def on_select_trigger_key(self, _event):
+        dialog = TriggerKeyPickerDialog(self, self.trigger_text.GetValue())
+        try:
+            if dialog.ShowModal() == wx.ID_OK:
+                trigger = dialog.get_trigger()
+                value = hotkey_description(trigger)
+                self.trigger_text.SetValue(value)
+                self.action_trigger_summary.SetLabel(value)
+        finally:
+            dialog.Destroy()
 
     def read_trigger(self):
         return parse_hotkey_description(self.trigger_text.GetValue())
@@ -1504,9 +2110,17 @@ class MacroBKPluginManager(wx.Frame):
         try:
             self.apply_selected_to_config()
             save_config()
-            self.trigger_text.SetValue(hotkey_description(CONFIG["trigger"]))
-            self.action_trigger_summary.SetLabel(self.trigger_text.GetValue())
-            log("Register requested shortcut={}".format(self.trigger_text.GetValue()))
+
+            value = hotkey_description(CONFIG["trigger"])
+            self.trigger_text.SetValue(value)
+            self.action_trigger_summary.SetLabel(value)
+
+            # Immediately update the Trigger column in REGISTERED ACTIONS.
+            self.refresh_action_list()
+            self.action_list.Select(self.selected_index)
+            self.action_list.Focus(self.selected_index)
+
+            log("Register requested shortcut={}".format(value))
             restart_hotkey_listener()
         except Exception as exc:
             self.set_keyboard_status("Error")

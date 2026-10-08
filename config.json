@@ -1,12 +1,18 @@
 {
-  "name": "TEST",
+  "name": "New Action",
   "trigger": {
     "enabled": true,
     "ctrl": true,
-    "win": false,
-    "alt": false,
+    "win": true,
+    "alt": true,
     "shift": true,
-    "key": "F12"
+    "key": "A",
+    "keys": [
+      "A",
+      "B",
+      "C",
+      "F2"
+    ]
   },
   "phone": {
     "host": "127.0.0.1",
@@ -15,7 +21,7 @@
   },
   "action": {
     "type": "python",
-    "script": "print(\"hello\")"
+    "script": "# Enter KiCad Python here\n"
   },
   "actions": [
     {
@@ -28,7 +34,10 @@
         "win": false,
         "alt": false,
         "shift": true,
-        "key": "F12"
+        "key": "F12",
+        "keys": [
+          "F12"
+        ]
       },
       "phone": {
         "host": "127.0.0.1",
@@ -39,7 +48,35 @@
         "type": "python",
         "script": "print(\"hello\")"
       }
+    },
+    {
+      "id": "action-6ce5eb21",
+      "name": "New Action",
+      "icon": "execute",
+      "trigger": {
+        "enabled": true,
+        "ctrl": true,
+        "win": true,
+        "alt": true,
+        "shift": true,
+        "key": "A",
+        "keys": [
+          "A",
+          "B",
+          "C",
+          "F2"
+        ]
+      },
+      "phone": {
+        "host": "127.0.0.1",
+        "port": 47831,
+        "command": "KICAD_DRC"
+      },
+      "action": {
+        "type": "python",
+        "script": "# Enter KiCad Python here\n"
+      }
     }
   ],
-  "selected_action_id": "action-e17aa66b"
+  "selected_action_id": "action-6ce5eb21"
 }
