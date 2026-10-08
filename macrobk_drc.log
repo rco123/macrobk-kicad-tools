@@ -74,3 +74,8 @@
 [00:23:55] [MacroBK] ACTION START source=phone
 [00:23:55] [MacroBK] stdout: hello
 [00:23:55] [MacroBK] SUCCESS source=phone
+[07:53:48] [MacroBK] Plugin Manager opened
+[07:54:32] [MacroBK] plugin bridge starting
+[07:54:32] [MacroBK] RegisterHotKey failed shortcut=Ctrl + Shift + F12 error=1409 conflict=true
+[07:54:32] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[07:54:39] [MacroBK] Plugin Manager opened

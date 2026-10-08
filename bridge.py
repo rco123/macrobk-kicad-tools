@@ -1245,17 +1245,6 @@ class MacroBKPluginManager(wx.Frame):
         content_sizer.Add(wx.StaticLine(root_panel, style=wx.LI_VERTICAL), 0, wx.EXPAND)
         content_sizer.Add(right_panel, 1, wx.EXPAND)
         root_sizer.Add(content_sizer, 1, wx.EXPAND)
-        root_sizer.Add(wx.StaticLine(root_panel), 0, wx.EXPAND)
-
-        bottom_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        bottom_sizer.AddStretchSpacer(1)
-        save_button = style_button(wx.Button(root_panel, label="Save"), "save", 92)
-        close_button = style_button(wx.Button(root_panel, label="Close"), None, 92)
-        save_button.Bind(wx.EVT_BUTTON, self.on_save)
-        close_button.Bind(wx.EVT_BUTTON, lambda _event: self.Close())
-        bottom_sizer.Add(save_button, 0, wx.RIGHT, 8)
-        bottom_sizer.Add(close_button, 0)
-        root_sizer.Add(bottom_sizer, 0, wx.EXPAND | wx.ALL, 10)
 
         root_panel.SetSizer(root_sizer)
         self.status_bar = self.CreateStatusBar(4)
@@ -1514,6 +1503,7 @@ class MacroBKPluginManager(wx.Frame):
     def on_register(self, _event):
         try:
             self.apply_selected_to_config()
+            save_config()
             self.trigger_text.SetValue(hotkey_description(CONFIG["trigger"]))
             self.action_trigger_summary.SetLabel(self.trigger_text.GetValue())
             log("Register requested shortcut={}".format(self.trigger_text.GetValue()))
@@ -1553,6 +1543,12 @@ class MacroBKPluginManager(wx.Frame):
 
     def on_close(self, event):
         global _manager_frame
+        try:
+            self.apply_selected_to_config()
+            save_config()
+        except Exception as exc:
+            log("Auto-save on close error: " + repr(exc))
+
         if self._blink_timer is not None:
             self._blink_timer.Stop()
             self._blink_timer = None
