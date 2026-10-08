@@ -1,0 +1,4 @@
+@echo off
+setlocal
+powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public static class HotKeyProbe { [DllImport(\"user32.dll\", SetLastError=true)] public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk); [DllImport(\"user32.dll\")] public static extern bool UnregisterHotKey(IntPtr hWnd, int id); }'; $ok = [HotKeyProbe]::RegisterHotKey([IntPtr]::Zero, 19779, 0x400A, 0x7B); if ($ok) { [void][HotKeyProbe]::UnregisterHotKey([IntPtr]::Zero, 19779); Write-Host '[FREE] Ctrl+Win+F12 is available' } else { $errorCode = [Runtime.InteropServices.Marshal]::GetLastWin32Error(); Write-Host ('[IN USE] Ctrl+Win+F12 registration failed, Win32 error={0}' -f $errorCode) }"
+exit /b %errorlevel%

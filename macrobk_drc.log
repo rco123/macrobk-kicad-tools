@@ -1,0 +1,76 @@
+[22:37:54] [MacroBK] plugin bridge starting
+[22:37:54] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=40488
+[22:37:54] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+WIN:F12
+[22:38:28] [MacroBK] Plugin Manager opened
+[22:40:02] [MacroBK] Register requested shortcut=Ctrl + Win + F12
+[22:40:02] [MacroBK] hotkey unregistered shortcut=Ctrl + Win + F12
+[22:40:02] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=40948
+[22:40:48] [MacroBK] Register requested shortcut=Ctrl + Shift + F12
+[22:40:48] [MacroBK] hotkey unregistered shortcut=Ctrl + Win + F12
+[22:40:48] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=38604
+[22:40:57] [MacroBK] Register requested shortcut=Ctrl + Shift + F12
+[22:40:57] [MacroBK] hotkey unregistered shortcut=Ctrl + Shift + F12
+[22:40:57] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=40556
+[22:41:38] [MacroBK] Register requested shortcut=Ctrl + Shift + F12
+[22:41:38] [MacroBK] hotkey unregistered shortcut=Ctrl + Shift + F12
+[22:41:38] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=17472
+[22:41:58] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[22:41:58] [MacroBK] hotkey unregistered shortcut=Ctrl + Shift + F12
+[22:41:58] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=30620
+[22:42:03] [MacroBK] TEST RUN source=test
+[22:42:03] [MacroBK] stdout: hello
+[22:42:03] [MacroBK] SUCCESS source=test
+[22:42:12] [MacroBK] TEST RUN source=test
+[22:42:12] [MacroBK] stdout: hello
+[22:42:12] [MacroBK] SUCCESS source=test
+[23:09:15] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[23:26:48] [MacroBK] plugin bridge starting
+[23:26:48] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=44148
+[23:26:48] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=CTRL+SHIFT:F12
+[23:27:05] [MacroBK] Plugin Manager opened
+[23:27:15] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[23:27:15] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[23:27:15] [MacroBK] ACTION START source=phone
+[23:27:15] [MacroBK] stdout: hello
+[23:27:15] [MacroBK] SUCCESS source=phone
+[23:29:21] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[23:29:21] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[23:29:21] [MacroBK] ACTION START source=phone
+[23:29:21] [MacroBK] stdout: hello
+[23:29:21] [MacroBK] SUCCESS source=phone
+[00:23:03] [MacroBK] Plugin Manager opened
+[00:23:10] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:10] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:10] [MacroBK] ACTION START source=phone
+[00:23:10] [MacroBK] stdout: hello
+[00:23:10] [MacroBK] SUCCESS source=phone
+[00:23:18] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:18] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:18] [MacroBK] ACTION START source=phone
+[00:23:18] [MacroBK] stdout: hello
+[00:23:18] [MacroBK] SUCCESS source=phone
+[00:23:22] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:22] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:22] [MacroBK] ACTION START source=phone
+[00:23:22] [MacroBK] stdout: hello
+[00:23:22] [MacroBK] SUCCESS source=phone
+[00:23:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:23] [MacroBK] ACTION START source=phone
+[00:23:23] [MacroBK] stdout: hello
+[00:23:23] [MacroBK] SUCCESS source=phone
+[00:23:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:23] [MacroBK] ACTION START source=phone
+[00:23:23] [MacroBK] stdout: hello
+[00:23:23] [MacroBK] SUCCESS source=phone
+[00:23:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:25] [MacroBK] ACTION START source=phone
+[00:23:25] [MacroBK] stdout: hello
+[00:23:25] [MacroBK] SUCCESS source=phone
+[00:23:54] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[00:23:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[00:23:55] [MacroBK] ACTION START source=phone
+[00:23:55] [MacroBK] stdout: hello
+[00:23:55] [MacroBK] SUCCESS source=phone

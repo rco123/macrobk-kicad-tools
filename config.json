@@ -1,0 +1,45 @@
+{
+  "name": "TEST",
+  "trigger": {
+    "enabled": true,
+    "ctrl": true,
+    "win": false,
+    "alt": false,
+    "shift": true,
+    "key": "F12"
+  },
+  "phone": {
+    "host": "127.0.0.1",
+    "port": 47831,
+    "command": "KICAD_DRC"
+  },
+  "action": {
+    "type": "python",
+    "script": "print(\"hello\")"
+  },
+  "actions": [
+    {
+      "id": "action-e17aa66b",
+      "name": "TEST",
+      "icon": "execute",
+      "trigger": {
+        "enabled": true,
+        "ctrl": true,
+        "win": false,
+        "alt": false,
+        "shift": true,
+        "key": "F12"
+      },
+      "phone": {
+        "host": "127.0.0.1",
+        "port": 47831,
+        "command": "KICAD_DRC"
+      },
+      "action": {
+        "type": "python",
+        "script": "print(\"hello\")"
+      }
+    }
+  ],
+  "selected_action_id": "action-e17aa66b"
+}
