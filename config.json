@@ -21,7 +21,7 @@
   },
   "action": {
     "type": "python",
-    "script": "import time\r\n\r\ntime.sleep(5)"
+    "script": "print(\r\n    pcb_select_filter_state()\r\n)"
   },
   "actions": [
     {
@@ -74,7 +74,7 @@
       },
       "action": {
         "type": "python",
-        "script": "import time\r\n\r\ntime.sleep(5)"
+        "script": "print(\r\n    pcb_select_filter_state()\r\n)"
       }
     }
   ],
