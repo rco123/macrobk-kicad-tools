@@ -1,17 +1,14 @@
 {
-  "name": "New Action",
+  "name": "TEST",
   "trigger": {
     "enabled": true,
     "ctrl": true,
-    "win": true,
-    "alt": true,
+    "win": false,
+    "alt": false,
     "shift": true,
-    "key": "A",
+    "key": "F12",
     "keys": [
-      "A",
-      "B",
-      "C",
-      "F2"
+      "F12"
     ]
   },
   "phone": {
@@ -21,7 +18,7 @@
   },
   "action": {
     "type": "python",
-    "script": "print(\r\n    pcb_select_filter_state()\r\n)"
+    "script": "import time\r\n\r\nprint(\"=== Selection Filter Test Start ===\")\r\n\r\n# 현재 상태 출력\r\nstate = pcb_select_filter_state()\r\nprint(\"현재 상태:\")\r\nprint(state)\r\n\r\n# Tracks 선택\r\nprint(\"\\n[TEST] Tracks ON\")\r\npcb_select_filter(\"Tracks\", True)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Tracks 해제\r\nprint(\"\\n[TEST] Tracks OFF\")\r\npcb_select_filter(\"Tracks\", False)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", True)\r\ntime.sleep(1)\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", False)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", True)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", False)\r\ntime.sleep(1)\r\n\r\n\r\n\r\n# 최종 상태\r\nprint(\"\\n최종 상태:\")\r\nprint(pcb_select_filter_state())\r\n\r\nprint(\"=== Selection Filter Test End ===\")"
   },
   "actions": [
     {
@@ -46,7 +43,7 @@
       },
       "action": {
         "type": "python",
-        "script": "print(\"hello\")"
+        "script": "import time\r\n\r\nprint(\"=== Selection Filter Test Start ===\")\r\n\r\n# 현재 상태 출력\r\nstate = pcb_select_filter_state()\r\nprint(\"현재 상태:\")\r\nprint(state)\r\n\r\n# Tracks 선택\r\nprint(\"\\n[TEST] Tracks ON\")\r\npcb_select_filter(\"Tracks\", True)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Tracks 해제\r\nprint(\"\\n[TEST] Tracks OFF\")\r\npcb_select_filter(\"Tracks\", False)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", True)\r\ntime.sleep(1)\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", False)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", True)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", False)\r\ntime.sleep(1)\r\n\r\n\r\n\r\n# 최종 상태\r\nprint(\"\\n최종 상태:\")\r\nprint(pcb_select_filter_state())\r\n\r\nprint(\"=== Selection Filter Test End ===\")"
       }
     },
     {
@@ -78,5 +75,5 @@
       }
     }
   ],
-  "selected_action_id": "action-6ce5eb21"
+  "selected_action_id": "action-e17aa66b"
 }

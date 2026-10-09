@@ -117,7 +117,7 @@ scripts such as wx.GetTopLevelWindows must migrate to the snapshot APIs.
 ## Test command
 
 ```powershell
-& 'C:\Program Files\KiCad\9.0\bin\python.exe' -B 'kicad-plugin\tests\test_worker_engine.py'
+& 'C:\Program Files\KiCad\9.0\bin\python.exe' -B -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
 These tests use real wx widgets and the project's Manager in a separate

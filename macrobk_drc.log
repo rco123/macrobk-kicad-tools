@@ -6061,3 +6061,1368 @@ IN:A,B,C,F2
 [14:13:32] [MacroBK] plugin bridge starting version=worker-phone-all-actions-v1 pid=48664 path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge
 [14:13:32] [MacroBK] RegisterHotKey skipped shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2 reason=multi-key phone-trigger
 [14:13:32] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 actions=2
+[14:29:07] [MacroBK] plugin bridge starting version=worker-phone-all-actions-v1 pid=44916 path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge
+[14:29:07] [MacroBK] RegisterHotKey skipped shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2 reason=multi-key phone-trigger
+[14:29:07] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 actions=2
+[14:29:15] [MacroBK] Plugin Manager opened
+[14:29:23] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+source=phone action=action-e17aa66b run_id=1 thread=44464
+[14:29:23] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:23] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=1
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] SUCCESS source=phone
+one action=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] stdout: hello
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] stdout: hello
+[14:29:23] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] stdout: hello
+[14:29:23] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] ACTION START source=phone
+ction=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:23] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:23] [MacroBK] stdout: hehhhhllo
+[14:29:23] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] stdout: hello
+[14:29:23] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:23] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] ACTION START source=phone
+ne udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:23] [MacroBK] stdout: hello
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:23] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+from=127.0.0.1:54156
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:23] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=2 thread=40660
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=2
+[14:29:24] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+ction-e17aa66b
+[14:29:24] [MacroBK] stdout: hehhhhllo
+=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+:F12
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=3 thread=19748
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:24] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=3
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] stdout: hehhhhllo
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+ F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] stdout: hello
+phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+.1:54156
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+from=127.0.0.1:54156
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=4 thread=34772
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+d=4
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hehhhhllo
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:541[14:[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] stdout: hello
+d source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+:F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+run_id=5 thread=44028
+[14:29:24] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:24] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=5
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+one action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] stdout: hehhhhllo
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+:F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:541[14:[14:29:24] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=6
+[14:29:24] [MacroBK] PHONE worker start action_id=action-e17aa66b
+12 from=127.0.0.1:54156
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+ion=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] stdout: hehhhhllo
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] ACTION START source=phone
+ction-e17aa66b
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:24] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:24] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:24] [MacroBK] ACTION START source=phone
+[14:29:24] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:24] [MacroBK] stdout: hello
+[14:29:24] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+:F12
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=7 thread=4988
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=7
+[14:29:25] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hello
+gui action=action-e17aa66b
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hehhhhllo
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+ction-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0[14:29:25][14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ACTION START source=phone
+2
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=8 thread=14588
+[14:29:25] [MacroBK] stdout: hehhhhllo
+[14:29:25] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:25] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=8
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+:F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] SUCCESS source=phone
+ion=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=9 thread=52132
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+ run_id=9
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] stdout: hehhhhllo
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] stdout: hello
+urce=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] SUCCESS source=phone
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:25] [MacroBK] ACTION START source=phone
+[14:29:25] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:25] [MacroBK] stdout: hello
+[14:29:25] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:25] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+ted=CTRL+WIN:F12
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] SUCCESS source=phone
+e=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=10 thread=11392
+[14:29:26] [MacroBK] ACTION START source=phone
+ction-e17aa66b
+[14:29:26] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=10
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] stdout: hehhhhllo
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:26] [MacroBK] trigger received source=phone [14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] ACTION START source=phone
+ne udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+oBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:26] [MacroBK] stdout: hello
+urce=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=11 thread=47700
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:26] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=11
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+mode=gui
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] stdout: hehhhhllo
+=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] stdout: hello
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:26] [MacroBK] ACTION START source=phone
+[14:29:26] [MacroBK] stdout: hello
+gui action=action-e17aa66b
+[14:29:26] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:26] [MacroBK] SUCCESS source=phone
+[14:29:37] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=12 thread=49672
+[14:29:37] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=12
+[14:29:38] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=13 thread=27516
+[14:29:38] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=13
+[14:29:38] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=14 thread=49988
+[14:29:38] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=14
+[14:29:38] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=15 thread=16228
+[14:29:38] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=15
+[14:29:42] [MacroBK] ACTION START source=test action=action-6ce5eb21 run_id=16 thread=43692
+[14:29:42] [MacroBK] GUI helper call: gui thread=43692
+[14:29:42] [MacroBK] SUCCESS source=test action=action-6ce5eb21 run_id=16
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:541[14:[14:29:55] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+r=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=17 thread=49388
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:55] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=17
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+one action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hehhhhllo
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=18 thread=51528
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=18
+[14:29:55] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] PHONE worker start action_id=action-e17aa66b
+2
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+mode=gui
+[14:29:55] [MacroBK] ACTION START source=phone
+r=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+hhhllo
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=19 thread=43916
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+hhhllo
+[14:29:55] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+ F12
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+TRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:55] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+run_id=20 thread=45004
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+oBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] stdout: hehhhhllo
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+d=20
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] ACTION START source=phone
+[14:29:55] [MacroBK] stdout: hello
+[14:29:55] [MacroBK] SUCCESS source=phone
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:55] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:55] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:55] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+ F12
+ST' trigger=CTRL+SHIFT:F12
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=21 thread=22220
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=21
+[14:29:56] [MacroBK] stdout: hello
+gui action=action-e17aa66b
+[14:29:56] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hehhhhllo
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+trl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] SUCCESS source=phone
+d=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+urce=phone action=action-e17aa66b run_id=22 thread=33900
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+=action-e17aa66b run_id=22
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+rigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hehhhhllo
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE trigger=CTRL+SHIFT:F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+run_id=23 thread=23164
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=23
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+one action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hehhhhllo
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[14:29:56] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+56
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+from=127.0.0.1:54156
+[14:29:56] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=24 thread=21452
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=24
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] EXECUTION MODE gui action=action-e17aa66b
+[14:29:56] [MacroBK] ACTION START source=phone action=action-e17aa66b mode=gui
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hehhhhllo
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:29:56] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[14:29:56] [MacroBK] ACTION START source=phone
+[14:29:56] [MacroBK] stdout: hello
+[14:29:56] [MacroBK] SUCCESS source=phone
+[14:35:43] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[14:37:21] [MacroBK] plugin bridge starting version=worker-phone-all-actions-v1 pid=46896 path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge
+[14:37:21] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=51940
+[14:37:21] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 actions=2
+[14:37:38] [MacroBK] Plugin Manager opened
+[14:37:56] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[14:52:38] [MacroBK] UDP SOCKET CREATED service=e570b09efdae epoch=1 thread=14784
+[14:52:38] [MacroBK] UDP LISTENER START service=e570b09efdae epoch=1 thread=47840
+[14:52:38] [MacroBK] SERVICE START service=e570b09efdae epoch=1 thread=14784
+[14:52:38] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=47056
+[14:52:39] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=e570b09efdae epoch=1 thread=14784
+[14:52:49] [MacroBK] MANAGER OPEN
+[14:52:56] [MacroBK] PCB FRAME CLOSE DETECTED service=e570b09efdae epoch=1 thread=14784
+[14:52:56] [MacroBK] PCB FRAME DESTROY DETECTED service=e570b09efdae epoch=1 thread=14784
+[14:52:56] [MacroBK] SERVICE SHUTDOWN START service=e570b09efdae epoch=2 thread=14784
+[14:52:56] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[14:52:56] [MacroBK] WORKERS STOP REQUESTED count=0 service=e570b09efdae epoch=2 thread=14784
+[14:52:56] [MacroBK] UDP LISTENER STOP service=e570b09efdae epoch=2 thread=47840
+[14:52:56] [MacroBK] UDP SOCKET CLOSED service=e570b09efdae epoch=2 thread=14784
+[14:52:56] [MacroBK] SERVICE SHUTDOWN COMPLETE service=e570b09efdae epoch=2 thread=14784
+[14:53:11] [MacroBK] UDP SOCKET CREATED service=e570b09efdae epoch=3 thread=14784
+[14:53:11] [MacroBK] UDP LISTENER START service=e570b09efdae epoch=3 thread=18788
+[14:53:11] [MacroBK] SERVICE START service=e570b09efdae epoch=3 thread=14784
+[14:53:11] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=51748
+[14:53:12] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=e570b09efdae epoch=3 thread=14784
+[14:53:18] [MacroBK] PCB FRAME CLOSE DETECTED service=e570b09efdae epoch=3 thread=14784
+[14:53:18] [MacroBK] PCB FRAME DESTROY DETECTED service=e570b09efdae epoch=3 thread=14784
+[14:53:18] [MacroBK] SERVICE SHUTDOWN START service=e570b09efdae epoch=4 thread=14784
+[14:53:18] [MacroBK] WORKERS STOP REQUESTED count=0 service=e570b09efdae epoch=4 thread=14784
+[14:53:18] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[14:53:18] [MacroBK] UDP LISTENER STOP service=e570b09efdae epoch=4 thread=18788
+[14:53:18] [MacroBK] UDP SOCKET CLOSED service=e570b09efdae epoch=4 thread=14784
+[14:53:18] [MacroBK] SERVICE SHUTDOWN COMPLETE service=e570b09efdae epoch=4 thread=14784
+[14:53:25] [MacroBK] UDP SOCKET CREATED service=e570b09efdae epoch=5 thread=14784
+[14:53:25] [MacroBK] UDP LISTENER START service=e570b09efdae epoch=5 thread=14948
+[14:53:25] [MacroBK] SERVICE START service=e570b09efdae epoch=5 thread=14784
+[14:53:25] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=49644
+[14:53:26] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=e570b09efdae epoch=5 thread=14784
+[14:54:37] [MacroBK] PCB FRAME CLOSE DETECTED service=e570b09efdae epoch=5 thread=14784
+[14:54:37] [MacroBK] PCB FRAME DESTROY DETECTED service=e570b09efdae epoch=5 thread=14784
+[14:54:37] [MacroBK] SERVICE SHUTDOWN START service=e570b09efdae epoch=6 thread=14784
+[14:54:37] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[14:54:37] [MacroBK] WORKERS STOP REQUESTED count=0 service=e570b09efdae epoch=6 thread=14784
+[14:54:37] [MacroBK] UDP LISTENER STOP service=e570b09efdae epoch=6 thread=14948
+[14:54:37] [MacroBK] UDP SOCKET CLOSED service=e570b09efdae epoch=6 thread=14784
+[14:54:37] [MacroBK] SERVICE SHUTDOWN COMPLETE service=e570b09efdae epoch=6 thread=14784
+[14:54:40] [MacroBK] UDP SOCKET CREATED service=e570b09efdae epoch=7 thread=14784
+[14:54:40] [MacroBK] UDP LISTENER START service=e570b09efdae epoch=7 thread=47832
+[14:54:40] [MacroBK] SERVICE START service=e570b09efdae epoch=7 thread=14784
+[14:54:40] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=38804
+[14:54:41] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=e570b09efdae epoch=7 thread=14784
+[14:56:23] [MacroBK] PCB FRAME CLOSE DETECTED service=e570b09efdae epoch=7 thread=14784
+[14:56:23] [MacroBK] PCB FRAME DESTROY DETECTED service=e570b09efdae epoch=7 thread=14784
+[14:56:23] [MacroBK] SERVICE SHUTDOWN START service=e570b09efdae epoch=8 thread=14784
+[14:56:23] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[14:56:23] [MacroBK] WORKERS STOP REQUESTED count=0 service=e570b09efdae epoch=8 thread=14784
+[14:56:23] [MacroBK] UDP LISTENER STOP service=e570b09efdae epoch=8 thread=47832
+[14:56:23] [MacroBK] UDP SOCKET CLOSED service=e570b09efdae epoch=8 thread=14784
+[14:56:23] [MacroBK] SERVICE SHUTDOWN COMPLETE service=e570b09efdae epoch=8 thread=14784
+[14:56:35] [MacroBK] UDP SOCKET CREATED service=cc7895dcecac epoch=1 thread=10104
+[14:56:35] [MacroBK] UDP LISTENER START service=cc7895dcecac epoch=1 thread=46756
+[14:56:35] [MacroBK] SERVICE START service=cc7895dcecac epoch=1 thread=10104
+[14:56:35] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=46232
+[14:56:36] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=cc7895dcecac epoch=1 thread=10104
+[14:56:42] [MacroBK] MANAGER OPEN
+[14:56:44] [MacroBK] MANAGER CLOSE
+[14:56:53] [MacroBK] MANAGER OPEN
+[14:57:26] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=1 thread=44100
+[14:57:26] [MacroBK] GUI helper call: gui thread=44100
+[14:57:26] [MacroBK] GUI helper call: gui thread=44100
+[14:57:27] [MacroBK] GUI helper call: gui thread=44100
+[14:57:28] [MacroBK] GUI helper call: gui thread=44100
+[14:57:29] [MacroBK] GUI helper call: gui thread=44100
+[14:57:30] [MacroBK] GUI helper call: gui thread=44100
+[14:57:30] [MacroBK] GUI helper call: gui thread=44100
+[14:57:31] [MacroBK] GUI helper call: gui thread=44100
+[14:57:31] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=1
+[14:57:35] [MacroBK] MANAGER CLOSE
+[14:57:45] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:45] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:45] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=2 thread=33444
+[14:57:45] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:45] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=2
+[14:57:47] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:47] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:47] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=3 thread=51688
+[14:57:47] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:47] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=3
+[14:57:48] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:48] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:48] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=4 thread=51276
+[14:57:48] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:48] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=4
+[14:57:48] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:48] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:48] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=5 thread=51248
+[14:57:48] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:48] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=5
+[14:57:48] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:48] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:48] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=6 thread=46344
+[14:57:48] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=6
+[14:57:48] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:52] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[14:57:52] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[14:57:52] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=7 thread=33660
+[14:57:52] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[14:57:52] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=7
+[15:10:25] [MacroBK] MANAGER CLOSE
+[15:10:26] [MacroBK] PCB FRAME CLOSE DETECTED service=cc7895dcecac epoch=1 thread=10104
+[15:10:27] [MacroBK] PCB FRAME DESTROY DETECTED service=cc7895dcecac epoch=1 thread=10104
+[15:10:27] [MacroBK] SERVICE SHUTDOWN START service=cc7895dcecac epoch=2 thread=10104
+[15:10:27] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:10:27] [MacroBK] WORKERS STOP REQUESTED count=0 service=cc7895dcecac epoch=2 thread=10104
+[15:10:27] [MacroBK] UDP SOCKET CLOSED service=cc7895dcecac epoch=2 thread=10104
+[15:10:27] [MacroBK] UDP LISTENER STOP service=cc7895dcecac epoch=2 thread=46756
+[15:10:27] [MacroBK] SERVICE SHUTDOWN COMPLETE service=cc7895dcecac epoch=2 thread=10104
+[15:10:35] [MacroBK] UDP SOCKET CREATED service=5fd9e716f65e epoch=1 thread=11580
+[15:10:35] [MacroBK] UDP LISTENER START service=5fd9e716f65e epoch=1 thread=44900
+[15:10:35] [MacroBK] SERVICE START service=5fd9e716f65e epoch=1 thread=11580
+[15:10:35] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=51272
+[15:10:35] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=5fd9e716f65e epoch=1 thread=11580
+[15:10:46] [MacroBK] MANAGER OPEN
+[15:11:23] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[15:11:23] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:11:23] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=38612
+[15:11:36] [MacroBK] MANAGER CLOSE
+[15:11:43] [MacroBK] MANAGER OPEN
+[15:11:44] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=1 thread=14140
+[15:11:44] [MacroBK] GUI helper call: gui thread=14140
+[15:11:44] [MacroBK] GUI helper call: gui thread=14140
+[15:11:45] [MacroBK] GUI helper call: gui thread=14140
+[15:11:45] [MacroBK] GUI helper call: gui thread=14140
+[15:11:46] [MacroBK] GUI helper call: gui thread=14140
+[15:11:46] [MacroBK] GUI helper call: gui thread=14140
+[15:11:47] [MacroBK] GUI helper call: gui thread=14140
+[15:11:48] [MacroBK] GUI helper call: gui thread=14140
+[15:11:48] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=1
+[15:11:56] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=2 thread=44592
+[15:11:56] [MacroBK] GUI helper call: gui thread=44592
+[15:11:56] [MacroBK] GUI helper call: gui thread=44592
+[15:11:57] [MacroBK] GUI helper call: gui thread=44592
+[15:11:57] [MacroBK] GUI helper call: gui thread=44592
+[15:11:58] [MacroBK] GUI helper call: gui thread=44592
+[15:11:58] [MacroBK] GUI helper call: gui thread=44592
+[15:11:59] [MacroBK] GUI helper call: gui thread=44592
+[15:12:00] [MacroBK] GUI helper call: gui thread=44592
+[15:12:00] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=2
+[15:12:03] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=3 thread=52100
+[15:12:03] [MacroBK] GUI helper call: gui thread=52100
+[15:12:03] [MacroBK] GUI helper call: gui thread=52100
+[15:12:04] [MacroBK] GUI helper call: gui thread=52100
+[15:12:04] [MacroBK] GUI helper call: gui thread=52100
+[15:12:05] [MacroBK] GUI helper call: gui thread=52100
+[15:12:05] [MacroBK] GUI helper call: gui thread=52100
+[15:12:06] [MacroBK] GUI helper call: gui thread=52100
+[15:12:07] [MacroBK] GUI helper call: gui thread=52100
+[15:12:07] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=3
+[15:12:43] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[15:12:43] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:12:43] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=41812
+[15:13:07] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[15:13:07] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:13:07] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=36884
+[15:13:11] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=4 thread=50200
+[15:13:11] [MacroBK] GUI helper call: gui thread=50200
+[15:13:11] [MacroBK] GUI helper call: gui thread=50200
+[15:13:12] [MacroBK] GUI helper call: gui thread=50200
+[15:13:12] [MacroBK] GUI helper call: gui thread=50200
+[15:13:13] [MacroBK] GUI helper call: gui thread=50200
+[15:13:13] [MacroBK] GUI helper call: gui thread=50200
+[15:13:14] [MacroBK] GUI helper call: gui thread=50200
+[15:13:15] [MacroBK] GUI helper call: gui thread=50200
+[15:13:16] [MacroBK] GUI helper call: gui thread=50200
+[15:13:17] [MacroBK] GUI helper call: gui thread=50200
+[15:13:17] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=4
+[15:13:19] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=5 thread=48472
+[15:13:19] [MacroBK] GUI helper call: gui thread=48472
+[15:13:19] [MacroBK] GUI helper call: gui thread=48472
+[15:13:20] [MacroBK] GUI helper call: gui thread=48472
+[15:13:20] [MacroBK] GUI helper call: gui thread=48472
+[15:13:21] [MacroBK] GUI helper call: gui thread=48472
+[15:13:21] [MacroBK] GUI helper call: gui thread=48472
+[15:13:22] [MacroBK] GUI helper call: gui thread=48472
+[15:13:23] [MacroBK] GUI helper call: gui thread=48472
+[15:13:24] [MacroBK] GUI helper call: gui thread=48472
+[15:13:25] [MacroBK] GUI helper call: gui thread=48472
+[15:13:25] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=5
+[15:13:28] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[15:13:28] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[15:13:28] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=6 thread=39540
+[15:13:28] [MacroBK] GUI helper call: gui thread=39540
+[15:13:28] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[15:13:28] [MacroBK] GUI helper call: gui thread=39540
+[15:13:29] [MacroBK] GUI helper call: gui thread=39540
+[15:13:29] [MacroBK] GUI helper call: gui thread=39540
+[15:13:30] [MacroBK] GUI helper call: gui thread=39540
+[15:13:30] [MacroBK] GUI helper call: gui thread=39540
+[15:13:31] [MacroBK] GUI helper call: gui thread=39540
+[15:13:32] [MacroBK] GUI helper call: gui thread=39540
+[15:13:33] [MacroBK] GUI helper call: gui thread=39540
+[15:13:34] [MacroBK] GUI helper call: gui thread=39540
+[15:13:34] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=6
+[15:13:36] [MacroBK] MANAGER CLOSE
+[15:13:37] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[15:13:37] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[15:13:37] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=7 thread=2176
+[15:13:37] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[15:13:37] [MacroBK] GUI helper call: gui thread=2176
+[15:13:37] [MacroBK] GUI helper call: gui thread=2176
+[15:13:38] [MacroBK] GUI helper call: gui thread=2176
+[15:13:38] [MacroBK] GUI helper call: gui thread=2176
+[15:13:39] [MacroBK] GUI helper call: gui thread=2176
+[15:13:39] [MacroBK] GUI helper call: gui thread=2176
+[15:13:40] [MacroBK] GUI helper call: gui thread=2176
+[15:13:41] [MacroBK] GUI helper call: gui thread=2176
+[15:13:42] [MacroBK] GUI helper call: gui thread=2176
+[15:13:43] [MacroBK] GUI helper call: gui thread=2176
+[15:13:43] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=7
+[15:13:47] [MacroBK] PCB FRAME CLOSE DETECTED service=5fd9e716f65e epoch=1 thread=11580
+[15:13:47] [MacroBK] PCB FRAME DESTROY DETECTED service=5fd9e716f65e epoch=1 thread=11580
+[15:13:47] [MacroBK] SERVICE SHUTDOWN START service=5fd9e716f65e epoch=2 thread=11580
+[15:13:47] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:13:47] [MacroBK] WORKERS STOP REQUESTED count=0 service=5fd9e716f65e epoch=2 thread=11580
+[15:13:47] [MacroBK] UDP LISTENER STOP service=5fd9e716f65e epoch=2 thread=44900
+[15:13:47] [MacroBK] UDP SOCKET CLOSED service=5fd9e716f65e epoch=2 thread=11580
+[15:13:47] [MacroBK] SERVICE SHUTDOWN COMPLETE service=5fd9e716f65e epoch=2 thread=11580
+[15:13:56] [MacroBK] UDP SOCKET CREATED service=5fd9e716f65e epoch=3 thread=11580
+[15:13:56] [MacroBK] UDP LISTENER START service=5fd9e716f65e epoch=3 thread=6680
+[15:13:56] [MacroBK] SERVICE START service=5fd9e716f65e epoch=3 thread=11580
+[15:13:56] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=49656
+[15:13:57] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=5fd9e716f65e epoch=3 thread=11580

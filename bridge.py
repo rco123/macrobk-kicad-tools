@@ -33,9 +33,10 @@ def start_bridge():
     try:
         # Bind at the plugin GUI entry point. Do not reload live worker/service
         # modules: restarting PCB Editor applies a new source generation.
+        from .lifecycle import engine
+        trigger_core = engine(trigger_core)
         trigger_core.bind_gui_thread()
-        trigger_core.start_bridge()
-        return True
+        return trigger_core.start_bridge()
     except Exception as exc:
         _show_load_error("MacroBK start error", exc)
         return False

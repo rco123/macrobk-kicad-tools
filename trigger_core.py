@@ -23,8 +23,8 @@ except ImportError:
     import kicad_controls as kc
 
 PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_PATH = os.path.join(PLUGIN_DIR, "config.json")
-LOG_PATH = os.path.join(PLUGIN_DIR, "macrobk_drc.log")
+CONFIG_PATH = globals().get("CONFIG_PATH", os.path.join(PLUGIN_DIR, "config.json"))
+LOG_PATH = globals().get("LOG_PATH", os.path.join(PLUGIN_DIR, "macrobk_drc.log"))
 
 LOCAL_TRIGGER_GROUP = "239.255.77.77"
 LOCAL_TRIGGER_PORT = 47831
@@ -59,23 +59,26 @@ MOD_WIN = 0x0008
 MOD_NOREPEAT = 0x4000
 ERROR_HOTKEY_ALREADY_REGISTERED = 1409
 
-_started = False
-_keyboard_status = "Starting"
-_phone_status = "Starting"
-_hotkey_thread = None
-_hotkey_thread_id = None
-_hotkey_generation = 0
-_hotkey_lock = threading.Lock()
-_log_lock = threading.Lock()
-_manager_provider = lambda: None
-_action_workers = {}
-_action_workers_lock = threading.Lock()
-_run_counter = itertools.count(1)
-_latest_runs = {}
-_context = threading.local()
-_gui_thread_id = None
-_engine_generation = uuid.uuid4().hex
-_service_stop = threading.Event()
+# Preserve the live worker engine on explicit importlib.reload.
+if "_engine_generation" not in globals():
+    _started = False
+    _keyboard_status = "Starting"
+    _phone_status = "Starting"
+    _hotkey_thread = None
+    _hotkey_thread_id = None
+    _hotkey_generation = 0
+    _hotkey_lock = threading.Lock()
+    _log_lock = threading.Lock()
+    _manager_provider = lambda: None
+    _action_workers = {}
+    _action_workers_lock = threading.Lock()
+    _run_counter = itertools.count(1)
+    _latest_runs = {}
+    _context = threading.local()
+    _gui_thread_id = None
+    _engine_generation = uuid.uuid4().hex
+    _service_stop = threading.Event()
+
 
 
 class ActionStopped(Exception):
@@ -115,10 +118,32 @@ def _check_stop():
         raise ActionStopped()
 
 
+def get_service():
+    from .lifecycle import get_service as get
+    return get(sys.modules[__name__])
+
+
+def _callback_epoch():
+    from .lifecycle import get_service as get
+    service = get()
+    return service.epoch if service is not None else None
+
+
+def _callbacks_allowed(epoch):
+    from .lifecycle import get_service as get
+    service = get()
+    return service is None or (service.accepting and (epoch is None or epoch == service.epoch))
+
+
+def shutdown_service():
+    get_service().shutdown()
+
+
 def call_gui_async(function, *args, **kwargs):
     generation = _engine_generation
+    epoch = _callback_epoch()
     def invoke():
-        if generation != _engine_generation:
+        if generation != _engine_generation or not _callbacks_allowed(epoch):
             return
         try:
             function(*args, **kwargs)
@@ -143,9 +168,10 @@ def call_gui_sync(function, *args, timeout=10.0, **kwargs):
     box = {}
     stop_event = getattr(_context, "stop_event", None)
     generation = _engine_generation
+    epoch = _callback_epoch()
     def invoke():
         try:
-            if cancelled.is_set() or generation != _engine_generation:
+            if cancelled.is_set() or generation != _engine_generation or not _callbacks_allowed(epoch):
                 return
             if stop_event is not None and stop_event.is_set():
                 return
@@ -341,7 +367,8 @@ def save_config():
     log("configuration saved path={}".format(CONFIG_PATH))
 
 
-CONFIG = load_config()
+if "CONFIG" not in globals():
+    CONFIG = load_config()
 
 def virtual_key_code(name):
     value = str(name).upper().strip()
@@ -474,7 +501,7 @@ def set_keyboard_status(status):
     _keyboard_status = status
     manager = _manager_provider()
     if manager is not None:
-        wx.CallAfter(manager.set_keyboard_status, status)
+        call_gui_async(manager.set_keyboard_status, status)
 
 
 def set_phone_status(status):
@@ -482,7 +509,7 @@ def set_phone_status(status):
     _phone_status = status
     manager = _manager_provider()
     if manager is not None:
-        wx.CallAfter(manager.set_phone_status, status)
+        call_gui_async(manager.set_phone_status, status)
 
 
 def hotkey_worker(trigger, generation):
@@ -529,6 +556,8 @@ def hotkey_worker(trigger, generation):
     user32.UnregisterHotKey.restype = wintypes.BOOL
     user32.GetMessageW.argtypes = [ctypes.POINTER(wintypes.MSG), wintypes.HWND, wintypes.UINT, wintypes.UINT]
     user32.GetMessageW.restype = ctypes.c_int
+    user32.PeekMessageW.argtypes = [ctypes.POINTER(wintypes.MSG), wintypes.HWND, wintypes.UINT, wintypes.UINT, wintypes.UINT]
+    user32.PeekMessageW.restype = wintypes.BOOL
 
     thread_id = threading.get_native_id()
     with _hotkey_lock:
@@ -558,26 +587,30 @@ def hotkey_worker(trigger, generation):
     )
     message = wintypes.MSG()
     try:
-        while True:
-            result = user32.GetMessageW(ctypes.byref(message), None, 0, 0)
-            if result == -1:
-                log("hotkey message loop failed error={}".format(ctypes.get_last_error()))
-                break
-            if result == 0:
+        while not _service_stop.is_set():
+            with _hotkey_lock:
+                if generation != _hotkey_generation:
+                    break
+            if not user32.PeekMessageW(ctypes.byref(message), None, 0, 0, 1):
+                _service_stop.wait(0.05)
+                continue
+            if message.message == WM_QUIT:
                 break
             if message.message == WM_HOTKEY and message.wParam == HOTKEY_ID:
                 log("trigger received source=keyboard trigger={}".format(shortcut))
-                wx.CallAfter(handle_trigger, "keyboard")
+                call_gui_async(handle_trigger, "keyboard")
     finally:
         user32.UnregisterHotKey(None, HOTKEY_ID)
-        log("hotkey unregistered shortcut={}".format(shortcut))
+        log("HOTKEY UNREGISTERED shortcut={}".format(shortcut))
         with _hotkey_lock:
             if _hotkey_thread_id == thread_id:
                 _hotkey_thread_id = None
 
 
 def stop_hotkey_listener():
+    global _hotkey_generation, _hotkey_thread, _hotkey_thread_id
     with _hotkey_lock:
+        _hotkey_generation += 1
         thread = _hotkey_thread
         thread_id = _hotkey_thread_id
 
@@ -595,6 +628,10 @@ def stop_hotkey_listener():
 
     if thread is not None and thread.is_alive() and thread is not threading.current_thread():
         thread.join(timeout=1.0)
+    with _hotkey_lock:
+        if thread is None or not thread.is_alive():
+            _hotkey_thread = None
+            _hotkey_thread_id = None
 
 
 def start_hotkey_listener():
@@ -606,6 +643,10 @@ def start_hotkey_listener():
         return
 
     with _hotkey_lock:
+        if _hotkey_thread is not None and _hotkey_thread.is_alive():
+            return
+        if not _callbacks_allowed(_callback_epoch()):
+            return
         _hotkey_generation += 1
         generation = _hotkey_generation
 
@@ -618,7 +659,7 @@ def start_hotkey_listener():
     )
     with _hotkey_lock:
         _hotkey_thread = thread
-    thread.start()
+        thread.start()
 
 
 def restart_hotkey_listener():
@@ -768,6 +809,8 @@ def execute_python_script(script, source, action_id=None):
     debug = _script_debug_enabled(script)
     manager = _manager_provider()
     with _action_workers_lock:
+        if not _callbacks_allowed(_callback_epoch()):
+            return False
         if key in _action_workers:
             # A registered worker reserves the Action even before Thread.start.
             duplicate = True
@@ -866,94 +909,40 @@ def handle_phone_trigger(received):
     return started
 
 
-def udp_worker():
-    # Resolve each received ID on the GUI thread against all current Actions.
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-
-    # Multiple applications/plugins must be able to listen on the same multicast port.
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
+def udp_worker(service, sock, stop_event, epoch):
+    service.log("UDP LISTENER START")
+    set_phone_status("Ready")
     try:
-        # Multicast receivers normally bind the wildcard address, then join only
-        # the loopback interface. Studio sends with TTL 0 on 127.0.0.1.
-        sock.bind(("", LOCAL_TRIGGER_PORT))
-        membership = socket.inet_aton(LOCAL_TRIGGER_GROUP) + socket.inet_aton(
-            LOCAL_TRIGGER_INTERFACE
-        )
-        sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, membership)
-        sock.settimeout(0.5)
-        set_phone_status("Ready")
-        log(
-            "UDP multicast ready group={}:{} interface={} actions={}".format(
-                LOCAL_TRIGGER_GROUP,
-                LOCAL_TRIGGER_PORT,
-                LOCAL_TRIGGER_INTERFACE,
-                len(CONFIG.get("actions", [])),
-            )
-        )
-    except Exception as exc:
-        set_phone_status("Port Error")
-        log(
-            "UDP multicast setup failed group={}:{} interface={} error={}".format(
-                LOCAL_TRIGGER_GROUP,
-                LOCAL_TRIGGER_PORT,
-                LOCAL_TRIGGER_INTERFACE,
-                repr(exc),
-            )
-        )
-        sock.close()
-        return
-
-    while not _service_stop.is_set():
-        try:
-            data, address = sock.recvfrom(1024)
-        except socket.timeout:
-            continue
-        except Exception as exc:
-            log("UDP recv error: " + repr(exc))
-            set_phone_status("Port Error")
-            break
-
-        log("PHONE RX raw={!r} from={}:{}".format(data, address[0], address[1]))
-        received = parse_phone_packet(data)
-        if received is None:
-            log("ignored UDP command: {!r}".format(data))
-            continue
-        log("PHONE trigger={}".format(received))
-        log("trigger received source=phone udp={} from={}:{}".format(
-            received, address[0], address[1]))
-        wx.CallAfter(handle_phone_trigger, received)
-
-    sock.close()
+        while not stop_event.is_set():
+            try:
+                data, address = sock.recvfrom(1024)
+            except socket.timeout:
+                continue
+            except OSError as exc:
+                if not stop_event.is_set():
+                    log("UDP recv error: " + repr(exc))
+                    set_phone_status("Port Error")
+                break
+            if stop_event.is_set():
+                break
+            log("PHONE RX raw={!r} from={}:{}".format(data, address[0], address[1]))
+            received = parse_phone_packet(data)
+            if received is not None:
+                def deliver(received=received):
+                    if service.accepting and service.epoch == epoch:
+                        handle_phone_trigger(received)
+                call_gui_async(deliver)
+    finally:
+        # Socket ownership stays with the service; unexpected receive failure
+        # also tears down its resources and permits an explicit later restart.
+        service.log("UDP LISTENER STOP")
+        if not stop_event.is_set():
+            service.shutdown()
 
 
 def start_bridge():
-    """Start the MacroBK hotkey and phone UDP listeners once."""
-    global _started
-
-    if _started:
-        return True
-
-    _started = True
-    log("plugin bridge starting version=worker-phone-all-actions-v1 pid={} path={}".format(
-        os.getpid(), PLUGIN_DIR))
-
-    try:
-        start_hotkey_listener()
-    except Exception as exc:
-        log("hotkey listener start error: " + repr(exc))
-
-    try:
-        thread = threading.Thread(
-            target=udp_worker,
-            name="MacroBK-KiCad-DRC-UDP",
-            daemon=True,
-        )
-        thread.start()
-    except Exception as exc:
-        log("UDP listener start error: " + repr(exc))
-
-    return True
+    """Return the process-local service; simultaneous/reloaded calls reuse it."""
+    return get_service().start()
 
 
 kc.set_logger(log)

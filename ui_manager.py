@@ -1,5 +1,6 @@
 import copy
 import os
+import sys
 import uuid
 
 import wx
@@ -13,9 +14,11 @@ except ImportError:
     import trigger_core as core
 
 PLUGIN_DIR = os.path.dirname(os.path.abspath(__file__))
+from .lifecycle import engine
+core = engine(core)
 ICON_DIR = os.path.join(PLUGIN_DIR, "icons")
 LOG_PATH = core.LOG_PATH
-_manager_frame = None
+_manager_frame = globals().get("_manager_frame")
 
 def system_colour(colour_id):
     return wx.SystemSettings.GetColour(colour_id)
@@ -69,7 +72,9 @@ def action_icon_name(action):
     return "execute"
 
 def get_manager_frame():
-    return _manager_frame
+    service = core.get_service()
+    manager = service.manager or _manager_frame
+    return manager if manager is not None and bool(manager) and not manager.IsBeingDeleted() else None
 
 class MacroBKPluginManager(wx.Frame):
     def __init__(self, parent):
@@ -281,23 +286,18 @@ class MacroBKPluginManager(wx.Frame):
         self.stop_button.Enable(False)
         self.stop_button.Bind(wx.EVT_BUTTON, self.on_stop_test)
 
-        self.test_status_icon = wx.StaticBitmap(
-            execute_panel,
-            bitmap=icon_bitmap("execute", 18),
-        )
+        self.save_button = wx.Button(execute_panel, label="Save")
+        self.save_button.SetMinSize((84, 32))
+        self.save_button.Bind(wx.EVT_BUTTON, self.on_save)
+
         self.test_status_label = wx.StaticText(execute_panel, label="IDLE")
         status_font = self.test_status_label.GetFont()
         status_font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.test_status_label.SetFont(status_font)
 
         execute_controls.Add(self.test_button, 0, wx.RIGHT, 8)
-        execute_controls.Add(self.stop_button, 0, wx.RIGHT, 14)
-        execute_controls.Add(
-            self.test_status_icon,
-            0,
-            wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
-            6,
-        )
+        execute_controls.Add(self.stop_button, 0, wx.RIGHT, 8)
+        execute_controls.Add(self.save_button, 0, wx.RIGHT, 14)
         execute_controls.Add(
             self.test_status_label,
             0,
@@ -604,16 +604,10 @@ class MacroBKPluginManager(wx.Frame):
             self.stop_button.Enable(label == "RUNNING" and bool(stoppable))
 
         if label == "SUCCESS":
-            self.test_status_icon.SetBitmap(icon_bitmap("success", 18))
             self.test_status_label.SetForegroundColour(wx.Colour(39, 174, 96))
         elif label == "ERROR":
-            self.test_status_icon.SetBitmap(icon_bitmap("error", 18))
             self.test_status_label.SetForegroundColour(wx.Colour(192, 57, 43))
-        elif label == "STOPPED":
-            self.test_status_icon.SetBitmap(icon_bitmap("execute", 18))
-            self.test_status_label.SetForegroundColour(system_colour(wx.SYS_COLOUR_WINDOWTEXT))
         else:
-            self.test_status_icon.SetBitmap(icon_bitmap("execute", 18))
             self.test_status_label.SetForegroundColour(system_colour(wx.SYS_COLOUR_WINDOWTEXT))
 
     def update_status_bar(self):
@@ -733,27 +727,41 @@ class MacroBKPluginManager(wx.Frame):
         self.result_text.ClearAll()
         self.result_text.SetReadOnly(True)
 
-    def on_close(self, event):
+    def dispose(self):
+        """Destroy only this Manager; never save config during lifecycle cleanup."""
         global _manager_frame
+        if getattr(self, "_disposing", False):
+            return
+        self._disposing = True
         action_id = getattr(self, "running_test_action_id", None)
         if action_id is not None:
             core.stop_action(action_id, "test")
-        try:
-            self.apply_selected_to_config()
-            core.save_config()
-        except Exception as exc:
-            core.log("Auto-save on close error: " + repr(exc))
-
         if self._blink_timer is not None:
             self._blink_timer.Stop()
             self._blink_timer = None
-        _manager_frame = None
+        if _manager_frame is self:
+            _manager_frame = None
+        service = core.get_service()
+        if service.manager is self:
+            service.manager = None
         self.Destroy()
+
+    def on_close(self, event):
+        core.log("MANAGER CLOSE")
+        self.dispose()
 
 
 def show_manager():
     core.bind_gui_thread()
     global _manager_frame
+    service = core.get_service()
+    if not service.accepting:
+        return
+    if service.ui_module is not None and service.ui_module is not sys.modules[__name__]:
+        return service.ui_module.show_manager()
+    service.ui_module = sys.modules[__name__]
+    service.attach_frame()
+    _manager_frame = service.manager or _manager_frame
     if (
         _manager_frame is not None
         and bool(_manager_frame)
@@ -762,6 +770,7 @@ def show_manager():
         try:
             if _manager_frame.IsIconized():
                 _manager_frame.Iconize(False)
+            core.log("MANAGER OPEN")
             _manager_frame.Show(True)
             _manager_frame.Raise()
             _manager_frame.SetFocus()
@@ -769,13 +778,13 @@ def show_manager():
         except Exception:
             _manager_frame = None
 
-    # Keep the modeless manager independent from transient KiCad child windows.
-    # The module-level reference above owns it until the user explicitly closes it.
-    _manager_frame = MacroBKPluginManager(None)
+    # Parent to the identified PCB main frame, never a transient child window.
+    _manager_frame = MacroBKPluginManager(service.frame)
+    service.manager = _manager_frame
     _manager_frame.Show(True)
     _manager_frame.Raise()
     _manager_frame.SetFocus()
-    core.log("Plugin Manager opened")
+    core.log("MANAGER OPEN")
 
 
 

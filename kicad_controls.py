@@ -142,6 +142,50 @@ def candidate_frames():
     return frames
 
 
+def find_pcb_frame():
+    """Prefer native PCB class/name; menu + PCB hierarchy are fallback evidence."""
+    for frame in candidate_frames():
+        try:
+            native = str(frame.GetClassInfo().GetClassName()).lower()
+            name = str(frame.GetName()).lower()
+            if "pcb_edit_frame" in native or name in ("pcbframe", "pcb_edit_frame", "pcbnew"):
+                return frame
+            children = list(iter_controls(frame))
+            hierarchy = any("pcb" in (str(child.GetName()) + child.__class__.__name__).lower()
+                            for child in children)
+            if hierarchy and "pcb editor" in str(frame.GetTitle()).lower():
+                return frame
+        except (RuntimeError, AttributeError):
+            continue
+    return None
+
+
+_callbacks = globals().get("_callbacks", [])
+_callback_generation = globals().get("_callback_generation", 0)
+
+
+def call_later(delay, callback, *args):
+    generation = _callback_generation
+    holder = []
+    def invoke():
+        if holder and holder[0] in _callbacks:
+            _callbacks.remove(holder[0])
+        if generation == _callback_generation:
+            callback(*args)
+    timer = wx.CallLater(delay, invoke)
+    holder.append(timer)
+    _callbacks.append(timer)
+    return timer
+
+
+def cancel_callbacks():
+    global _callback_generation
+    _callback_generation += 1
+    timers, _callbacks[:] = list(_callbacks), []
+    for timer in timers:
+        timer.Stop()
+
+
 def iter_menu(menu, path=""):
     for position in range(menu.GetMenuItemCount()):
         item = menu.FindItemByPosition(position)
@@ -209,7 +253,7 @@ def _log_preferences_direct_children(baseline_windows, attempts=12):
         ]
     if not preferences:
         if attempts > 0:
-            wx.CallLater(200, _log_preferences_direct_children, baseline_windows, attempts - 1)
+            call_later(200, _log_preferences_direct_children, baseline_windows, attempts - 1)
         else:
             log("Preferences window not found")
         return
@@ -241,7 +285,7 @@ def _log_preferences_direct_children(baseline_windows, attempts=12):
 
 def test_preferences_direct_children():
     baseline_windows = tuple(wx.GetTopLevelWindows())
-    wx.CallLater(200, _log_preferences_direct_children, baseline_windows)
+    call_later(200, _log_preferences_direct_children, baseline_windows)
     return open_menu("Preferences -> Preferences")
 
 
@@ -285,7 +329,7 @@ def _log_preferences_control_tree(baseline_windows, attempts=12):
         ]
     if not preferences:
         if attempts > 0:
-            wx.CallLater(200, _log_preferences_control_tree, baseline_windows, attempts - 1)
+            call_later(200, _log_preferences_control_tree, baseline_windows, attempts - 1)
         else:
             log("Preferences window not found")
         return
@@ -297,7 +341,7 @@ def _log_preferences_control_tree(baseline_windows, attempts=12):
 
 def test_preferences_control_tree():
     baseline_windows = tuple(wx.GetTopLevelWindows())
-    wx.CallLater(200, _log_preferences_control_tree, baseline_windows)
+    call_later(200, _log_preferences_control_tree, baseline_windows)
     return open_menu("Preferences -> Preferences")
 
 
@@ -317,7 +361,7 @@ def _log_preferences_checkbox_value(baseline_windows, attempts=12):
         ]
     if not preferences:
         if attempts > 0:
-            wx.CallLater(
+            call_later(
                 200, _log_preferences_checkbox_value, baseline_windows, attempts - 1
             )
         else:
@@ -337,7 +381,7 @@ def _log_preferences_checkbox_value(baseline_windows, attempts=12):
 
 def test_preferences_checkbox_value():
     baseline_windows = tuple(wx.GetTopLevelWindows())
-    wx.CallLater(200, _log_preferences_checkbox_value, baseline_windows)
+    call_later(200, _log_preferences_checkbox_value, baseline_windows)
     return open_menu("Preferences -> Preferences")
 
 
@@ -362,7 +406,7 @@ def _toggle_preferences_checkbox(baseline_windows, attempts=12):
         ]
     if not preferences:
         if attempts > 0:
-            wx.CallLater(200, _toggle_preferences_checkbox, baseline_windows, attempts - 1)
+            call_later(200, _toggle_preferences_checkbox, baseline_windows, attempts - 1)
         else:
             log("Preferences window not found")
         return
@@ -380,12 +424,12 @@ def _toggle_preferences_checkbox(baseline_windows, attempts=12):
     set_control_value(checkbox, not before)
     log("after={}".format(get_control_value(checkbox)))
     preferences[0].Update()
-    wx.CallLater(5000, _restore_preferences_checkbox, checkbox, before)
+    call_later(5000, _restore_preferences_checkbox, checkbox, before)
 
 
 def test_preferences_checkbox_toggle_restore():
     baseline_windows = tuple(wx.GetTopLevelWindows())
-    wx.CallLater(200, _toggle_preferences_checkbox, baseline_windows)
+    call_later(200, _toggle_preferences_checkbox, baseline_windows)
     return open_menu("Preferences -> Preferences")
 
 
