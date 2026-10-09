@@ -41,12 +41,33 @@ def engine(default):
 
 
 def register_plugin(factory):
+    """Register one ActionPlugin for the currently open PCB Editor.
+
+    The UDP/worker service is process-local and may survive Python module
+    reimports, but KiCad's ActionPlugin registration belongs to a PCB Editor
+    frame generation.  ``shutdown()`` clears this cached registration when the
+    PCB frame is destroyed so reopening PCB Editor registers a fresh menu item.
+    """
     with _registry.lock:
         if _registry.plugin is None:
             plugin = factory()
             plugin.register()
             _registry.plugin = plugin
         return _registry.plugin
+
+
+def release_plugin_registration():
+    """Forget only MacroBK's cached ActionPlugin registration.
+
+    KiCad removes the old menu/action registration when its PCB frame is
+    destroyed.  Keeping the Python object here would make the next package
+    import incorrectly believe registration still exists and the MacroBK menu
+    entry would disappear after closing/reopening PCB Editor.
+    """
+    with _registry.lock:
+        plugin = _registry.plugin
+        _registry.plugin = None
+        return plugin
 
 
 class MacroBKService:
@@ -183,6 +204,13 @@ class MacroBKService:
             self.stop_event.set()
             sock, thread = self.socket, self.thread
         self.log("SERVICE SHUTDOWN START")
+        # The service itself is process-local and can be restarted, but the
+        # ActionPlugin registration is tied to the PCB Editor frame that has
+        # just been destroyed.  Drop only our cached registration now so the
+        # next PCB Editor import calls plugin.register() again.
+        release_plugin_registration()
+        self.log("PLUGIN REGISTRATION RELEASED")
+
         def cleanup(label, function):
             try:
                 function()

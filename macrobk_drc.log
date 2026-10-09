@@ -7426,3 +7426,75 @@ from=127.0.0.1:54156
 [15:13:56] [MacroBK] SERVICE START service=5fd9e716f65e epoch=3 thread=11580
 [15:13:56] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=49656
 [15:13:57] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=5fd9e716f65e epoch=3 thread=11580
+[15:32:29] [MacroBK] UDP SOCKET CREATED service=0335aaa1848e epoch=1 thread=4876
+[15:32:29] [MacroBK] UDP LISTENER START service=0335aaa1848e epoch=1 thread=45032
+[15:32:29] [MacroBK] SERVICE START service=0335aaa1848e epoch=1 thread=4876
+[15:32:29] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=40768
+[15:32:29] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=0335aaa1848e epoch=1 thread=4876
+[15:32:35] [MacroBK] MANAGER OPEN
+[15:32:37] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=1 thread=49520
+[15:32:37] [MacroBK] GUI helper call: gui thread=49520
+[15:32:37] [MacroBK] GUI helper call: gui thread=49520
+[15:32:38] [MacroBK] GUI helper call: gui thread=49520
+[15:32:38] [MacroBK] GUI helper call: gui thread=49520
+[15:32:39] [MacroBK] GUI helper call: gui thread=49520
+[15:32:39] [MacroBK] GUI helper call: gui thread=49520
+[15:32:40] [MacroBK] GUI helper call: gui thread=49520
+[15:32:41] [MacroBK] GUI helper call: gui thread=49520
+[15:32:42] [MacroBK] GUI helper call: gui thread=49520
+[15:32:43] [MacroBK] GUI helper call: gui thread=49520
+[15:32:43] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=1
+[15:32:45] [MacroBK] MANAGER CLOSE
+[15:32:48] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[15:32:48] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[15:32:48] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=2 thread=51908
+[15:32:48] [MacroBK] GUI helper call: gui thread=51908
+[15:32:48] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[15:32:48] [MacroBK] GUI helper call: gui thread=51908
+[15:32:49] [MacroBK] GUI helper call: gui thread=51908
+[15:32:49] [MacroBK] GUI helper call: gui thread=51908
+[15:32:50] [MacroBK] GUI helper call: gui thread=51908
+[15:32:50] [MacroBK] GUI helper call: gui thread=51908
+[15:32:51] [MacroBK] GUI helper call: gui thread=51908
+[15:32:52] [MacroBK] GUI helper call: gui thread=51908
+[15:32:53] [MacroBK] GUI helper call: gui thread=51908
+[15:32:54] [MacroBK] GUI helper call: gui thread=51908
+[15:32:54] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=2
+[15:32:56] [MacroBK] PCB FRAME CLOSE DETECTED service=0335aaa1848e epoch=1 thread=4876
+[15:32:56] [MacroBK] PCB FRAME DESTROY DETECTED service=0335aaa1848e epoch=1 thread=4876
+[15:32:56] [MacroBK] SERVICE SHUTDOWN START service=0335aaa1848e epoch=2 thread=4876
+[15:32:56] [MacroBK] PLUGIN REGISTRATION RELEASED service=0335aaa1848e epoch=2 thread=4876
+[15:32:56] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:32:56] [MacroBK] WORKERS STOP REQUESTED count=0 service=0335aaa1848e epoch=2 thread=4876
+[15:32:56] [MacroBK] UDP SOCKET CLOSED service=0335aaa1848e epoch=2 thread=4876
+[15:32:56] [MacroBK] UDP LISTENER STOP service=0335aaa1848e epoch=2 thread=45032
+[15:32:56] [MacroBK] SERVICE SHUTDOWN COMPLETE service=0335aaa1848e epoch=2 thread=4876
+[15:33:00] [MacroBK] UDP SOCKET CREATED service=0335aaa1848e epoch=3 thread=4876
+[15:33:00] [MacroBK] UDP LISTENER START service=0335aaa1848e epoch=3 thread=40216
+[15:33:00] [MacroBK] SERVICE START service=0335aaa1848e epoch=3 thread=4876
+[15:33:00] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=12328
+[15:33:01] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=0335aaa1848e epoch=3 thread=4876
+[15:33:11] [MacroBK] PHONE RX raw=b'TRIGGER|CTRL+SHIFT:F12' from=127.0.0.1:54156
+[15:33:11] [MacroBK] PHONE matched action_id=action-e17aa66b label='TEST' trigger=CTRL+SHIFT:F12
+[15:33:11] [MacroBK] ACTION START source=phone action=action-e17aa66b run_id=3 thread=44672
+[15:33:11] [MacroBK] GUI helper call: gui thread=44672
+[15:33:11] [MacroBK] PHONE worker start action_id=action-e17aa66b
+[15:33:11] [MacroBK] GUI helper call: gui thread=44672
+[15:33:12] [MacroBK] GUI helper call: gui thread=44672
+[15:33:12] [MacroBK] GUI helper call: gui thread=44672
+[15:33:13] [MacroBK] GUI helper call: gui thread=44672
+[15:33:13] [MacroBK] GUI helper call: gui thread=44672
+[15:33:14] [MacroBK] GUI helper call: gui thread=44672
+[15:33:15] [MacroBK] GUI helper call: gui thread=44672
+[15:33:16] [MacroBK] GUI helper call: gui thread=44672
+[15:33:17] [MacroBK] GUI helper call: gui thread=44672
+[15:33:17] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=3
+[15:33:26] [MacroBK] PCB FRAME CLOSE DETECTED service=0335aaa1848e epoch=3 thread=4876
+[15:33:26] [MacroBK] PCB FRAME DESTROY DETECTED service=0335aaa1848e epoch=3 thread=4876
+[15:33:26] [MacroBK] SERVICE SHUTDOWN START service=0335aaa1848e epoch=4 thread=4876
+[15:33:26] [MacroBK] PLUGIN REGISTRATION RELEASED service=0335aaa1848e epoch=4 thread=4876
+[15:33:26] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:33:26] [MacroBK] WORKERS STOP REQUESTED count=0 service=0335aaa1848e epoch=4 thread=4876
+[15:33:26] [MacroBK] UDP SOCKET CLOSED service=0335aaa1848e epoch=4 thread=4876
+[15:33:26] [MacroBK] UDP LISTENER STOP service=0335aaa1848e epoch=4 thread=40216
+[15:33:26] [MacroBK] SERVICE SHUTDOWN COMPLETE service=0335aaa1848e epoch=4 thread=4876
