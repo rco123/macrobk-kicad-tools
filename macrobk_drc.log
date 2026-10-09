@@ -131,3 +131,6 @@
 [08:44:30] [MacroBK] TEST RUN source=test
 [08:44:30] [MacroBK] stdout: hello
 [08:44:30] [MacroBK] SUCCESS source=test
+[09:01:26] [MacroBK] TEST RUN source=test
+[09:01:27] [MacroBK] stdout: hehhhhllo
+[09:01:27] [MacroBK] SUCCESS source=test
