@@ -199,37 +199,17 @@
 [09:57:44] [MacroBK] stdout: === searching Selection Filter ===
 [09:57:44] [MacroBK] SUCCESS source=test
 [10:05:22] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
-[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=ALT+CTRL+SHIFT+WIN:A,B,C,F2
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hello
-[10:56:26] [MacroBK] SUCCESS source=phone
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hello
-[10:56:26] [MacroBK] SUCCESS source=phone
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hello
-[10:56:26] [MacroBK] SUCCESS source=phone
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hello
-[10:56:26] [MacroBK] SUCCESS source=phone
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hehhhhllo
-[10:56:26] [MacroBK] SUCCESS source=phone
-[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
-[10:56:26] [MacroBK] ACTION START source=phone
-[10:56:26] [MacroBK] stdout: hello
-[10:56:26] [MacroBK] SUCCESS source=phone
+[11:00:57] [MacroBK] plugin bridge starting
+[11:00:57] [MacroBK] RegisterHotKey skipped shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2 reason=multi-key phone-trigger
+[11:00:57] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=ALT+CTRL+SHIFT+WIN:A,B,C,F2
+[11:01:02] [MacroBK] Plugin Manager opened
+[11:01:58] [MacroBK] TEST RUN source=test
+[11:02:43] [MacroBK] TEST RUN source=test
+[11:03:05] [MacroBK] TEST RUN source=test
+[11:04:02] [MacroBK] TEST RUN source=test
+[11:04:15] [MacroBK] TEST RUN source=test
+[11:05:01] [MacroBK] TEST RUN source=test
+[11:05:18] [MacroBK] TEST RUN source=test
+[11:05:32] [MacroBK] TEST RUN source=test
+[11:06:36] [MacroBK] TEST RUN source=test
+[11:29:13] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
