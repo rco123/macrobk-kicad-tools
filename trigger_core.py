@@ -810,9 +810,64 @@ def handle_trigger(source):
     execute_python_script(script, source, action_id)
 
 
+def parse_phone_packet(data):
+    """Extract the canonical ID from a Studio TRIGGER datagram."""
+    try:
+        command = data.decode("utf-8") if isinstance(data, bytes) else str(data)
+    except UnicodeDecodeError:
+        return None
+    command = command.strip()
+    if not command.startswith("TRIGGER|"):
+        return None
+    received = command.split("|", 1)[1].strip()
+    return received or None
+
+
+def find_action_by_trigger(received_trigger):
+    """Find the first enabled registered Action, independently of UI selection.
+
+    Duplicate triggers use config order and warn in the file log. Returning a
+    copy prevents subsequent UI edits from changing the chosen run's script.
+    """
+    matches = []
+    for action in CONFIG.get("actions", []):
+        if not isinstance(action, dict):
+            continue
+        trigger = action.get("trigger")
+        if not isinstance(trigger, dict) or not trigger.get("enabled", True):
+            continue
+        if trigger_id(trigger) == received_trigger:
+            matches.append(action)
+    if not matches:
+        return None
+    if len(matches) > 1:
+        log("PHONE duplicate trigger={} actions={} policy=first-match".format(
+            received_trigger, [action.get("id") for action in matches]))
+    return copy.deepcopy(matches[0])
+
+
+def handle_phone_trigger(received):
+    """GUI callback: resolve the incoming ID against current registered Actions."""
+    manager = _manager_provider()
+    if manager is not None:
+        manager.blink_input_signal("phone")
+    action = find_action_by_trigger(received)
+    if action is None:
+        log("PHONE no matching action trigger={}".format(received))
+        return False
+    action_id = str(action["id"])
+    script = str(action.get("action", {}).get("script", ""))
+    debug = _script_debug_enabled(script)
+    debug_log("PHONE matched action_id={} label={!r} trigger={}".format(
+        action_id, action.get("name", action.get("label", "")), received), debug)
+    started = execute_python_script(script, source="phone", action_id=action_id)
+    debug_log("PHONE worker {} action_id={}".format(
+        "start" if started else "rejected", action_id), debug)
+    return started
+
+
 def udp_worker():
-    # Do not cache the expected trigger here.
-    # Trigger changes made with Register/Save must take effect immediately.
+    # Resolve each received ID on the GUI thread against all current Actions.
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 
     # Multiple applications/plugins must be able to listen on the same multicast port.
@@ -829,11 +884,11 @@ def udp_worker():
         sock.settimeout(0.5)
         set_phone_status("Ready")
         log(
-            "UDP multicast ready group={}:{} interface={} trigger={}".format(
+            "UDP multicast ready group={}:{} interface={} actions={}".format(
                 LOCAL_TRIGGER_GROUP,
                 LOCAL_TRIGGER_PORT,
                 LOCAL_TRIGGER_INTERFACE,
-                trigger_id(CONFIG.get("trigger", {})),
+                len(CONFIG.get("actions", [])),
             )
         )
     except Exception as exc:
@@ -859,30 +914,15 @@ def udp_worker():
             set_phone_status("Port Error")
             break
 
-        command = data.decode("utf-8", errors="ignore").strip()
-        if not command.startswith("TRIGGER|"):
-            log("ignored UDP command: " + repr(command))
+        log("PHONE RX raw={!r} from={}:{}".format(data, address[0], address[1]))
+        received = parse_phone_packet(data)
+        if received is None:
+            log("ignored UDP command: {!r}".format(data))
             continue
-
-        received = command.split("|", 1)[1].strip()
-
-        # Re-read the current trigger for every UDP packet.
-        # This avoids stale comparisons after Register/Save changes.
-        expected = trigger_id(CONFIG.get("trigger", {}))
-
-        if received == expected:
-            log(
-                "trigger received source=phone udp={} from={}:{}".format(
-                    received, address[0], address[1]
-                )
-            )
-            wx.CallAfter(handle_trigger, "phone")
-        else:
-            log(
-                "ignored UDP trigger received={} expected={}".format(
-                    received, expected
-                )
-            )
+        log("PHONE trigger={}".format(received))
+        log("trigger received source=phone udp={} from={}:{}".format(
+            received, address[0], address[1]))
+        wx.CallAfter(handle_phone_trigger, received)
 
     sock.close()
 
@@ -895,7 +935,8 @@ def start_bridge():
         return True
 
     _started = True
-    log("plugin bridge starting")
+    log("plugin bridge starting version=worker-phone-all-actions-v1 pid={} path={}".format(
+        os.getpid(), PLUGIN_DIR))
 
     try:
         start_hotkey_listener()

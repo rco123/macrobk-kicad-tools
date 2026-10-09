@@ -5,6 +5,13 @@ same engine. No MODE setting or automatic script classification is used.
 Restart PCB Editor after manually updating plugin sources; Refresh Plugins
 does not reload live engine/Manager modules or abandon existing workers.
 
+Phone UDP packets (`TRIGGER|CTRL+SHIFT:F12`) search all enabled registered
+Actions by canonical trigger, regardless of the Action selected for editing.
+Duplicate triggers execute the first enabled match in config order and log a
+warning. Keyboard registration continues using its existing selected-Action
+path. PHONE RX/match/no-match diagnostics go to the file log; matched scripts
+with `DEBUG=True` also display match/worker diagnostics in Result.
+
 ## Examples
 
 ```python
