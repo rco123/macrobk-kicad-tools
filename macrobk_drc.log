@@ -7498,3 +7498,88 @@ from=127.0.0.1:54156
 [15:33:26] [MacroBK] UDP SOCKET CLOSED service=0335aaa1848e epoch=4 thread=4876
 [15:33:26] [MacroBK] UDP LISTENER STOP service=0335aaa1848e epoch=4 thread=40216
 [15:33:26] [MacroBK] SERVICE SHUTDOWN COMPLETE service=0335aaa1848e epoch=4 thread=4876
+[15:35:14] [MacroBK] UDP SOCKET CREATED service=e7edd7adc62b epoch=1 thread=29000
+[15:35:14] [MacroBK] UDP LISTENER START service=e7edd7adc62b epoch=1 thread=34088
+[15:35:14] [MacroBK] SERVICE START service=e7edd7adc62b epoch=1 thread=29000
+[15:35:14] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=8928
+[15:35:15] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=e7edd7adc62b epoch=1 thread=29000
+[15:37:17] [MacroBK] MANAGER OPEN
+[15:37:36] [MacroBK] ACTION START source=test action=action-6ce5eb21 run_id=1 thread=7540
+[15:37:36] [MacroBK] SUCCESS source=test action=action-6ce5eb21 run_id=1
+[15:38:01] [MacroBK] ACTION START source=test action=action-6ce5eb21 run_id=2 thread=9108
+[15:38:01] [MacroBK] SUCCESS source=test action=action-6ce5eb21 run_id=2
+[15:38:14] [MacroBK] ACTION START source=test action=action-6ce5eb21 run_id=3 thread=48992
+[15:38:14] [MacroBK] GUI helper call: gui thread=48992
+[15:38:14] [MacroBK] SUCCESS source=test action=action-6ce5eb21 run_id=3
+[15:50:25] [MacroBK] MANAGER CLOSE
+[15:50:35] [MacroBK] PCB FRAME CLOSE DETECTED service=e7edd7adc62b epoch=1 thread=29000
+[15:50:35] [MacroBK] PCB FRAME DESTROY DETECTED service=e7edd7adc62b epoch=1 thread=29000
+[15:50:35] [MacroBK] SERVICE SHUTDOWN START service=e7edd7adc62b epoch=2 thread=29000
+[15:50:35] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[15:50:35] [MacroBK] PLUGIN REGISTRATION RELEASED service=e7edd7adc62b epoch=2 thread=29000
+[15:50:35] [MacroBK] WORKERS STOP REQUESTED count=0 service=e7edd7adc62b epoch=2 thread=29000
+[15:50:35] [MacroBK] UDP LISTENER STOP service=e7edd7adc62b epoch=2 thread=34088
+[15:50:35] [MacroBK] UDP SOCKET CLOSED service=e7edd7adc62b epoch=2 thread=29000
+[15:50:35] [MacroBK] SERVICE SHUTDOWN COMPLETE service=e7edd7adc62b epoch=2 thread=29000
+[22:20:50] [MacroBK] UDP SOCKET CREATED service=904c483bd465 epoch=1 thread=9464
+[22:20:50] [MacroBK] UDP LISTENER START service=904c483bd465 epoch=1 thread=51812
+[22:20:50] [MacroBK] SERVICE START service=904c483bd465 epoch=1 thread=9464
+[22:20:50] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=39224
+[22:20:51] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=904c483bd465 epoch=1 thread=9464
+[22:24:36] [MacroBK] MANAGER OPEN
+[22:53:28] [MacroBK] PCB FRAME CLOSE DETECTED service=904c483bd465 epoch=1 thread=9464
+[22:53:28] [MacroBK] PCB FRAME DESTROY DETECTED service=904c483bd465 epoch=1 thread=9464
+[22:53:28] [MacroBK] SERVICE SHUTDOWN START service=904c483bd465 epoch=2 thread=9464
+[22:53:28] [MacroBK] PLUGIN REGISTRATION RELEASED service=904c483bd465 epoch=2 thread=9464
+[22:53:28] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[22:53:29] [MacroBK] WORKERS STOP REQUESTED count=0 service=904c483bd465 epoch=2 thread=9464
+[22:53:29] [MacroBK] UDP LISTENER STOP service=904c483bd465 epoch=2 thread=51812
+[22:53:29] [MacroBK] UDP SOCKET CLOSED service=904c483bd465 epoch=2 thread=9464
+[22:53:29] [MacroBK] SERVICE SHUTDOWN COMPLETE service=904c483bd465 epoch=2 thread=9464
+[22:53:33] [MacroBK] UDP SOCKET CREATED service=904c483bd465 epoch=3 thread=9464
+[22:53:33] [MacroBK] UDP LISTENER START service=904c483bd465 epoch=3 thread=6028
+[22:53:33] [MacroBK] SERVICE START service=904c483bd465 epoch=3 thread=9464
+[22:53:33] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=51160
+[22:53:33] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=904c483bd465 epoch=3 thread=9464
+[22:53:47] [MacroBK] MANAGER OPEN
+[22:55:13] [MacroBK] ACTION START source=test action=action-a54e0a8b run_id=1 thread=14112
+[22:55:13] [MacroBK] ERROR source=test action=action-a54e0a8b run_id=1
+[22:57:25] [MacroBK] PCB FRAME CLOSE DETECTED service=904c483bd465 epoch=3 thread=9464
+[22:57:25] [MacroBK] PCB FRAME DESTROY DETECTED service=904c483bd465 epoch=3 thread=9464
+[22:57:25] [MacroBK] SERVICE SHUTDOWN START service=904c483bd465 epoch=4 thread=9464
+[22:57:25] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[22:57:25] [MacroBK] PLUGIN REGISTRATION RELEASED service=904c483bd465 epoch=4 thread=9464
+[22:57:25] [MacroBK] WORKERS STOP REQUESTED count=0 service=904c483bd465 epoch=4 thread=9464
+[22:57:25] [MacroBK] UDP LISTENER STOP service=904c483bd465 epoch=4 thread=6028
+[22:57:25] [MacroBK] UDP SOCKET CLOSED service=904c483bd465 epoch=4 thread=9464
+[22:57:25] [MacroBK] SERVICE SHUTDOWN COMPLETE service=904c483bd465 epoch=4 thread=9464
+[22:57:44] [MacroBK] UDP SOCKET CREATED service=9e40e0cdc2c2 epoch=1 thread=46336
+[22:57:44] [MacroBK] UDP LISTENER START service=9e40e0cdc2c2 epoch=1 thread=51252
+[22:57:44] [MacroBK] SERVICE START service=9e40e0cdc2c2 epoch=1 thread=46336
+[22:57:44] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=23148
+[22:57:45] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=9e40e0cdc2c2 epoch=1 thread=46336
+[22:57:51] [MacroBK] MANAGER OPEN
+[22:58:16] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[22:58:16] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[22:58:16] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=45068
+[22:58:17] [MacroBK] ACTION START source=test action=action-27f33157 run_id=1 thread=51024
+[22:58:17] [MacroBK] GUI helper call: gui thread=51024
+[22:58:18] [MacroBK] GUI helper call: gui thread=51024
+[22:58:18] [MacroBK] GUI helper call: gui thread=51024
+[22:58:19] [MacroBK] GUI helper call: gui thread=51024
+[22:58:19] [MacroBK] GUI helper call: gui thread=51024
+[22:58:20] [MacroBK] GUI helper call: gui thread=51024
+[22:58:20] [MacroBK] GUI helper call: gui thread=51024
+[22:58:21] [MacroBK] GUI helper call: gui thread=51024
+[22:58:21] [MacroBK] SUCCESS source=test action=action-27f33157 run_id=1
+[22:58:26] [MacroBK] ACTION START source=test action=action-27f33157 run_id=2 thread=18580
+[22:58:26] [MacroBK] GUI helper call: gui thread=18580
+[22:58:26] [MacroBK] GUI helper call: gui thread=18580
+[22:58:27] [MacroBK] GUI helper call: gui thread=18580
+[22:58:27] [MacroBK] GUI helper call: gui thread=18580
+[22:58:28] [MacroBK] GUI helper call: gui thread=18580
+[22:58:28] [MacroBK] GUI helper call: gui thread=18580
+[22:58:29] [MacroBK] GUI helper call: gui thread=18580
+[22:58:29] [MacroBK] GUI helper call: gui thread=18580
+[22:58:30] [MacroBK] SUCCESS source=test action=action-27f33157 run_id=2
+[23:24:20] [MacroBK] MANAGER CLOSE

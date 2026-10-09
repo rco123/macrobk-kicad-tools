@@ -1,11 +1,11 @@
 {
-  "name": "TEST",
+  "name": "New Action",
   "trigger": {
     "enabled": true,
     "ctrl": true,
-    "win": false,
+    "win": true,
     "alt": false,
-    "shift": true,
+    "shift": false,
     "key": "F12",
     "keys": [
       "F12"
@@ -18,7 +18,7 @@
   },
   "action": {
     "type": "python",
-    "script": "import time\r\n\r\nprint(\"=== Selection Filter Test Start ===\")\r\n\r\n# 현재 상태 출력\r\nstate = pcb_select_filter_state()\r\nprint(\"현재 상태:\")\r\nprint(state)\r\n\r\n# Tracks 선택\r\nprint(\"\\n[TEST] Tracks ON\")\r\npcb_select_filter(\"Tracks\", True)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Tracks 해제\r\nprint(\"\\n[TEST] Tracks OFF\")\r\npcb_select_filter(\"Tracks\", False)\r\ntime.sleep(1)\r\n\r\nprint(\"Tracks =\", pcb_select_filter(\"Tracks\"))\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", True)\r\ntime.sleep(1)\r\n\r\n# Vias 선택\r\nprint(\"\\n[TEST] Vias ON\")\r\npcb_select_filter(\"Vias\", False)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", True)\r\ntime.sleep(1)\r\n\r\n\r\n# Pads 선택\r\nprint(\"\\n[TEST] Pads ON\")\r\npcb_select_filter(\"Pads\", False)\r\ntime.sleep(1)\r\n\r\n\r\n\r\n# 최종 상태\r\nprint(\"\\n최종 상태:\")\r\nprint(pcb_select_filter_state())\r\n\r\nprint(\"=== Selection Filter Test End ===\")"
+    "script": "# Enter KiCad Python here\nimport time\r\n\r\nprint(\"=== Layer Function Test Start ===\")\r\n\r\nprint(\"1. Select F.Cu\")\r\npcb_select_layer(\"F.Cu\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"2. Select B.Adhesive\")\r\npcb_select_layer(\"B.Adhesive\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"3. Select Edge.Cuts\")\r\npcb_select_layer(\"Edge.Cuts\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"4. Read B.Adhesive visibility\")\r\nstate = pcb_onoff_layer(\"B.Adhesive\")\r\nprint(\"B.Adhesive visible =\", state)\r\ntime.sleep(0.5)\r\n\r\nprint(\"5. B.Adhesive OFF\")\r\npcb_onoff_layer(\"B.Adhesive\", False)\r\ntime.sleep(0.5)\r\n\r\nprint(\"6. Read B.Adhesive visibility\")\r\nprint(\"B.Adhesive visible =\", pcb_onoff_layer(\"B.Adhesive\"))\r\ntime.sleep(0.5)\r\n\r\nprint(\"7. B.Adhesive ON\")\r\npcb_onoff_layer(\"B.Adhesive\", True)\r\ntime.sleep(0.5)\r\n\r\nprint(\"8. Read B.Adhesive visibility\")\r\nprint(\"B.Adhesive visible =\", pcb_onoff_layer(\"B.Adhesive\"))\r\ntime.sleep(0.5)\r\n\r\nprint(\"=== Layer Function Test End ===\")"
   },
   "actions": [
     {
@@ -73,7 +73,32 @@
         "type": "python",
         "script": "print(\r\n    pcb_select_filter_state()\r\n)"
       }
+    },
+    {
+      "id": "action-27f33157",
+      "name": "New Action",
+      "icon": "execute",
+      "trigger": {
+        "enabled": true,
+        "ctrl": true,
+        "win": true,
+        "alt": false,
+        "shift": false,
+        "key": "F12",
+        "keys": [
+          "F12"
+        ]
+      },
+      "phone": {
+        "host": "127.0.0.1",
+        "port": 47831,
+        "command": "KICAD_DRC"
+      },
+      "action": {
+        "type": "python",
+        "script": "# Enter KiCad Python here\nimport time\r\n\r\nprint(\"=== Layer Function Test Start ===\")\r\n\r\nprint(\"1. Select F.Cu\")\r\npcb_select_layer(\"F.Cu\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"2. Select B.Adhesive\")\r\npcb_select_layer(\"B.Adhesive\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"3. Select Edge.Cuts\")\r\npcb_select_layer(\"Edge.Cuts\")\r\ntime.sleep(0.5)\r\n\r\nprint(\"4. Read B.Adhesive visibility\")\r\nstate = pcb_onoff_layer(\"B.Adhesive\")\r\nprint(\"B.Adhesive visible =\", state)\r\ntime.sleep(0.5)\r\n\r\nprint(\"5. B.Adhesive OFF\")\r\npcb_onoff_layer(\"B.Adhesive\", False)\r\ntime.sleep(0.5)\r\n\r\nprint(\"6. Read B.Adhesive visibility\")\r\nprint(\"B.Adhesive visible =\", pcb_onoff_layer(\"B.Adhesive\"))\r\ntime.sleep(0.5)\r\n\r\nprint(\"7. B.Adhesive ON\")\r\npcb_onoff_layer(\"B.Adhesive\", True)\r\ntime.sleep(0.5)\r\n\r\nprint(\"8. Read B.Adhesive visibility\")\r\nprint(\"B.Adhesive visible =\", pcb_onoff_layer(\"B.Adhesive\"))\r\ntime.sleep(0.5)\r\n\r\nprint(\"=== Layer Function Test End ===\")"
+      }
     }
   ],
-  "selected_action_id": "action-e17aa66b"
+  "selected_action_id": "action-27f33157"
 }
