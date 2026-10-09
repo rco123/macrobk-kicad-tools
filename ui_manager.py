@@ -268,13 +268,18 @@ class MacroBKPluginManager(wx.Frame):
         )
 
         execute_controls = wx.BoxSizer(wx.HORIZONTAL)
-        test_button = style_button(
+        self.test_button = style_button(
             wx.Button(execute_panel, label="Run Test"),
             "play",
             120,
         )
-        test_button.Bind(wx.EVT_BUTTON, self.on_test_run)
-        test_button.SetDefault()
+        self.test_button.Bind(wx.EVT_BUTTON, self.on_test_run)
+        self.test_button.SetDefault()
+
+        self.stop_button = wx.Button(execute_panel, label="Stop")
+        self.stop_button.SetMinSize((84, 32))
+        self.stop_button.Enable(False)
+        self.stop_button.Bind(wx.EVT_BUTTON, self.on_stop_test)
 
         self.test_status_icon = wx.StaticBitmap(
             execute_panel,
@@ -285,7 +290,8 @@ class MacroBKPluginManager(wx.Frame):
         status_font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.test_status_label.SetFont(status_font)
 
-        execute_controls.Add(test_button, 0, wx.RIGHT, 14)
+        execute_controls.Add(self.test_button, 0, wx.RIGHT, 8)
+        execute_controls.Add(self.stop_button, 0, wx.RIGHT, 14)
         execute_controls.Add(
             self.test_status_icon,
             0,
@@ -394,7 +400,7 @@ class MacroBKPluginManager(wx.Frame):
         )
         self.action_list.Select(self.selected_index)
         self.load_action(self.selected_index)
-        self.load_file_log()
+        # Result shows only current script output/errors. Internal diagnostics stay in the log file.
         self.update_status_bar()
 
     def create_monitor_row(self, parent, sizer, icon_name, label, status):
@@ -587,15 +593,25 @@ class MacroBKPluginManager(wx.Frame):
         self.set_led_colour(self.phone_led, status)
         self.update_status_bar()
 
-    def set_test_status(self, status):
+    def set_test_status(self, status, stoppable=True):
         label = str(status)
         self.test_status_label.SetLabel(label)
+
+        running = label in ("RUNNING", "STOPPING")
+        if hasattr(self, "test_button"):
+            self.test_button.Enable(not running)
+        if hasattr(self, "stop_button"):
+            self.stop_button.Enable(label == "RUNNING" and bool(stoppable))
+
         if label == "SUCCESS":
             self.test_status_icon.SetBitmap(icon_bitmap("success", 18))
             self.test_status_label.SetForegroundColour(wx.Colour(39, 174, 96))
         elif label == "ERROR":
             self.test_status_icon.SetBitmap(icon_bitmap("error", 18))
             self.test_status_label.SetForegroundColour(wx.Colour(192, 57, 43))
+        elif label == "STOPPED":
+            self.test_status_icon.SetBitmap(icon_bitmap("execute", 18))
+            self.test_status_label.SetForegroundColour(system_colour(wx.SYS_COLOUR_WINDOWTEXT))
         else:
             self.test_status_icon.SetBitmap(icon_bitmap("execute", 18))
             self.test_status_label.SetForegroundColour(system_colour(wx.SYS_COLOUR_WINDOWTEXT))
@@ -671,7 +687,17 @@ class MacroBKPluginManager(wx.Frame):
             self.show_result_tab()
 
     def on_test_run(self, _event):
-        core.execute_python_script(self.script_text.GetValue(), "test")
+        action_id = self.actions[self.selected_index]["id"] if self.actions else "test"
+        core.execute_python_script(
+            self.script_text.GetValue(),
+            "test",
+            action_id,
+        )
+
+    def on_stop_test(self, _event):
+        action_id = self.actions[self.selected_index]["id"] if self.actions else "test"
+        if core.stop_action(action_id, "test"):
+            self.set_test_status("STOPPING")
 
     def on_save(self, _event):
         try:

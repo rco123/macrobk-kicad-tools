@@ -57,3 +57,36 @@ Enter `open_drc_window()` in Execute and click `Run Test`.
 The DRC dialog must open and Test Status must show `SUCCESS`.
 
 Log file: `macrobk_drc.log`
+
+## Script execution mode (2026-10-09)
+
+Default mode is GUI for backward compatibility with direct `wx` / `pcbnew` code.
+
+```python
+print("GUI mode")
+```
+
+Long-running actions must opt in to the worker thread explicitly:
+
+```python
+MODE = "WORKER"
+import time
+print("A")
+time.sleep(0.5)
+print("B")
+```
+
+For a Stop button that wakes immediately during a delay, use:
+
+```python
+MODE = "WORKER"
+print("waiting")
+if wait_or_stop(5):
+    print("stop requested")
+```
+
+`DEBUG = True` shows internal MacroBK execution diagnostics in Result. Without it,
+Result shows user `print()` output and errors only.
+
+WORKER mode should use MacroBK GUI helpers such as `pcb_select_filter()` and
+`open_menu()` rather than direct wx/pcbnew object traversal.
