@@ -285,7 +285,7 @@ class MacroBKPluginManager(wx.Frame):
             execute_panel,
             bitmap=icon_bitmap("execute", 18),
         )
-        self.test_status_label = wx.StaticText(execute_panel, label="READY")
+        self.test_status_label = wx.StaticText(execute_panel, label="IDLE")
         status_font = self.test_status_label.GetFont()
         status_font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.test_status_label.SetFont(status_font)
@@ -686,17 +686,26 @@ class MacroBKPluginManager(wx.Frame):
             core.log("Register error: " + str(exc))
             self.show_result_tab()
 
+    def begin_test_run(self, action_id, run_id):
+        self.running_test_action_id = action_id
+        self.running_test_run_id = run_id
+        self.set_test_status("RUNNING")
+
+    def finish_test_run(self, action_id, run_id, status):
+        if (getattr(self, "running_test_action_id", None),
+                getattr(self, "running_test_run_id", None)) != (action_id, run_id):
+            return
+        self.set_test_status(status)
+        self.running_test_action_id = None
+
     def on_test_run(self, _event):
+        core.bind_gui_thread()
         action_id = self.actions[self.selected_index]["id"] if self.actions else "test"
-        core.execute_python_script(
-            self.script_text.GetValue(),
-            "test",
-            action_id,
-        )
+        core.execute_python_script(self.script_text.GetValue(), "test", action_id)
 
     def on_stop_test(self, _event):
-        action_id = self.actions[self.selected_index]["id"] if self.actions else "test"
-        if core.stop_action(action_id, "test"):
+        action_id = getattr(self, "running_test_action_id", None)
+        if action_id is not None and core.stop_action(action_id, "test", getattr(self, "running_test_run_id", None)):
             self.set_test_status("STOPPING")
 
     def on_save(self, _event):
@@ -726,6 +735,9 @@ class MacroBKPluginManager(wx.Frame):
 
     def on_close(self, event):
         global _manager_frame
+        action_id = getattr(self, "running_test_action_id", None)
+        if action_id is not None:
+            core.stop_action(action_id, "test")
         try:
             self.apply_selected_to_config()
             core.save_config()
@@ -740,6 +752,7 @@ class MacroBKPluginManager(wx.Frame):
 
 
 def show_manager():
+    core.bind_gui_thread()
     global _manager_frame
     if (
         _manager_frame is not None

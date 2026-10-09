@@ -190,7 +190,7 @@ def open_menu(menu_path):
         log("menu path not found: {!r}".format(menu_path))
         return False
     log("menu path found: {!r}, id={}".format(path, item.GetId()))
-    return dispatch_menu_command(owner_menu, item)
+    return dispatch_menu_command(owner_menu, item, _frame)
 
 
 def _log_preferences_direct_children(baseline_windows, attempts=12):
@@ -414,6 +414,8 @@ def get_pcb_selection_filter_panel():
     """
     for window in wx.GetTopLevelWindows():
         try:
+            if window.IsBeingDeleted():
+                continue
             title = str(window.GetTitle())
         except Exception:
             continue
@@ -565,13 +567,14 @@ def find_drc_command():
     return None, None, None, None
 
 
-def dispatch_menu_command(owner_menu, item):
+def dispatch_menu_command(owner_menu, item, frame=None):
     cmd_id = item.GetId()
     try:
         if hasattr(owner_menu, "SendEvent"):
             result = owner_menu.SendEvent(cmd_id)
             log("menu.SendEvent({}) -> {}".format(cmd_id, repr(result)))
-            return bool(result) or result is None
+            if bool(result) or result is None:
+                return True
     except Exception as exc:
         log("menu.SendEvent error: " + repr(exc))
 
@@ -581,9 +584,14 @@ def dispatch_menu_command(owner_menu, item):
         if hasattr(owner_menu, "ProcessEvent"):
             result = owner_menu.ProcessEvent(event)
             log("menu.ProcessEvent -> " + repr(result))
-            return bool(result)
+            if result:
+                return True
     except Exception as exc:
         log("menu.ProcessEvent error: " + repr(exc))
+    if frame is not None:
+        event = wx.CommandEvent(wx.wxEVT_COMMAND_MENU_SELECTED, cmd_id)
+        event.SetEventObject(frame)
+        return bool(frame.GetEventHandler().ProcessEvent(event))
     return False
 
 
@@ -601,7 +609,7 @@ def open_drc_window(source="unknown", show_error=True):
                 )
             return False
 
-        ok = dispatch_menu_command(owner_menu, item)
+        ok = dispatch_menu_command(owner_menu, item, _frame)
         log("request source={} id={} result={}".format(source, item.GetId(), ok))
         if not ok and show_error:
             wx.MessageBox(

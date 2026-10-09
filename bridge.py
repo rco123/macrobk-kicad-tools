@@ -1,4 +1,3 @@
-import importlib
 import traceback
 
 import pcbnew
@@ -32,10 +31,9 @@ def start_bridge():
             return False
 
     try:
-        # KiCad's "Refresh Plugins" does not reliably remove already imported
-        # Python modules from sys.modules. Reload this split module explicitly
-        # so a replaced trigger_core.py is actually read from disk.
-        trigger_core = importlib.reload(trigger_core)
+        # Bind at the plugin GUI entry point. Do not reload live worker/service
+        # modules: restarting PCB Editor applies a new source generation.
+        trigger_core.bind_gui_thread()
         trigger_core.start_bridge()
         return True
     except Exception as exc:
@@ -55,16 +53,8 @@ def show_manager():
             return False
 
     try:
-        # Reload the split UI module for the same reason as trigger_core above.
-        # This is useful while iterating with KiCad's Refresh Plugins command.
-        try:
-            if _show_manager.__module__.startswith("macrobk_drc_bridge."):
-                module = importlib.import_module(_show_manager.__module__)
-                module = importlib.reload(module)
-                _show_manager = module.show_manager
-        except Exception:
-            pass
-
+        # Keep the existing engine/Manager generation together. Apply source
+        # updates by restarting PCB Editor rather than reloading live workers.
         _show_manager()
         return True
     except Exception as exc:

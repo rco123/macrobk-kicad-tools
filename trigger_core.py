@@ -9,6 +9,9 @@ import os
 import socket
 import sys
 import threading
+import time
+import itertools
+import uuid
 import traceback
 
 import pcbnew
@@ -67,6 +70,12 @@ _log_lock = threading.Lock()
 _manager_provider = lambda: None
 _action_workers = {}
 _action_workers_lock = threading.Lock()
+_run_counter = itertools.count(1)
+_latest_runs = {}
+_context = threading.local()
+_gui_thread_id = None
+_engine_generation = uuid.uuid4().hex
+_service_stop = threading.Event()
 
 
 class ActionStopped(Exception):
@@ -88,31 +97,87 @@ def _default_config_copy():
     return json.loads(json.dumps(DEFAULT_CONFIG))
 
 
-def _is_gui_thread():
-    """Return True when executing on KiCad's primary Python/GUI thread.
+def bind_gui_thread():
+    """Bind at a known wx event/Manager entry point, never from a worker."""
+    global _gui_thread_id
+    _gui_thread_id = threading.get_ident()
 
-    wx.IsMainThread() is not reliable in every embedded KiCad/wxPython build,
-    so also use Python's main-thread identity.  This avoids posting a
-    CallAfter to ourselves and then waiting for it (GUI deadlock).
-    """
-    if threading.current_thread() is threading.main_thread():
-        return True
+
+def _is_gui_thread():
+    if _gui_thread_id is not None:
+        return threading.get_ident() == _gui_thread_id
+    return bool(wx.IsMainThread())
+
+
+def _check_stop():
+    event = getattr(_context, "stop_event", None)
+    if event is not None and event.is_set():
+        raise ActionStopped()
+
+
+def call_gui_async(function, *args, **kwargs):
+    generation = _engine_generation
+    def invoke():
+        if generation != _engine_generation:
+            return
+        try:
+            function(*args, **kwargs)
+        except BaseException:
+            log(traceback.format_exc())
+    if _is_gui_thread():
+        invoke()
+    else:
+        wx.CallAfter(invoke)
+
+
+def call_gui_sync(function, *args, timeout=10.0, **kwargs):
+    """GUI result transport with bounded, cooperative waiting."""
+    _check_stop()
+    debug_log("GUI helper call: {} thread={}".format(
+        getattr(function, "__name__", "callback"), threading.get_ident()),
+        getattr(_context, "debug", False))
+    if _is_gui_thread():
+        return function(*args, **kwargs)
+    done = threading.Event()
+    cancelled = threading.Event()
+    box = {}
+    stop_event = getattr(_context, "stop_event", None)
+    generation = _engine_generation
+    def invoke():
+        try:
+            if cancelled.is_set() or generation != _engine_generation:
+                return
+            if stop_event is not None and stop_event.is_set():
+                return
+            box["result"] = function(*args, **kwargs)
+        except BaseException as exc:
+            box["error"] = exc
+        finally:
+            done.set()
+    wx.CallAfter(invoke)
+    deadline = time.monotonic() + timeout
     try:
-        return bool(wx.IsMainThread())
-    except Exception:
-        return False
+        while not done.wait(0.05):
+            _check_stop()
+            if time.monotonic() >= deadline:
+                raise TimeoutError("GUI helper timed out after {} seconds".format(timeout))
+        _check_stop()
+        if "error" in box:
+            raise box["error"]
+        return box.get("result")
+    except BaseException:
+        cancelled.set()
+        raise
 
 
 def _append_result(line):
-    manager = _manager_provider()
-    if manager is not None:
-        try:
-            if _is_gui_thread():
-                manager.append_result(str(line))
-            else:
-                wx.CallAfter(manager.append_result, str(line))
-        except Exception:
-            pass
+    manager = getattr(_context, "manager", None) or _manager_provider()
+    if manager is None:
+        return
+    def append():
+        if _manager_provider() is manager and bool(manager):
+            manager.append_result(str(line))
+    call_gui_async(append)
 
 
 def log(message):
@@ -175,174 +240,17 @@ def _script_debug_enabled(script):
 
 
 
-def _script_execution_mode(script):
-    """Return explicit script execution mode. Default is GUI for compatibility.
-
-    Supported top-level literals:
-        MODE = "GUI"      # default, full wx/pcbnew compatibility
-        MODE = "WORKER"   # background thread; use GUI helper APIs only
-
-    EXECUTION_MODE is accepted as an alias.  No automatic wx/AST guessing is
-    performed because aliases, dynamic imports and generators make that
-    classification unreliable.
-    """
-    try:
-        tree = ast.parse(str(script), mode="exec")
-    except Exception:
-        return "GUI"
-
-    for node in tree.body:
-        if not isinstance(node, (ast.Assign, ast.AnnAssign)):
-            continue
-
-        if isinstance(node, ast.Assign):
-            targets = node.targets
-            value = node.value
-        else:
-            targets = [node.target]
-            value = node.value
-
-        if not isinstance(value, ast.Constant) or not isinstance(value.value, str):
-            continue
-
-        for target in targets:
-            if isinstance(target, ast.Name) and target.id in ("MODE", "EXECUTION_MODE"):
-                mode = value.value.strip().upper()
-                if mode in ("GUI", "WORKER"):
-                    return mode
-    return "GUI"
-
-
-def _legacy_script_namespace(debug=False):
-    """Namespace used by legacy/main-thread scripts."""
-    return {
-        "__builtins__": __builtins__,
-        "print": _script_print,
-        "DEBUG": debug,
-        "open_drc_window": lambda: kc.open_drc_window("script", False),
-        "open_menu": kc.open_menu,
-        "iter_controls": kc.iter_controls,
-        "find_controls": kc.find_controls,
-        "find_control": kc.find_control,
-        "get_control_info": kc.get_control_info,
-        "get_control_value": kc.get_control_value,
-        "set_control_value": kc.set_control_value,
-        "get_pcb_selection_filter_panel": kc.get_pcb_selection_filter_panel,
-        "pcb_select_filter": kc.pcb_select_filter,
-        "pcb_select_filter_state": kc.pcb_select_filter_state,
-        "test_preferences_direct_children": kc.test_preferences_direct_children,
-        "test_preferences_control_tree": kc.test_preferences_control_tree,
-        "test_preferences_checkbox_value": kc.test_preferences_checkbox_value,
-        "test_preferences_checkbox_toggle_restore": kc.test_preferences_checkbox_toggle_restore,
-        "pcbnew": pcbnew,
-        "wx": wx,
-    }
-
-
-def _execute_python_script_ui(script, source, action_id, debug):
-    """Execute a script synchronously on KiCad's GUI thread.
-
-    GUI is the compatibility/default mode.  It may use raw wx/pcbnew objects.
-    Long sleeps or loops will block the KiCad UI and cannot be stopped from the
-    Manager while blocked; use MODE = "WORKER" for long-running actions.
-    """
-    key = _worker_key(action_id, source)
-    manager = _manager_provider()
-    if manager is not None and source == "test":
-        try:
-            manager.set_test_status("RUNNING", stoppable=False)
-        except TypeError:
-            manager.set_test_status("RUNNING")
-
-    debug_log(
-        "{} source={} action={} mode=gui".format(
-            "TEST RUN" if source == "test" else "ACTION START",
-            source,
-            key,
-        ),
-        debug,
-    )
-
-    namespace = _legacy_script_namespace(debug)
-    terminal = "SUCCESS"
-    ok = True
-    try:
-        exec(compile(script, "<MacroBK Plugin Script>", "exec"), namespace, namespace)
-        run_function = namespace.get("run")
-        if callable(run_function):
-            run_function()
-        debug_log("SUCCESS source={} action={} mode=gui".format(source, key), debug)
-    except BaseException:
-        ok = False
-        terminal = "ERROR"
-        debug_log("ERROR source={} action={} mode=gui".format(source, key), debug)
-        error_result("[ERROR] MacroBK script failed")
-        for line in traceback.format_exc().rstrip().splitlines():
-            error_result(line)
-        if manager is not None:
-            try:
-                manager.show_result_tab()
-            except Exception:
-                pass
-    finally:
-        if manager is not None and source == "test":
-            try:
-                manager.set_test_status(terminal, stoppable=False)
-            except TypeError:
-                manager.set_test_status(terminal)
-    return ok
-
-
-
-def _call_on_ui_thread(function, *args, **kwargs):
-    """Run a helper on the wx GUI thread.
-
-    Optional keyword-only transport argument ``_stop_event`` lets a WORKER
-    action cancel its wait.  Unlike the previous implementation this never
-    performs one unbounded Event.wait().
-    """
-    stop_event = kwargs.pop("_stop_event", None)
-
-    if _is_gui_thread():
-        return function(*args, **kwargs)
-
-    done = threading.Event()
-    box = {}
-
-    def invoke():
-        try:
-            box["result"] = function(*args, **kwargs)
-        except BaseException as exc:
-            box["error"] = exc
-            box["traceback"] = traceback.format_exc()
-        finally:
-            done.set()
-
-    wx.CallAfter(invoke)
-
-    # Poll instead of waiting forever so Stop can release a worker that is
-    # waiting for a GUI callback.  The GUI callback may still run later, but
-    # the worker will no longer remain stuck in RUNNING.
-    while not done.wait(0.05):
-        if stop_event is not None and stop_event.is_set():
-            raise ActionStopped()
-
-    if "error" in box:
-        error = box["error"]
-        try:
-            setattr(error, "_macrobk_ui_traceback", box.get("traceback", ""))
-        except Exception:
-            pass
-        raise error
-    return box.get("result")
-
-
 def load_config():
     config = _default_config_copy()
 
     try:
         with open(CONFIG_PATH, "r", encoding="utf-8") as file:
             loaded = json.load(file)
+
+        # Preserve extension metadata through subsequent Register/Save calls.
+        for key, value in loaded.items():
+            if key not in config:
+                config[key] = copy.deepcopy(value)
 
         if isinstance(loaded.get("name"), str):
             config["name"] = loaded["name"]
@@ -395,7 +303,8 @@ def load_config():
     for index, item in enumerate(actions):
         if not isinstance(item, dict):
             continue
-        normalized_actions.append(
+        normalized = copy.deepcopy(item)
+        normalized.update(
             {
                 "id": str(item.get("id") or "action-{}".format(index + 1)),
                 "name": str(item.get("name") or "Action {}".format(index + 1)),
@@ -405,6 +314,7 @@ def load_config():
                 "action": dict(item.get("action") or config["action"]),
             }
         )
+        normalized_actions.append(normalized)
     if not normalized_actions:
         normalized_actions = actions
     config["actions"] = normalized_actions
@@ -635,6 +545,9 @@ def hotkey_worker(trigger, generation):
                 shortcut, error, str(conflict).lower()
             )
         )
+        with _hotkey_lock:
+            if _hotkey_thread_id == thread_id:
+                _hotkey_thread_id = None
         return
 
     set_keyboard_status("Ready")
@@ -680,7 +593,7 @@ def stop_hotkey_listener():
         if not user32.PostThreadMessageW(thread_id, WM_QUIT, 0, 0):
             log("hotkey stop message failed error={}".format(ctypes.get_last_error()))
 
-    if thread is not None and thread.is_alive():
+    if thread is not None and thread.is_alive() and thread is not threading.current_thread():
         thread.join(timeout=1.0)
 
 
@@ -725,7 +638,7 @@ def is_action_running(action_id, source="action"):
         return bool(thread is not None and thread.is_alive())
 
 
-def stop_action(action_id, source="action"):
+def stop_action(action_id, source="action", run_id=None):
     """Request a running action to stop.
 
     Python threads cannot be safely killed externally.  The event is exposed
@@ -736,8 +649,7 @@ def stop_action(action_id, source="action"):
         worker = _action_workers.get(key)
         if not worker:
             return False
-        thread = worker.get("thread")
-        if thread is None or not thread.is_alive():
+        if run_id is not None and worker["run_id"] != run_id:
             return False
         worker["stop_event"].set()
         debug = bool(worker.get("debug", False))
@@ -772,185 +684,119 @@ def _script_print(*args, **kwargs):
         pass
 
 
-def _execute_python_script_worker(script, source, action_id, stop_event, debug):
-    key = _worker_key(action_id, source)
-    manager = _manager_provider()
-    terminal = "SUCCESS"
-    ok = True
+def _notify_test(manager, key, run_id, status):
+    if manager is None:
+        return
+    def update():
+        if _manager_provider() is not manager or not bool(manager):
+            return
+        with _action_workers_lock:
+            if _latest_runs.get(key) != run_id:
+                return
+        if status == "RUNNING":
+            manager.begin_test_run(key, run_id)
+        else:
+            manager.finish_test_run(key, run_id, status)
+    call_gui_async(update)
 
-    debug_log(
-        "{} source={} action={} mode=worker".format(
-            "TEST RUN" if source == "test" else "ACTION START",
-            source,
-            key,
-        ),
-        debug,
-    )
 
-    def ui(function):
-        def wrapped(*args, **kwargs):
-            if stop_event.is_set():
-                raise ActionStopped()
-            return _call_on_ui_thread(
-                function, *args, _stop_event=stop_event, **kwargs
-            )
-        return wrapped
-
-    def script_open_drc_window():
-        return _call_on_ui_thread(
-            kc.open_drc_window, source, False, _stop_event=stop_event
-        )
-
-    def stop_requested():
-        return stop_event.is_set()
-
-    def wait_or_stop(seconds):
-        return stop_event.wait(float(seconds))
-
-    # WORKER mode intentionally exposes helper APIs, not raw wx/pcbnew control
-    # traversal.  Direct GUI object use belongs in the default GUI mode.
-    namespace = {
-        "__builtins__": __builtins__,
-        "print": _script_print,
-        "DEBUG": debug,
-        "MODE": "WORKER",
-        "EXECUTION_MODE": "WORKER",
-        "stop_requested": stop_requested,
-        "wait_or_stop": wait_or_stop,
-        "open_drc_window": script_open_drc_window,
-        "open_menu": ui(kc.open_menu),
-        "pcb_select_filter": ui(kc.pcb_select_filter),
-        "pcb_select_filter_state": ui(kc.pcb_select_filter_state),
-        "test_preferences_direct_children": ui(kc.test_preferences_direct_children),
-        "test_preferences_control_tree": ui(kc.test_preferences_control_tree),
-        "test_preferences_checkbox_value": ui(kc.test_preferences_checkbox_value),
-        "test_preferences_checkbox_toggle_restore": ui(
-            kc.test_preferences_checkbox_toggle_restore
-        ),
-    }
-
+def _execute_python_script_worker(script, source, key, run_id, stop_event, debug, manager):
+    terminal = "ERROR"
+    old_trace = sys.gettrace()
+    _context.stop_event = stop_event
+    _context.manager = manager
+    _context.debug = debug
+    _context.cooperative_stop = False
     try:
-        if stop_event.is_set():
-            raise ActionStopped()
-
+        debug_log("ACTION START source={} action={} run_id={} thread={}".format(
+            source, key, run_id, threading.get_ident()), debug)
+        from . import gui_helpers
+        def stop_requested():
+            return stop_event.is_set()
+        def wait_or_stop(seconds):
+            stopped = stop_event.wait(float(seconds))
+            # A cooperating script may print its own shutdown message.
+            if stopped:
+                _context.cooperative_stop = True
+            return stopped
+        namespace = {
+            "__builtins__": __builtins__, "print": _script_print, "DEBUG": debug,
+            "stop_requested": stop_requested, "wait_or_stop": wait_or_stop,
+            "wx": wx, "pcbnew": pcbnew,
+        }
+        namespace.update(gui_helpers.script_api(call_gui_sync, _check_stop))
+        def trace(frame, event, arg):
+            if frame.f_code.co_filename == "<MacroBK Plugin Script>" and event in ("line", "call"):
+                if not getattr(_context, "cooperative_stop", False):
+                    _check_stop()
+            return trace
+        _check_stop()
+        sys.settrace(trace)
         exec(compile(script, "<MacroBK Plugin Script>", "exec"), namespace, namespace)
-
-        if stop_event.is_set():
-            raise ActionStopped()
-
+        _check_stop()
         run_function = namespace.get("run")
         if callable(run_function):
             run_function()
-
-        if stop_event.is_set():
-            raise ActionStopped()
-
-        debug_log("SUCCESS source={} action={} mode=worker".format(source, key), debug)
+        _check_stop()
+        terminal = "SUCCESS"
     except ActionStopped:
+        sys.settrace(old_trace)
         terminal = "STOPPED"
-        ok = False
-        debug_log("STOPPED source={} action={} mode=worker".format(source, key), debug)
     except BaseException:
+        sys.settrace(old_trace)
         terminal = "ERROR"
-        ok = False
-        debug_log("ERROR source={} action={} mode=worker".format(source, key), debug)
         error_result("[ERROR] MacroBK script failed")
         for line in traceback.format_exc().rstrip().splitlines():
             error_result(line)
-        if manager is not None:
-            wx.CallAfter(manager.show_result_tab)
     finally:
-        # Terminal UI status is guaranteed for every exit path, including
-        # SystemExit/KeyboardInterrupt raised by a user script.
-        if manager is not None and source == "test":
-            wx.CallAfter(manager.set_test_status, terminal)
-
-        with _action_workers_lock:
-            current = _action_workers.get(key)
-            if current is not None and current.get("thread") is threading.current_thread():
-                _action_workers.pop(key, None)
-
-    return ok
-
+        sys.settrace(old_trace)
+        try:
+            debug_log("{} source={} action={} run_id={}".format(terminal, source, key, run_id), debug)
+        finally:
+            with _action_workers_lock:
+                current = _action_workers.get(key)
+                if current is not None and current["run_id"] == run_id:
+                    _action_workers.pop(key, None)
+            if source == "test":
+                _notify_test(manager, key, run_id, terminal)
+            _context.__dict__.clear()
 
 
 def execute_python_script(script, source, action_id=None):
-    """Execute a MacroBK script using an explicit execution mode.
-
-    Default: MODE = "GUI"
-        Preserves legacy wx/pcbnew compatibility.
-
-    Optional: MODE = "WORKER"
-        Runs in a daemon worker thread.  Use MacroBK GUI helper functions such
-        as pcb_select_filter/open_menu rather than raw wx/pcbnew objects.
-    """
+    """All Action sources use one worker engine; no script mode guessing."""
     key = _worker_key(action_id, source)
     debug = _script_debug_enabled(script)
-    mode = _script_execution_mode(script)
     manager = _manager_provider()
-
-    debug_log("EXECUTION MODE {} action={}".format(mode.lower(), key), debug)
-
-    if mode == "GUI":
-        # Run Test and trigger callbacks normally arrive on the wx thread.  If
-        # called from elsewhere, schedule asynchronously rather than CallAfter
-        # + wait, which can deadlock an embedded GUI.
-        if _is_gui_thread():
-            return _execute_python_script_ui(script, source, action_id, debug)
-
-        wx.CallAfter(
-            _execute_python_script_ui,
-            script,
-            source,
-            action_id,
-            debug,
-        )
-        return True
-
     with _action_workers_lock:
-        existing = _action_workers.get(key)
-        existing_thread = existing.get("thread") if existing else None
-        if existing_thread is not None and existing_thread.is_alive():
-            debug_log("ALREADY RUNNING action={}".format(key), debug)
-            return False
-
-        stop_event = threading.Event()
-        thread = threading.Thread(
-            target=_execute_python_script_worker,
-            args=(script, source, action_id, stop_event, debug),
-            name="MacroBK-Action-{}".format(key),
-            daemon=True,
-        )
-        _action_workers[key] = {
-            "thread": thread,
-            "stop_event": stop_event,
-            "debug": debug,
-            "mode": "WORKER",
-        }
-
-        # Set RUNNING before starting the worker.  Otherwise a very short
-        # script can queue SUCCESS first and then have RUNNING overwrite it.
-        if manager is not None and source == "test":
-            try:
-                manager.set_test_status("RUNNING", stoppable=True)
-            except TypeError:
-                manager.set_test_status("RUNNING")
-
-        # Start while still holding the registry lock so another simultaneous
-        # trigger cannot observe a registered-but-not-yet-alive thread.
-        try:
-            thread.start()
-        except BaseException:
+        if key in _action_workers:
+            # A registered worker reserves the Action even before Thread.start.
+            duplicate = True
+        else:
+            duplicate = False
+            run_id = next(_run_counter)
+            stop_event = threading.Event()
+            thread = threading.Thread(
+                target=_execute_python_script_worker,
+                args=(script, source, key, run_id, stop_event, debug, manager),
+                name="MacroBK-Action-{}-{}".format(key, run_id), daemon=True)
+            _action_workers[key] = {"thread": thread, "stop_event": stop_event,
+                                    "run_id": run_id, "source": source, "debug": debug}
+            _latest_runs[key] = run_id
+    if duplicate:
+        debug_log("Already running: {}".format(key), debug)
+        return False
+    if source == "test":
+        _notify_test(manager, key, run_id, "RUNNING")
+    try:
+        thread.start()
+    except BaseException:
+        with _action_workers_lock:
             _action_workers.pop(key, None)
-            if manager is not None and source == "test":
-                try:
-                    manager.set_test_status("ERROR", stoppable=False)
-                except TypeError:
-                    manager.set_test_status("ERROR")
-            raise
-
+        error_result(traceback.format_exc())
+        if source == "test":
+            _notify_test(manager, key, run_id, "ERROR")
+        return False
     return True
-
 
 
 def handle_trigger(source):
@@ -1003,7 +849,7 @@ def udp_worker():
         sock.close()
         return
 
-    while True:
+    while not _service_stop.is_set():
         try:
             data, address = sock.recvfrom(1024)
         except socket.timeout:
