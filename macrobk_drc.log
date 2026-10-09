@@ -7583,3 +7583,60 @@ from=127.0.0.1:54156
 [22:58:29] [MacroBK] GUI helper call: gui thread=18580
 [22:58:30] [MacroBK] SUCCESS source=test action=action-27f33157 run_id=2
 [23:24:20] [MacroBK] MANAGER CLOSE
+[01:05:38] [MacroBK] UDP SOCKET CREATED service=ddaef3136d1d epoch=1 thread=23536
+[01:05:38] [MacroBK] UDP LISTENER START service=ddaef3136d1d epoch=1 thread=51652
+[01:05:38] [MacroBK] SERVICE START service=ddaef3136d1d epoch=1 thread=23536
+[01:05:38] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=12604
+[01:05:39] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=ddaef3136d1d epoch=1 thread=23536
+[01:05:49] [MacroBK] MANAGER OPEN
+[01:06:18] [MacroBK] ACTION START source=test action=action-f470c901 run_id=1 thread=53684
+[01:06:18] [MacroBK] GUI helper call: gui thread=53684
+[01:06:19] [MacroBK] GUI helper call: gui thread=53684
+[01:06:19] [MacroBK] ERROR source=test action=action-f470c901 run_id=1
+[01:09:59] [MacroBK] PCB FRAME CLOSE DETECTED service=ddaef3136d1d epoch=1 thread=23536
+[01:09:59] [MacroBK] PCB FRAME DESTROY DETECTED service=ddaef3136d1d epoch=1 thread=23536
+[01:09:59] [MacroBK] SERVICE SHUTDOWN START service=ddaef3136d1d epoch=2 thread=23536
+[01:09:59] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Win + F12
+[01:09:59] [MacroBK] PLUGIN REGISTRATION RELEASED service=ddaef3136d1d epoch=2 thread=23536
+[01:09:59] [MacroBK] WORKERS STOP REQUESTED count=0 service=ddaef3136d1d epoch=2 thread=23536
+[01:09:59] [MacroBK] UDP LISTENER STOP service=ddaef3136d1d epoch=2 thread=51652
+[01:09:59] [MacroBK] UDP SOCKET CLOSED service=ddaef3136d1d epoch=2 thread=23536
+[01:09:59] [MacroBK] SERVICE SHUTDOWN COMPLETE service=ddaef3136d1d epoch=2 thread=23536
+[01:10:03] [MacroBK] UDP SOCKET CREATED service=ddaef3136d1d epoch=3 thread=23536
+[01:10:03] [MacroBK] UDP LISTENER START service=ddaef3136d1d epoch=3 thread=48048
+[01:10:03] [MacroBK] SERVICE START service=ddaef3136d1d epoch=3 thread=23536
+[01:10:03] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=52696
+[01:10:03] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=ddaef3136d1d epoch=3 thread=23536
+[01:10:12] [MacroBK] MANAGER OPEN
+[01:10:38] [MacroBK] ACTION START source=test action=action-cfb78f72 run_id=2 thread=43436
+[01:10:38] [MacroBK] GUI helper call: gui thread=43436
+[01:10:38] [MacroBK] GUI helper call: gui thread=43436
+[01:10:38] [MacroBK] ERROR source=test action=action-cfb78f72 run_id=2
+[01:11:04] [MacroBK] MANAGER CLOSE
+[02:04:24] [MacroBK] PCB FRAME CLOSE DETECTED service=ddaef3136d1d epoch=3 thread=23536
+[02:04:25] [MacroBK] PCB FRAME DESTROY DETECTED service=ddaef3136d1d epoch=3 thread=23536
+[02:04:25] [MacroBK] SERVICE SHUTDOWN START service=ddaef3136d1d epoch=4 thread=23536
+[02:04:25] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Win + F12
+[02:04:25] [MacroBK] PLUGIN REGISTRATION RELEASED service=ddaef3136d1d epoch=4 thread=23536
+[02:04:25] [MacroBK] WORKERS STOP REQUESTED count=0 service=ddaef3136d1d epoch=4 thread=23536
+[02:04:25] [MacroBK] UDP LISTENER STOP service=ddaef3136d1d epoch=4 thread=48048
+[02:04:25] [MacroBK] UDP SOCKET CLOSED service=ddaef3136d1d epoch=4 thread=23536
+[02:04:25] [MacroBK] SERVICE SHUTDOWN COMPLETE service=ddaef3136d1d epoch=4 thread=23536
+[02:04:35] [MacroBK] UDP SOCKET CREATED service=f88e4615c945 epoch=1 thread=43816
+[02:04:35] [MacroBK] UDP LISTENER START service=f88e4615c945 epoch=1 thread=33428
+[02:04:35] [MacroBK] SERVICE START service=f88e4615c945 epoch=1 thread=43816
+[02:04:35] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=19056
+[02:04:36] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=f88e4615c945 epoch=1 thread=43816
+[02:04:47] [MacroBK] MANAGER OPEN
+[02:06:07] [MacroBK] ACTION START source=test action=action-265f8642 run_id=1 thread=51280
+[02:06:07] [MacroBK] GUI helper call: show_diagnostic_panel thread=51280
+[02:06:07] [MacroBK] SUCCESS source=test action=action-265f8642 run_id=1
+[08:33:33] [MacroBK] PCB FRAME CLOSE DETECTED service=f88e4615c945 epoch=1 thread=43816
+[08:33:33] [MacroBK] PCB FRAME DESTROY DETECTED service=f88e4615c945 epoch=1 thread=43816
+[08:33:33] [MacroBK] SERVICE SHUTDOWN START service=f88e4615c945 epoch=2 thread=43816
+[08:33:33] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Win + F12
+[08:33:33] [MacroBK] PLUGIN REGISTRATION RELEASED service=f88e4615c945 epoch=2 thread=43816
+[08:33:34] [MacroBK] WORKERS STOP REQUESTED count=0 service=f88e4615c945 epoch=2 thread=43816
+[08:33:34] [MacroBK] UDP LISTENER STOP service=f88e4615c945 epoch=2 thread=33428
+[08:33:34] [MacroBK] UDP SOCKET CLOSED service=f88e4615c945 epoch=2 thread=43816
+[08:33:34] [MacroBK] SERVICE SHUTDOWN COMPLETE service=f88e4615c945 epoch=2 thread=43816

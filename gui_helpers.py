@@ -174,6 +174,8 @@ def script_api(call_sync, check_stop):
         "pcb_select_filter_state": kc.pcb_select_filter_state,
         "pcb_select_layer": kc.pcb_select_layer,
         "pcb_onoff_layer": kc.pcb_onoff_layer,
+        "pcb_layer_up": kc.pcb_layer_up,
+        "pcb_layer_down": kc.pcb_layer_down,
         "test_preferences_direct_children": kc.test_preferences_direct_children,
         "test_preferences_control_tree": kc.test_preferences_control_tree,
         "test_preferences_checkbox_value": kc.test_preferences_checkbox_value,

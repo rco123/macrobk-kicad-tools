@@ -1,0 +1,285 @@
+Window: "jjj — PCB Editor", App: kicad.exe.
+	0 창 jjj — PCB Editor Secondary Actions: Raise
+		1 상태 표시줄
+			2 텍스트
+			3 텍스트 Z 0.79
+			4 텍스트 X 190.4500 Y 76.5500
+			5 텍스트 dx 190.4500 dy 76.5500 dist 205.2586
+			6 텍스트 grid 0.0500
+			7 텍스트 mm
+			8 텍스트
+			9 텍스트
+		10 창 panel ID: -31686
+		11 창 panel ID: -31685
+			12 창 GLCanvas ID: -31579
+		13 창 control ID: 6114
+		14 창 control ID: 6117
+			15 콤보 상자 (settable, string) Value: Track: use netclass width ID: 8517
+				16 텍스트 (settable, string) Value: Track: use netclass width
+				17 단추 열기 ID: DropDown
+			18 콤보 상자 (settable, string) Value: Via: use netclass sizes ID: 8516
+				19 텍스트 (settable, string) Value: Via: use netclass sizes
+				20 단추 열기 ID: DropDown
+			21 콤보 상자 (settable, string) Value: F.Cu (Shift+Z) ID: 8585
+				22 텍스트 (settable, string) Value: F.Cu (Shift+Z)
+				23 단추 열기 ID: DropDown
+			24 콤보 상자 (settable, string) Value: 0.0500 mm (0.0020 in) ID: 6157
+				25 텍스트 (settable, string) Value: 0.0500 mm (0.0020 in)
+				26 단추 열기 ID: DropDown
+			27 콤보 상자 (settable, string) Value: Zoom 0.60 ID: 6156
+				28 텍스트 (settable, string) Value: Zoom 0.60
+				29 단추 열기 ID: DropDown
+		30 창 control ID: 6115
+		31 창 control ID: 6116
+		32 창 ID: -31677
+			33 확인란 All items ID: -31676
+			34 확인란 Locked items ID: -31675
+			35 확인란 Footprints ID: -31674
+			36 확인란 Text ID: -31673
+			37 확인란 Tracks ID: -31672
+			38 확인란 Vias ID: -31671
+			39 확인란 Pads ID: -31670
+			40 확인란 Graphics ID: -31669
+			41 확인란 Zones ID: -31668
+			42 확인란 Rule Areas ID: -31667
+			43 확인란 Dimensions ID: -31666
+			44 확인란 Other items ID: -31665
+		45 창 ID: -31664
+			46 Tab ID: -31663
+				47 창 panel ID: -31662
+					48 창 panel ID: -31661
+						49 창 panel
+							50 창 panel
+								51 이미지
+							52 창 panel
+								53 이미지
+							54 창 panel
+								55 이미지
+							56 텍스트 F.Cu
+						57 창 panel ID: 2
+							58 창 panel ID: 2
+								59 이미지 ID: 2
+							60 창 panel ID: 2
+								61 이미지 ID: 2
+							62 창 panel ID: 2
+								63 이미지 ID: 2
+							64 텍스트 B.Cu ID: 2
+						65 창 panel ID: 9
+							66 창 panel ID: 9
+								67 이미지 ID: 9
+							68 창 panel ID: 9
+								69 이미지 ID: 9
+							70 창 panel ID: 9
+								71 이미지 ID: 9
+							72 텍스트 F.Adhesive ID: 9
+						73 창 panel ID: 11
+							74 창 panel ID: 11
+								75 이미지 ID: 11
+							76 창 panel ID: 11
+								77 이미지 ID: 11
+							78 창 panel ID: 11
+								79 이미지 ID: 11
+							80 텍스트 B.Adhesive ID: 11
+						81 창 panel ID: 13
+							82 창 panel ID: 13
+								83 이미지 ID: 13
+							84 창 panel ID: 13
+								85 이미지 ID: 13
+							86 창 panel ID: 13
+								87 이미지 ID: 13
+							88 텍스트 F.Paste ID: 13
+						89 창 panel ID: 15
+							90 창 panel ID: 15
+								91 이미지 ID: 15
+							92 창 panel ID: 15
+								93 이미지 ID: 15
+							94 창 panel ID: 15
+								95 이미지 ID: 15
+							96 텍스트 B.Paste ID: 15
+						97 창 panel ID: 5
+							98 창 panel ID: 5
+								99 이미지 ID: 5
+							100 창 panel ID: 5
+								101 이미지 ID: 5
+							102 창 panel ID: 5
+								103 이미지 ID: 5
+							104 텍스트 F.Silkscreen ID: 5
+						105 창 panel ID: 7
+							106 창 panel ID: 7
+								107 이미지 ID: 7
+							108 창 panel ID: 7
+								109 이미지 ID: 7
+							110 창 panel ID: 7
+								111 이미지 ID: 7
+							112 텍스트 B.Silkscreen ID: 7
+						113 창 panel ID: 1
+							114 창 panel ID: 1
+								115 이미지 ID: 1
+							116 창 panel ID: 1
+								117 이미지 ID: 1
+							118 창 panel ID: 1
+								119 이미지 ID: 1
+							120 텍스트 F.Mask ID: 1
+						121 창 panel ID: 3
+							122 창 panel ID: 3
+								123 이미지 ID: 3
+							124 창 panel ID: 3
+								125 이미지 ID: 3
+							126 창 panel ID: 3
+								127 이미지 ID: 3
+							128 텍스트 B.Mask ID: 3
+						129 창 panel ID: 17
+							130 창 panel ID: 17
+								131 이미지 ID: 17
+							132 창 panel ID: 17
+								133 이미지 ID: 17
+							134 창 panel ID: 17
+								135 이미지 ID: 17
+							136 텍스트 User.Drawings ID: 17
+						137 창 panel ID: 19
+							138 창 panel ID: 19
+								139 이미지 ID: 19
+							140 창 panel ID: 19
+								141 이미지 ID: 19
+							142 창 panel ID: 19
+								143 이미지 ID: 19
+							144 텍스트 User.Comments ID: 19
+						145 창 panel ID: 21
+							146 창 panel ID: 21
+								147 이미지 ID: 21
+							148 창 panel ID: 21
+								149 이미지 ID: 21
+							150 창 panel ID: 21
+								151 이미지 ID: 21
+							152 텍스트 User.Eco1 ID: 21
+						153 창 panel ID: 23
+							154 창 panel ID: 23
+								155 이미지 ID: 23
+							156 창 panel ID: 23
+								157 이미지 ID: 23
+							158 창 panel ID: 23
+								159 이미지 ID: 23
+							160 텍스트 User.Eco2 ID: 23
+						161 창 panel ID: 25
+							162 창 panel ID: 25
+								163 이미지 ID: 25
+							164 창 panel ID: 25
+								165 이미지 ID: 25
+							166 창 panel ID: 25
+								167 이미지 ID: 25
+							168 텍스트 Edge.Cuts ID: 25
+						169 창 panel ID: 27
+							170 창 panel ID: 27
+								171 이미지 ID: 27
+							172 창 panel ID: 27
+								173 이미지 ID: 27
+							174 창 panel ID: 27
+								175 이미지 ID: 27
+							176 텍스트 Margin ID: 27
+						177 창 panel ID: 31
+							178 창 panel ID: 31
+								179 이미지 ID: 31
+							180 창 panel ID: 31
+								181 이미지 ID: 31
+							182 창 panel ID: 31
+								183 이미지 ID: 31
+							184 텍스트 F.Courtyard ID: 31
+						185 창 panel ID: 29
+							186 창 panel ID: 29
+								187 이미지 ID: 29
+							188 창 panel ID: 29
+								189 이미지 ID: 29
+							190 창 panel ID: 29
+								191 이미지 ID: 29
+							192 텍스트 B.Courtyard ID: 29
+						193 창 panel ID: 35
+							194 창 panel ID: 35
+								195 이미지 ID: 35
+							196 창 panel ID: 35
+								197 이미지 ID: 35
+							198 창 panel ID: 35
+								199 이미지 ID: 35
+							200 텍스트 F.Fab ID: 35
+						201 창 panel ID: 33
+							202 창 panel ID: 33
+								203 이미지 ID: 33
+							204 창 panel ID: 33
+								205 이미지 ID: 33
+							206 창 panel ID: 33
+								207 이미지 ID: 33
+							208 텍스트 B.Fab ID: 33
+						209 창 panel ID: 39
+							210 창 panel ID: 39
+								211 이미지 ID: 39
+							212 창 panel ID: 39
+								213 이미지 ID: 39
+							214 창 panel ID: 39
+								215 이미지 ID: 39
+							216 텍스트 User.1 ID: 39
+						217 창 panel ID: 41
+							218 창 panel ID: 41
+								219 이미지 ID: 41
+							220 창 panel ID: 41
+								221 이미지 ID: 41
+							222 창 panel ID: 41
+								223 이미지 ID: 41
+							224 텍스트 User.2 ID: 41
+						225 창 panel ID: 43
+							226 창 panel ID: 43
+								227 이미지 ID: 43
+							228 창 panel ID: 43
+								229 이미지 ID: 43
+							230 창 panel ID: 43
+								231 이미지 ID: 43
+							232 텍스트 User.3 ID: 43
+						233 창 panel ID: 45
+							234 창 panel ID: 45
+								235 이미지 ID: 45
+							236 창 panel ID: 45
+								237 이미지 ID: 45
+							238 창 panel ID: 45
+								239 이미지 ID: 45
+							240 텍스트 User.4 ID: 45
+						241 스크롤 막대 (settable, float) 세로 Value: 0 ID: NonClientVerticalScrollBar
+							242 단추 위쪽 스크롤 화살표 ID: UpButton
+							243 위치 조정 위치 ID: ScrollbarThumb
+							244 단추 페이지 아래로 ID: DownPageButton
+							245 단추 아래쪽 스크롤 화살표 ID: DownButton
+					246 창 COLLAPSIBLE_PANE_HEADER ID: -31639
+						247 창 Layer Display Options ID: -31638
+						248 창 COLLAPSIBLE_PANE_PANE ID: -31637
+							249 텍스트 Inactive layers (H): ID: -31636
+							250 라디오 단추 (selectable) Normal ID: -31635
+							251 라디오 단추 (selectable) Dim ID: -31634
+							252 라디오 단추 (selectable) Hide ID: -31633
+							253 이미지 ID: -31632
+							254 확인란 Flip board view ID: -31631
+				255 탭 항목 (selectable) Layers
+				256 탭 항목 (selectable) Objects
+				257 탭 항목 (selectable) Nets
+			258 텍스트 Presets (Ctrl+Tab): ID: -31643
+			259 콤보 상자 (settable, string) Presets (Ctrl+Tab): Value: --- ID: -31642
+				260 텍스트 (settable, string) Presets (Ctrl+Tab): Value: ---
+				261 단추 열기 ID: DropDown
+			262 텍스트 Viewports (Shift+Tab): ID: -31641
+			263 콤보 상자 (settable, string) Viewports (Shift+Tab): Value: --- ID: -31640
+				264 텍스트 (settable, string) Viewports (Shift+Tab): Value: ---
+				265 단추 열기 ID: DropDown
+		266 제목 표시줄 (settable, string) Value: jjj — PCB Editor
+			267 메뉴 모음 시스템 ID: MenuBar
+				302 메뉴 항목 시스템
+			269 단추 최소화
+			270 단추 최대화
+			271 단추 닫기
+		272 메뉴 모음 응용 프로그램 ID: MenuBar
+			303 메뉴 항목 File
+			304 메뉴 항목 Edit
+			305 메뉴 항목 View
+			306 메뉴 항목 Place
+			307 메뉴 항목 Route
+			308 메뉴 항목 Inspect
+			309 메뉴 항목 Tools
+			310 메뉴 항목 Preferences
+			311 메뉴 항목 Help
+
+The focused UI element is 11 창 panel ID: -31685.

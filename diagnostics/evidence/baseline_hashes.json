@@ -1,0 +1,38 @@
+[
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\__init__.py",
+    "Hash": "69A6B4B1B55AA6DEC6ED6191741D9C41478B3E7F7B7FAE6F689BF36AC854BE67"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\bridge.py",
+    "Hash": "FD4054A9412AA7EDC636B5DBC50AD987CD1DBEE7FC32CB1D8AEEBD4D03A5FBFC"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\trigger_core.py",
+    "Hash": "4E9BC18125956B385839F56D3E31651D0D97345891F66D08F7CAE75698918E0B"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\ui_manager.py",
+    "Hash": "D0C23F1524DC8282E9E1B85DA02CA211163A7ADE21275157183C7BBEE35D3BF1"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\gui_helpers.py",
+    "Hash": "0BF4CCF2067BC98C18A3C3A0ADC8DD4B66CA22BF6823DA1E7A5FA05CFF778C20"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\kicad_controls.py",
+    "Hash": "7E1E6883381DB7DE3E21271925D19B1ED218851BBBDFE977E27CAF864A40EF1C"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\key_picker.py",
+    "Hash": "A505826B17C6C2443458F5D80A1789544AF167583783B172D07C2B3442E1BC7C"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\lifecycle.py",
+    "Hash": "88A26092BC900A334E5304D2D4E9502BAE74F542ECEE6FC57F913C10A31D0646"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\config.json",
+    "Hash": "F0947EB350FC5F0321E6B3BDE02B0498BDFEDADD377BB1B3BC47CCCC2E07E328"
+  }
+]
