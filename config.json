@@ -21,7 +21,7 @@
   },
   "action": {
     "type": "python",
-    "script": "# Enter KiCad Python here\n"
+    "script": "for window in wx.GetTopLevelWindows():\r\n    try:\r\n        if \"PCB Editor\" not in window.GetTitle():\r\n            continue\r\n    except Exception:\r\n        continue\r\n\r\n    print(\"=== searching Selection Filter ===\")\r\n\r\n    for control in iter_controls(window):\r\n        try:\r\n            label = control.GetLabel()\r\n        except Exception:\r\n            label = \"\"\r\n\r\n        if \"Selection Filter\" in str(label):\r\n            print(\r\n                control.__class__.__name__,\r\n                \"label =\", repr(label),\r\n                \"name =\", repr(control.GetName())\r\n            )"
   },
   "actions": [
     {
@@ -74,7 +74,7 @@
       },
       "action": {
         "type": "python",
-        "script": "# Enter KiCad Python here\n"
+        "script": "for window in wx.GetTopLevelWindows():\r\n    try:\r\n        if \"PCB Editor\" not in window.GetTitle():\r\n            continue\r\n    except Exception:\r\n        continue\r\n\r\n    print(\"=== searching Selection Filter ===\")\r\n\r\n    for control in iter_controls(window):\r\n        try:\r\n            label = control.GetLabel()\r\n        except Exception:\r\n            label = \"\"\r\n\r\n        if \"Selection Filter\" in str(label):\r\n            print(\r\n                control.__class__.__name__,\r\n                \"label =\", repr(label),\r\n                \"name =\", repr(control.GetName())\r\n            )"
       }
     }
   ],

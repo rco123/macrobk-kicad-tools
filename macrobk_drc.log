@@ -131,6 +131,105 @@
 [08:44:30] [MacroBK] TEST RUN source=test
 [08:44:30] [MacroBK] stdout: hello
 [08:44:30] [MacroBK] SUCCESS source=test
-[09:01:26] [MacroBK] TEST RUN source=test
-[09:01:27] [MacroBK] stdout: hehhhhllo
-[09:01:27] [MacroBK] SUCCESS source=test
+[09:27:48] [MacroBK] plugin bridge starting
+[09:27:48] [MacroBK] RegisterHotKey skipped shortcut=Ctrl + Alt + Shift + Win + A + B + C + F2 reason=multi-key phone-trigger
+[09:27:48] [MacroBK] UDP multicast ready group=239.255.77.77:47831 interface=127.0.0.1 trigger=ALT+CTRL+SHIFT+WIN:A,B,C,F2
+[09:28:00] [MacroBK] Plugin Manager opened
+[09:31:28] [MacroBK] TEST RUN source=test
+[09:31:28] [MacroBK] menu path found: 'Draw Circles', id=20048
+[09:31:28] [MacroBK] menu.ProcessEvent -> True
+[09:31:28] [MacroBK] SUCCESS source=test
+[09:32:21] [MacroBK] TEST RUN source=test
+[09:32:21] [MacroBK] menu path not found: 'Place -> Draw line'
+[09:32:21] [MacroBK] SUCCESS source=test
+[09:32:52] [MacroBK] TEST RUN source=test
+[09:32:52] [MacroBK] menu path found: 'Draw Lines', id=20045
+[09:32:52] [MacroBK] menu.ProcessEvent -> True
+[09:32:52] [MacroBK] SUCCESS source=test
+[09:38:17] [MacroBK] TEST RUN source=test
+[09:38:17] [MacroBK] stdout: === Selection Filter ===
+[09:38:17] [MacroBK] ERROR source=test
+[09:38:17] [MacroBK] Traceback (most recent call last):
+[09:38:17] [MacroBK]   File "C:\Users/sgkim/Documents/KiCad/9.0/scripting\plugins\macrobk_drc_bridge\trigger_core.py", line 516, in execute_python_script
+[09:38:17] [MacroBK]     exec(compile(script, "<MacroBK Plugin Script>", "exec"), namespace, namespace)
+[09:38:17] [MacroBK]   File "<MacroBK Plugin Script>", line 21, in <module>
+[09:38:17] [MacroBK] NameError: name 'candidate_frames' is not defined
+[09:40:12] [MacroBK] TEST RUN source=test
+[09:40:12] [MacroBK] stdout: === Selection Filter ===
+[09:40:12] [MacroBK] stdout: All items = True
+[09:40:12] [MacroBK] stdout: Footprints = True
+[09:40:12] [MacroBK] stdout: Tracks = True
+[09:40:12] [MacroBK] stdout: Pads = True
+[09:40:12] [MacroBK] stdout: Zones = True
+[09:40:12] [MacroBK] stdout: Dimensions = True
+[09:40:12] [MacroBK] stdout: Locked items = False
+[09:40:12] [MacroBK] stdout: Text = True
+[09:40:12] [MacroBK] stdout: Vias = True
+[09:40:12] [MacroBK] stdout: Graphics = True
+[09:40:12] [MacroBK] stdout: Rule Areas = True
+[09:40:12] [MacroBK] stdout: Other items = True
+[09:40:12] [MacroBK] SUCCESS source=test
+[09:54:03] [MacroBK] TEST RUN source=test
+[09:54:03] [MacroBK] stdout: === Parent Chain ===
+[09:54:03] [MacroBK] stdout: 0 CheckBox label = 'Tracks' name = 'check'
+[09:54:03] [MacroBK] stdout: 1 Panel label = '' name = ''
+[09:54:03] [MacroBK] stdout: 2 Frame label = '*jjj — PCB Editor' name = 'PcbFrame'
+[09:54:03] [MacroBK] SUCCESS source=test
+[09:55:26] [MacroBK] TEST RUN source=test
+[09:55:26] [MacroBK] stdout: === Selection Filter Panel ===
+[09:55:26] [MacroBK] stdout: type = Panel
+[09:55:26] [MacroBK] stdout: name = ''
+[09:55:26] [MacroBK] stdout: label = ''
+[09:55:26] [MacroBK] stdout: 
+[09:55:26] [MacroBK] stdout: === Direct Children ===
+[09:55:26] [MacroBK] stdout: 0 CheckBox label = 'All items' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 1 CheckBox label = 'Locked items' name = 'check' value = False
+[09:55:26] [MacroBK] stdout: 2 CheckBox label = 'Footprints' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 3 CheckBox label = 'Text' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 4 CheckBox label = 'Tracks' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 5 CheckBox label = 'Vias' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 6 CheckBox label = 'Pads' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 7 CheckBox label = 'Graphics' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 8 CheckBox label = 'Zones' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 9 CheckBox label = 'Rule Areas' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 10 CheckBox label = 'Dimensions' name = 'check' value = True
+[09:55:26] [MacroBK] stdout: 11 CheckBox label = 'Other items' name = 'check' value = True
+[09:55:26] [MacroBK] SUCCESS source=test
+[09:57:44] [MacroBK] TEST RUN source=test
+[09:57:44] [MacroBK] stdout: === searching Selection Filter ===
+[09:57:44] [MacroBK] SUCCESS source=test
+[10:05:22] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=ALT+CTRL+SHIFT+WIN:A,B,C,F2
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] ignored UDP trigger received=CTRL+SHIFT:F12 expected=CTRL+WIN:F12
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] trigger received source=phone udp=CTRL+SHIFT:F12 from=127.0.0.1:54156
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hello
+[10:56:26] [MacroBK] SUCCESS source=phone
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hello
+[10:56:26] [MacroBK] SUCCESS source=phone
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hello
+[10:56:26] [MacroBK] SUCCESS source=phone
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hello
+[10:56:26] [MacroBK] SUCCESS source=phone
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hehhhhllo
+[10:56:26] [MacroBK] SUCCESS source=phone
+[10:56:26] [MacroBK] TRIGGER source=phone trigger=Ctrl + Shift + F12
+[10:56:26] [MacroBK] ACTION START source=phone
+[10:56:26] [MacroBK] stdout: hello
+[10:56:26] [MacroBK] SUCCESS source=phone
