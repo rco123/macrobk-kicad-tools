@@ -7640,3 +7640,65 @@ from=127.0.0.1:54156
 [08:33:34] [MacroBK] UDP LISTENER STOP service=f88e4615c945 epoch=2 thread=33428
 [08:33:34] [MacroBK] UDP SOCKET CLOSED service=f88e4615c945 epoch=2 thread=43816
 [08:33:34] [MacroBK] SERVICE SHUTDOWN COMPLETE service=f88e4615c945 epoch=2 thread=43816
+[08:46:08] [MacroBK] UDP SOCKET CREATED service=22505049d4eb epoch=1 thread=39852
+[08:46:08] [MacroBK] UDP LISTENER START service=22505049d4eb epoch=1 thread=46172
+[08:46:08] [MacroBK] SERVICE START service=22505049d4eb epoch=1 thread=39852
+[08:46:08] [MacroBK] RegisterHotKey success shortcut=Ctrl + Win + F12 id=19778 thread_id=39124
+[08:46:09] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=22505049d4eb epoch=1 thread=39852
+[08:46:51] [MacroBK] MANAGER OPEN
+[08:47:46] [MacroBK] ACTION START source=test action=action-6c33c143 run_id=1 thread=5036
+[08:47:46] [MacroBK] GUI helper call: gui thread=5036
+[08:47:46] [MacroBK] GUI helper call: gui thread=5036
+[08:47:46] [MacroBK] GUI helper call: gui thread=5036
+[08:47:46] [MacroBK] GUI helper call: gui thread=5036
+[08:47:47] [MacroBK] GUI helper call: gui thread=5036
+[08:47:47] [MacroBK] GUI helper call: gui thread=5036
+[08:47:47] [MacroBK] GUI helper call: gui thread=5036
+[08:47:48] [MacroBK] GUI helper call: gui thread=5036
+[08:47:48] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:49] [MacroBK] GUI helper call: gui thread=5036
+[08:47:50] [MacroBK] GUI helper call: gui thread=5036
+[08:47:50] [MacroBK] GUI helper call: gui thread=5036
+[08:47:50] [MacroBK] GUI helper call: gui thread=5036
+[08:47:50] [MacroBK] GUI helper call: gui thread=5036
+[08:47:51] [MacroBK] GUI helper call: gui thread=5036
+[08:47:51] [MacroBK] GUI helper call: gui thread=5036
+[08:47:51] [MacroBK] GUI helper call: gui thread=5036
+[08:47:51] [MacroBK] GUI helper call: gui thread=5036
+[08:47:52] [MacroBK] GUI helper call: gui thread=5036
+[08:47:52] [MacroBK] GUI helper call: gui thread=5036
+[08:47:52] [MacroBK] GUI helper call: gui thread=5036
+[08:47:52] [MacroBK] SUCCESS source=test action=action-6c33c143 run_id=1
+[08:48:31] [MacroBK] ACTION START source=test action=action-6c33c143 run_id=2 thread=32556
+[08:48:31] [MacroBK] GUI helper call: gui thread=32556
+[08:48:31] [MacroBK] GUI helper call: gui thread=32556
+[08:48:32] [MacroBK] GUI helper call: gui thread=32556
+[08:48:32] [MacroBK] GUI helper call: gui thread=32556
+[08:48:32] [MacroBK] GUI helper call: gui thread=32556
+[08:48:32] [MacroBK] GUI helper call: gui thread=32556
+[08:48:33] [MacroBK] GUI helper call: gui thread=32556
+[08:48:34] [MacroBK] GUI helper call: gui thread=32556
+[08:48:34] [MacroBK] GUI helper call: gui thread=32556
+[08:48:34] [MacroBK] GUI helper call: gui thread=32556
+[08:48:34] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:35] [MacroBK] GUI helper call: gui thread=32556
+[08:48:36] [MacroBK] GUI helper call: gui thread=32556
+[08:48:36] [MacroBK] GUI helper call: gui thread=32556
+[08:48:36] [MacroBK] GUI helper call: gui thread=32556
+[08:48:36] [MacroBK] GUI helper call: gui thread=32556
+[08:48:37] [MacroBK] GUI helper call: gui thread=32556
+[08:48:37] [MacroBK] GUI helper call: gui thread=32556
+[08:48:37] [MacroBK] GUI helper call: gui thread=32556
+[08:48:37] [MacroBK] GUI helper call: gui thread=32556
+[08:48:38] [MacroBK] GUI helper call: gui thread=32556
+[08:48:38] [MacroBK] SUCCESS source=test action=action-6c33c143 run_id=2

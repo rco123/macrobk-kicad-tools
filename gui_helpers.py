@@ -173,6 +173,7 @@ def script_api(call_sync, check_stop):
         "pcb_select_filter": kc.pcb_select_filter,
         "pcb_select_filter_state": kc.pcb_select_filter_state,
         "pcb_select_layer": kc.pcb_select_layer,
+        "pcb_get_selected_layer": kc.pcb_get_selected_layer,
         "pcb_onoff_layer": kc.pcb_onoff_layer,
         "pcb_layer_up": kc.pcb_layer_up,
         "pcb_layer_down": kc.pcb_layer_down,

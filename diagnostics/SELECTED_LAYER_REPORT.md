@@ -101,3 +101,27 @@ getter를 작성하지 않음. raw capture의 expected_by_human은 사람의 관
 - evidence/python_api_probe.json — 별도 Python introspection, live Frame 아님
 - evidence/baseline_hashes.json — 변경 전 보호 파일 hash
 - evidence/diagnostic-tests.txt / all-tests.txt — fixture 및 전체 테스트
+
+---
+
+## 9. 후속 실측 및 production 반영 — 2026-10-10
+
+수동 Capture 4개(F.Cu, B.Cu, F.Adhesive, Edge.Cuts)를 실제 PCB Editor에서 수집한 뒤
+`diagnostics/comparison.json`으로 비교했다.
+
+모든 테스트 레이어에서 선택된 row의 첫 번째 bitmap(`row/0/0`)은 동일하게 다음 값을 보였다.
+
+```text
+선택:   nontransparent=25, alpha_gt_16=25, opaque=25, alpha_sum=6375
+미선택: nontransparent=1,  alpha_gt_16=0,  opaque=0,  alpha_sum=10
+```
+
+따라서 production `pcb_get_selected_layer()`는 Appearance > Layers의 첫 번째 bitmap을
+active-layer 화살표 indicator로 읽고, `alpha_gt_16_count > 0`인 row의 label을 반환하도록
+반영했다. 둘 이상 또는 0개가 선택으로 판정되면 추측하지 않고 오류를 반환한다.
+
+`pcb_layer_up()` / `pcb_layer_down()`도 이 getter를 사용해 enabled `*.Cu` 레이어만 순환한다.
+현재 레이어가 non-Cu이면 `UP -> 마지막 Cu(보통 B.Cu)`, `DOWN -> 첫 Cu(보통 F.Cu)` 정책을
+적용한다. 이동 후 indicator를 다시 읽어 target 도달을 검증한다.
+
+이 반영본은 Python syntax 검사를 통과했으며, 실제 KiCad live GUI 재검증은 설치 후 수행해야 한다.

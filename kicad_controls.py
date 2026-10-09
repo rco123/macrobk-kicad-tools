@@ -814,70 +814,135 @@ def _pcb_layer_rows(frame=None):
     return rows
 
 
-def _pcb_active_layer_name(frame=None):
-    """Return KiCad's current active layer name without changing the UI.
+def _find_layer_indicator_bitmap(row, label):
+    """Return the Appearance/Layers active-layer arrow bitmap for one row.
 
-    KiCad's wx wrapper does not always expose PCB_EDIT_FRAME.GetActiveLayer()
-    and the toolbar layer selector is a custom control in some builds.  The
-    Appearance/Layers panel is therefore used as the final fallback: KiCad
-    highlights exactly one active-layer row by changing that row panel's
-    background colour while all other layer rows keep the common panel colour.
+    KiCad creates the row controls in this order:
+      active-layer indicator, color swatch, visibility toggle, text label.
+
+    The diagnostic capture for KiCad 9.0.9 confirmed that the indicator is the
+    first bitmap path (row/0/0).  Keep the lookup structural rather than relying
+    on layer names, IDs, focus, or cached state.
+    """
+    children = list(row.GetChildren())
+    if not children:
+        raise RuntimeError("Layer row has no children: {!r}".format(label.GetLabel()))
+
+    try:
+        label_index = children.index(label)
+    except ValueError:
+        label_index = len(children)
+
+    # Only controls before the text label belong to the row decoration area.
+    # The first of them is the active-layer indicator control.
+    candidates = children[:label_index]
+    if not candidates:
+        raise RuntimeError("Layer indicator control not found: {!r}".format(label.GetLabel()))
+
+    indicator = candidates[0]
+    bitmaps = []
+    if isinstance(indicator, wx.StaticBitmap):
+        bitmaps.append(indicator)
+    for child in iter_controls(indicator):
+        if isinstance(child, wx.StaticBitmap):
+            bitmaps.append(child)
+
+    if len(bitmaps) != 1:
+        raise RuntimeError(
+            "Layer indicator bitmap not found: {!r} (matches={})".format(
+                label.GetLabel(), len(bitmaps)
+            )
+        )
+    return bitmaps[0]
+
+
+def _bitmap_alpha_gt_16_count(bitmap):
+    """Return effective-alpha pixel count above 16 for a wx.Bitmap.
+
+    The OFF indicator in the tested Windows KiCad build contains one
+    near-transparent pixel (alpha=10), while the ON arrow contains 25 pixels
+    above alpha 16.  Using a threshold avoids treating that OFF pixel as ON.
+    """
+    try:
+        if not bitmap.IsOk():
+            raise RuntimeError("invalid bitmap")
+        image = bitmap.ConvertToImage()
+        width = int(image.GetWidth())
+        height = int(image.GetHeight())
+        pixel_count = width * height
+        rgb = bytes(image.GetData())
+        alpha = bytes(image.GetAlpha()) if image.HasAlpha() else None
+        mask = (
+            (int(image.GetMaskRed()), int(image.GetMaskGreen()), int(image.GetMaskBlue()))
+            if image.HasMask()
+            else None
+        )
+    except Exception as exc:
+        raise RuntimeError("Could not read layer indicator bitmap: {}".format(exc))
+
+    if alpha is None and mask is None:
+        raise RuntimeError("Layer indicator bitmap has neither alpha nor mask")
+
+    count = 0
+    for index in range(pixel_count):
+        if mask is not None:
+            base = index * 3
+            if tuple(rgb[base:base + 3]) == mask:
+                continue
+        effective_alpha = alpha[index] if alpha is not None else 255
+        if effective_alpha > 16:
+            count += 1
+    return count
+
+
+def _pcb_selected_layer_from_indicator(frame=None):
+    """Return the live active layer from the Appearance selection arrow.
+
+    This intentionally does not use focus, background colour, a MacroBK cache,
+    or the requested value previously passed to pcb_select_layer().
     """
     if frame is None:
         frame = find_pcb_frame()
     if frame is None:
         raise RuntimeError("PCB Editor frame not found")
 
-    rows = _pcb_layer_rows(frame)
-
-    get_active = getattr(frame, "GetActiveLayer", None)
-    if callable(get_active):
+    selected = []
+    sampled = []
+    for _y, _layer_id, name, row, label in _pcb_layer_rows(frame):
         try:
-            active_id = int(get_active())
-            for _y, layer_id, name, _row, _label in rows:
-                if layer_id == active_id:
-                    return name
-        except (RuntimeError, TypeError, ValueError):
-            pass
-
-    selector = _find_layer_selector(frame)
-    if selector is not None:
-        try:
-            selected = str(selector.GetStringSelection()).strip()
-            if selected:
-                return selected
-        except (RuntimeError, AttributeError):
-            pass
-
-    # KiCad APPEARANCE_CONTROLS::OnLayerChanged() resets every layer row to
-    # m_layerPanelColour, then changes only the active row by +/-15 RGB and
-    # enables its indicator.  Detecting the one row whose background differs
-    # from the common row colour gives us the active layer without depending
-    # on KiCad's private C++ wrapper classes.
-    colour_rows = []
-    colour_counts = {}
-    for _y, _layer_id, name, row, _label in rows:
-        try:
-            colour = row.GetBackgroundColour()
-            key = (int(colour.Red()), int(colour.Green()), int(colour.Blue()))
-        except (RuntimeError, AttributeError, TypeError, ValueError):
+            bitmap = _find_layer_indicator_bitmap(row, label)
+            alpha_gt_16 = _bitmap_alpha_gt_16_count(bitmap.GetBitmap())
+        except (RuntimeError, AttributeError) as exc:
+            sampled.append((name, "error:{}".format(exc)))
             continue
-        colour_rows.append((name, key))
-        colour_counts[key] = colour_counts.get(key, 0) + 1
+        sampled.append((name, alpha_gt_16))
+        if alpha_gt_16 > 0:
+            selected.append((name, alpha_gt_16))
 
-    if colour_rows and colour_counts:
-        common_colour = max(colour_counts, key=colour_counts.get)
-        highlighted = [name for name, key in colour_rows if key != common_colour]
-        if len(highlighted) == 1:
-            return highlighted[0]
+    if len(selected) == 1:
+        return selected[0][0]
 
-    raise RuntimeError("Current active PCB layer could not be determined")
+    raise RuntimeError(
+        "Current active PCB layer indicator is ambiguous: selected={} sampled={}".format(
+            selected, sampled
+        )
+    )
+
+
+def pcb_get_selected_layer():
+    """Return the layer that currently has KiCad's active-layer arrow."""
+    return _pcb_selected_layer_from_indicator()
+
+
+def _pcb_active_layer_name(frame=None):
+    """Compatibility wrapper for the verified Appearance indicator reader."""
+    return _pcb_selected_layer_from_indicator(frame)
 
 
 def _pcb_copper_layers(frame=None):
-    """Return enabled/visible-in-stack copper layer names in UI stack order.
+    """Return enabled copper layer names in Appearance stack order.
 
-    Only *.Cu rows are returned.  Non-copper layers such as Mask, Silkscreen,
+    Only *.Cu rows are returned. Non-copper layers such as Mask, Silkscreen,
     Adhesive, Edge.Cuts, and User layers are excluded.
     """
     if frame is None:
@@ -904,79 +969,57 @@ def _pcb_copper_layers(frame=None):
     return result
 
 
-def _dispatch_pcb_layer_hotkey(key_char):
-    """Dispatch KiCad's native layer hotkey directly to the PCB Editor frame.
+def _pcb_move_copper_layer(step):
+    """Move one step within enabled copper layers and return the new layer.
 
-    KiCad already owns the routing-layer semantics:
-      '+' -> pcbnew.Control.layerNext
-      '-' -> pcbnew.Control.layerPrev
+    step < 0: UP / previous copper layer
+    step > 0: DOWN / next copper layer
 
-    During interactive routing KiCad itself builds the candidate sequence from
-    enabled copper layers only, so MacroBK must not reimplement current-layer
-    detection or layer-stack traversal.
+    Policy when the current layer is not copper:
+      UP   -> last copper layer (normally B.Cu)
+      DOWN -> first copper layer (normally F.Cu)
     """
     frame = find_pcb_frame()
     if frame is None:
         raise RuntimeError("PCB Editor frame not found")
 
-    key_char = str(key_char)
-    if key_char not in ("+", "-"):
-        raise ValueError("Unsupported PCB layer hotkey: {!r}".format(key_char))
+    copper = _pcb_copper_layers(frame)
+    current = _pcb_selected_layer_from_indicator(frame)
 
-    event = wx.KeyEvent(wx.wxEVT_CHAR)
-    event.SetEventObject(frame)
-    try:
-        event.SetId(frame.GetId())
-    except (AttributeError, RuntimeError):
-        pass
+    if current in copper:
+        index = copper.index(current)
+        target = copper[(index - 1) % len(copper)] if step < 0 else copper[(index + 1) % len(copper)]
+    else:
+        target = copper[-1] if step < 0 else copper[0]
 
-    # wxPython exposes the native key fields as properties on KeyEvent.
-    code = ord(key_char)
-    try:
-        event.m_keyCode = code
-    except Exception:
-        try:
-            event.SetKeyCode(code)
-        except Exception as exc:
-            raise RuntimeError(
-                "Could not build KiCad layer hotkey event: {!r}".format(key_char)
-            ) from exc
-
-    try:
-        event.m_uniChar = code
-    except Exception:
-        pass
-
-    processed = bool(frame.GetEventHandler().ProcessEvent(event))
+    pcb_select_layer(target)
     _process_pending_gui_events()
-
-    if not processed:
+    actual = _pcb_selected_layer_from_indicator(frame)
+    if norm_label(actual) != norm_label(target):
         raise RuntimeError(
-            "KiCad did not process native layer hotkey: {!r}".format(key_char)
+            "Copper layer move did not reach target: current={!r} target={!r} actual={!r}".format(
+                current, target, actual
+            )
         )
-
-    # Do not read the active layer back here.  Some KiCad 9 wx wrappers do not
-    # expose GetActiveLayer(), but the native action itself has already been
-    # dispatched to KiCad's tool system.
-    return True
+    return actual
 
 
 def pcb_layer_up():
-    """Run KiCad's native 'Switch to Previous Layer' action.
+    """Move to the previous enabled copper layer.
 
-    KiCad default hotkey: '-'.
-    During routing KiCad cycles only the enabled copper layers.
+    Copper layers wrap around.  From any non-copper layer, UP enters the last
+    copper layer in the stack (normally B.Cu).
     """
-    return _dispatch_pcb_layer_hotkey("-")
+    return _pcb_move_copper_layer(-1)
 
 
 def pcb_layer_down():
-    """Run KiCad's native 'Switch to Next Layer' action.
+    """Move to the next enabled copper layer.
 
-    KiCad default hotkey: '+'.
-    During routing KiCad cycles only the enabled copper layers.
+    Copper layers wrap around.  From any non-copper layer, DOWN enters the first
+    copper layer in the stack (normally F.Cu).
     """
-    return _dispatch_pcb_layer_hotkey("+")
+    return _pcb_move_copper_layer(1)
 
 
 def pcb_onoff_layer(name, value=None):
