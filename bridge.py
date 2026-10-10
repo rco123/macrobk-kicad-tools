@@ -59,15 +59,15 @@ def show_manager():
         _show_manager()
         return True
     except Exception as exc:
-        _show_load_error("MacroBK Plugin Manager error", exc)
+        _show_load_error("MacroBK PCB Tools error", exc)
         return False
 
 
 class MacroBKDRCBridge(pcbnew.ActionPlugin):
     def defaults(self):
-        self.name = "MacroBK Plugin Manager"
+        self.name = "MacroBK PCB Tools"
         self.category = "MacroBK"
-        self.description = "Configure and test the MacroBK KiCad trigger"
+        self.description = "PCB design and automation tools for KiCad"
         self.show_toolbar_button = False
 
     def Run(self):

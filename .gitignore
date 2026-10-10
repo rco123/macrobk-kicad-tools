@@ -1,4 +1,15 @@
-
-/__pycache__
-
-*.pyc
+# Python caches and runtime files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+*.log
+*.log.*
+*.tmp
+# User-specific MacroBK Action configuration
+config.json
+# Local editor/project files
+.vscode/
+.idea/

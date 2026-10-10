@@ -1,0 +1,23 @@
+{
+  "name": "Open DRC",
+  "trigger": {
+    "enabled": true,
+    "ctrl": true,
+    "win": true,
+    "alt": false,
+    "shift": false,
+    "key": "F12",
+    "keys": [
+      "F12"
+    ]
+  },
+  "phone": {
+    "host": "127.0.0.1",
+    "port": 47831,
+    "command": "KICAD_DRC"
+  },
+  "action": {
+    "type": "python",
+    "script": "open_drc_window()"
+  }
+}

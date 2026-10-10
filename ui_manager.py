@@ -78,7 +78,7 @@ def get_manager_frame():
 
 class MacroBKPluginManager(wx.Frame):
     def __init__(self, parent):
-        super().__init__(parent, title="MacroBK Plugin Manager", size=(1000, 660))
+        super().__init__(parent, title="MacroBK PCB Tools", size=(1000, 660))
         self.SetMinSize((960, 620))
         self.SetIcon(wx.Icon(icon_bitmap("plugin", 32)))
         self._blink_timer = None
@@ -102,7 +102,7 @@ class MacroBKPluginManager(wx.Frame):
         header_icon = wx.StaticBitmap(header, bitmap=icon_bitmap("plugin", 28))
         header_sizer.Add(header_icon, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 16)
         title_stack = wx.BoxSizer(wx.VERTICAL)
-        product_title = wx.StaticText(header, label="MacroBK Plugin Manager")
+        product_title = wx.StaticText(header, label="MacroBK PCB Tools")
         product_font = product_title.GetFont()
         product_font.SetPointSize(13)
         product_font.SetWeight(wx.FONTWEIGHT_BOLD)
@@ -567,7 +567,7 @@ class MacroBKPluginManager(wx.Frame):
 
     def on_delete_action(self, _event):
         if len(self.actions) <= 1:
-            wx.MessageBox("At least one action must remain.", "MacroBK Plugin Manager", wx.OK | wx.ICON_INFORMATION)
+            wx.MessageBox("At least one action must remain.", "MacroBK PCB Tools", wx.OK | wx.ICON_INFORMATION)
             return
         action = self.actions[self.selected_index]
         answer = wx.MessageBox(

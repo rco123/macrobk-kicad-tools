@@ -182,10 +182,7 @@ def script_api(call_sync, check_stop):
         "pcb_set_netclass_track_width": kc.pcb_set_netclass_track_width,
         "pcb_get_snap_settings": kc.pcb_get_snap_settings,
         "pcb_set_snap_settings": kc.pcb_set_snap_settings,
-        "test_preferences_direct_children": kc.test_preferences_direct_children,
-        "test_preferences_control_tree": kc.test_preferences_control_tree,
-        "test_preferences_checkbox_value": kc.test_preferences_checkbox_value,
-        "test_preferences_checkbox_toggle_restore": kc.test_preferences_checkbox_toggle_restore,
+
     }
 
     def wrap(function):

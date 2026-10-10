@@ -1,6 +1,0 @@
-{
-  "owned_page_destroyed": true,
-  "reason": "explicit remove or parent destruction",
-  "timer": false,
-  "frame_bindings": false
-}
