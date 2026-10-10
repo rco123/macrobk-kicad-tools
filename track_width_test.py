@@ -1,0 +1,8 @@
+print("=== Native Q Routing Width Test ===")
+print("Start routing with X, keep the mouse on PCB canvas, then run ONE line below.")
+print("The function returns immediately; KiCad's native Q dialog is filled/accepted by wx timers.")
+print()
+print("requested =", pcb_set_routing_track_width(0.40), "mm")
+print("Expected: current routing head continues at 0.40 mm without pcbnew.Refresh().")
+print("Run again later with 0.75 after the first change has completed.")
+print("=== END ===")

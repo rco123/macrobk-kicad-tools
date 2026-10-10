@@ -1022,6 +1022,483 @@ def pcb_layer_down():
     return _pcb_move_copper_layer(1)
 
 
+def _pcb_width_mm_to_iu(width_mm, pcbnew):
+    """Validate a millimetre width and convert it to KiCad internal units."""
+    try:
+        value = float(width_mm)
+    except (TypeError, ValueError):
+        raise ValueError("Track width must be a number in mm: {!r}".format(width_mm))
+
+    if value <= 0.0:
+        raise ValueError("Track width must be greater than 0 mm: {!r}".format(width_mm))
+
+    width_iu = int(pcbnew.FromMM(value))
+    if width_iu <= 0:
+        raise ValueError("Track width is too small for KiCad internal units: {!r}".format(width_mm))
+    return value, width_iu
+
+
+def pcb_set_selected_track_width(width_mm):
+    """Set width of the currently selected routed track segment(s), in mm.
+
+    Only selected PCB_TRACK items are changed.  PCB_VIA is explicitly excluded,
+    and connected but unselected track segments are not touched.
+
+    Returns the number of selected track segments whose width actually changed.
+
+    Note: this uses KiCad's public Python item mutation API.  KiCad 9's Python
+    bindings do not expose the editor BOARD_COMMIT/undo path used by the native
+    Change Track Width command, so this helper should be live-tested for the
+    desired Ctrl+Z behaviour before relying on undo.
+    """
+    try:
+        import pcbnew
+    except Exception as exc:
+        raise RuntimeError("pcbnew module unavailable: {}".format(exc))
+
+    board = _pcb_board()
+    _width_mm, width_iu = _pcb_width_mm_to_iu(width_mm, pcbnew)
+
+    try:
+        selected_items = list(pcbnew.GetCurrentSelection())
+    except Exception as exc:
+        raise RuntimeError("Could not read current PCB selection: {}".format(exc))
+
+    selected_tracks = []
+    via_type = getattr(pcbnew, "PCB_VIA", None)
+    track_type = getattr(pcbnew, "PCB_TRACK", None)
+    if track_type is None:
+        raise RuntimeError("pcbnew.PCB_TRACK is unavailable")
+
+    for item in selected_items:
+        try:
+            if via_type is not None and isinstance(item, via_type):
+                continue
+            if isinstance(item, track_type):
+                selected_tracks.append(item)
+        except TypeError:
+            continue
+
+    if not selected_tracks:
+        raise RuntimeError("No routed track segment is currently selected")
+
+    changed = 0
+    changed_items = []
+    for item in selected_tracks:
+        try:
+            before = int(item.GetWidth())
+            if before == width_iu:
+                continue
+            item.SetWidth(width_iu)
+            actual = int(item.GetWidth())
+        except Exception as exc:
+            raise RuntimeError("Could not change selected track width: {}".format(exc))
+
+        if actual != width_iu:
+            raise RuntimeError(
+                "Selected track width verification failed: requested_iu={} actual_iu={}".format(
+                    width_iu, actual
+                )
+            )
+        changed += 1
+        changed_items.append(item)
+
+    # Notify the board/view about changed geometry.  OnItemChanged is public in
+    # KiCad 9 Python and avoids assuming a Python-exposed BOARD_COMMIT object.
+    for item in changed_items:
+        notify = getattr(board, "OnItemChanged", None)
+        if callable(notify):
+            try:
+                notify(item)
+            except Exception:
+                pass
+
+    if changed:
+        refresh = getattr(pcbnew, "Refresh", None)
+        if callable(refresh):
+            refresh()
+        update_ui = getattr(pcbnew, "UpdateUserInterface", None)
+        if callable(update_ui):
+            update_ui()
+        _process_pending_gui_events()
+
+    return changed
+
+
+_routing_width_native_state = globals().get("_routing_width_native_state", None)
+_routing_width_native_serial = globals().get("_routing_width_native_serial", 0)
+
+
+def _is_descendant_window(window, ancestor):
+    """Return True when *window* belongs to *ancestor*'s wx hierarchy."""
+    current = window
+    while current is not None:
+        if current is ancestor:
+            return True
+        try:
+            current = current.GetParent()
+        except (AttributeError, RuntimeError):
+            return False
+    return False
+
+
+def _pcb_hotkey_focus_target(frame):
+    """Best-effort focus target for a native PCB hotkey.
+
+    Phone-triggered actions normally arrive while the canvas already owns focus;
+    preserve that first.  Run Test moves focus to MacroBK Manager, so then prefer
+    the PCB child currently under the mouse, followed by a canvas/draw-panel-like
+    child.  The frame itself is the final fallback.
+    """
+    try:
+        focus = wx.Window.FindFocus()
+        if focus is not None and _is_descendant_window(focus, frame):
+            return focus
+    except Exception:
+        pass
+
+    finder = getattr(wx, "FindWindowAtPointer", None)
+    if callable(finder):
+        try:
+            pointed = finder()
+            if isinstance(pointed, tuple):
+                pointed = pointed[0]
+            if pointed is not None and _is_descendant_window(pointed, frame):
+                return pointed
+        except Exception:
+            pass
+
+    best = None
+    best_score = -1
+    for control in iter_controls(frame):
+        try:
+            if not control.IsShown() or not control.IsEnabled():
+                continue
+            class_name = str(getattr(control, "GetClassName", lambda: "")()).lower()
+            native_name = str(control.GetClassInfo().GetClassName()).lower()
+            name = str(control.GetName()).lower()
+            text = " ".join((class_name, native_name, name))
+            size = control.GetClientSize()
+            area = max(0, int(size.x)) * max(0, int(size.y))
+        except Exception:
+            continue
+
+        keyword_score = 0
+        if "canvas" in text:
+            keyword_score += 100000000
+        if "gal" in text:
+            keyword_score += 50000000
+        if "draw" in text:
+            keyword_score += 10000000
+        score = keyword_score + min(area, 9000000)
+        if score > best_score:
+            best_score = score
+            best = control
+
+    return best or frame
+
+
+def _send_native_q_hotkey(frame):
+    """Inject one real Windows Q keystroke into KiCad's focused PCB window.
+
+    This intentionally uses the OS input path instead of synthesizing a wx
+    KeyEvent.  KiCad's Interactive Router hotkeys are consumed by its tool
+    manager, and direct wx ProcessEvent key synthesis does not reach that path.
+    """
+    if os.name != "nt":
+        raise RuntimeError("Native Q routing-width automation currently requires Windows")
+
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        target = _pcb_hotkey_focus_target(frame)
+        try:
+            frame.Raise()
+        except Exception:
+            pass
+        try:
+            target.SetFocus()
+        except Exception:
+            pass
+
+        user32 = ctypes.windll.user32
+        try:
+            user32.SetForegroundWindow(wintypes.HWND(int(frame.GetHandle())))
+        except Exception:
+            pass
+
+        # keybd_event goes through the same Windows keyboard path as a physical Q.
+        VK_Q = 0x51
+        KEYEVENTF_KEYUP = 0x0002
+        user32.keybd_event(VK_Q, 0, 0, 0)
+        user32.keybd_event(VK_Q, 0, KEYEVENTF_KEYUP, 0)
+    except Exception as exc:
+        raise RuntimeError("Could not send native Q hotkey to PCB Editor: {}".format(exc))
+
+
+def _find_custom_track_via_dialog(baseline_windows):
+    """Find KiCad's native Custom Track/Via Size dialog after Q."""
+    windows = list(wx.GetTopLevelWindows())
+    ordered = [window for window in windows if window not in baseline_windows]
+    ordered += [window for window in windows if window in baseline_windows]
+
+    for window in ordered:
+        try:
+            if not window.IsShown():
+                continue
+            labels = []
+            for child in iter_controls(window):
+                if isinstance(child, wx.StaticText):
+                    labels.append(norm_label(child.GetLabel()))
+            has_track = any(label.startswith("track width") for label in labels)
+            has_via = any("via" in label for label in labels)
+            title = norm_label(getattr(window, "GetTitle", lambda: "")())
+            if has_track and (has_via or ("track" in title and "via" in title)):
+                return window
+        except Exception:
+            continue
+    return None
+
+
+def _find_track_width_text_control(dialog):
+    """Locate the text editor paired with the native dialog's Track width label."""
+    labels = []
+    text_controls = []
+    for control in iter_controls(dialog):
+        try:
+            if isinstance(control, wx.StaticText) and norm_label(control.GetLabel()).startswith("track width"):
+                labels.append(control)
+            if isinstance(control, wx.TextCtrl) and control.IsShown() and control.IsEnabled():
+                text_controls.append(control)
+        except (RuntimeError, AttributeError):
+            continue
+
+    if len(labels) != 1:
+        raise RuntimeError("Custom Track/Via Size Track width label is missing or ambiguous")
+    if not text_controls:
+        raise RuntimeError("Custom Track/Via Size track-width editor was not found")
+
+    label = labels[0]
+    try:
+        label_rect = label.GetScreenRect()
+        label_cy = label_rect.y + label_rect.height / 2.0
+
+        def score(control):
+            rect = control.GetScreenRect()
+            cy = rect.y + rect.height / 2.0
+            right_penalty = 0 if rect.x >= label_rect.x else 10000
+            return abs(cy - label_cy) + right_penalty
+
+        return min(text_controls, key=score)
+    except Exception:
+        # Generated KiCad dialogs create the Track width editor before the via
+        # editors, so traversal order is a safe fallback after label matching.
+        return text_controls[0]
+
+
+def _command_ok_button(dialog):
+    """Press the dialog's native OK button so TransferDataFromWindow runs."""
+    button = None
+    try:
+        button = dialog.FindWindowById(wx.ID_OK)
+    except Exception:
+        pass
+    if button is None:
+        for control in iter_controls(dialog):
+            try:
+                if isinstance(control, wx.Button) and control.GetId() == wx.ID_OK:
+                    button = control
+                    break
+            except Exception:
+                continue
+    if button is None:
+        raise RuntimeError("Custom Track/Via Size OK button was not found")
+
+    event = wx.CommandEvent(wx.wxEVT_BUTTON, wx.ID_OK)
+    event.SetEventObject(button)
+    command = getattr(button, "Command", None)
+    if callable(command):
+        command(event)
+        return
+    if not button.GetEventHandler().ProcessEvent(event):
+        raise RuntimeError("KiCad did not process Custom Track/Via Size OK")
+
+
+def _finish_native_routing_width_request(serial, requested_mm, requested_iu):
+    global _routing_width_native_state
+    state = _routing_width_native_state
+    if not state or state.get("serial") != serial:
+        return
+
+    try:
+        import pcbnew
+        board = _pcb_board()
+        settings = board.GetDesignSettings()
+        custom_iu = int(settings.GetCustomTrackWidth())
+        custom_mode = bool(settings.UseCustomTrackViaSize())
+        if custom_iu != requested_iu or not custom_mode:
+            log(
+                "native Q routing width verification failed: requested_mm={} requested_iu={} "
+                "custom_iu={} custom_mode={}".format(
+                    requested_mm, requested_iu, custom_iu, custom_mode
+                )
+            )
+        else:
+            log("native Q routing width applied: {:.6g} mm".format(requested_mm))
+    except Exception as exc:
+        log("native Q routing width verification error: {}".format(exc))
+    finally:
+        _routing_width_native_state = None
+
+
+def _fill_native_routing_width_dialog(serial, attempts=40):
+    """Timer callback: fill Q's native dialog and press OK."""
+    global _routing_width_native_state
+    state = _routing_width_native_state
+    if not state or state.get("serial") != serial:
+        return
+
+    dialog = _find_custom_track_via_dialog(state["baseline_windows"])
+    if dialog is None:
+        if attempts > 0:
+            call_later(50, _fill_native_routing_width_dialog, serial, attempts - 1)
+            return
+        _routing_width_native_state = None
+        log("native Q routing width failed: Custom Track/Via Size dialog did not appear")
+        return
+
+    try:
+        editor = _find_track_width_text_control(dialog)
+        # An explicit unit suffix makes the API's width_mm contract independent
+        # of PCB Editor's currently selected display units (mm/in/mil).
+        text = "{:.12g} mm".format(state["requested_mm"])
+        change_value = getattr(editor, "ChangeValue", None)
+        if callable(change_value):
+            change_value(text)
+        else:
+            editor.SetValue(text)
+        editor.SetInsertionPointEnd()
+        _command_ok_button(dialog)
+        call_later(
+            100,
+            _finish_native_routing_width_request,
+            serial,
+            state["requested_mm"],
+            state["requested_iu"],
+        )
+    except Exception as exc:
+        _routing_width_native_state = None
+        log("native Q routing width dialog automation failed: {}".format(exc))
+
+
+def pcb_set_routing_track_width(width_mm):
+    """Set routing width by executing KiCad's native Q action.
+
+    Unlike directly changing BOARD_DESIGN_SETTINGS, this deliberately follows
+    the user's verified KiCad path:
+
+        native Q -> Custom Track/Via Size dialog -> OK
+        -> ROUTER_TOOL::CustomTrackWidthDialog
+        -> onTrackViaSizeChanged -> UpdateSizes -> Move
+
+    That native router notification is what updates the active routing head
+    without rebuilding the whole PCB view.  The requested width is entered with
+    an explicit ``mm`` suffix; all via fields are left untouched.
+
+    The helper schedules the modal-dialog fill on wx timers and returns the
+    requested width immediately.  Repeated calls are rejected until the current
+    native Q dialog transaction finishes.
+    """
+    global _routing_width_native_state, _routing_width_native_serial
+
+    try:
+        import pcbnew
+    except Exception as exc:
+        raise RuntimeError("pcbnew module unavailable: {}".format(exc))
+
+    requested_mm, width_iu = _pcb_width_mm_to_iu(width_mm, pcbnew)
+    frame = find_pcb_frame()
+    if frame is None:
+        raise RuntimeError("PCB Editor frame not found")
+
+    if _routing_width_native_state is not None:
+        raise RuntimeError("A native Q routing-width change is already in progress")
+
+    _routing_width_native_serial += 1
+    serial = _routing_width_native_serial
+    _routing_width_native_state = {
+        "serial": serial,
+        "requested_mm": requested_mm,
+        "requested_iu": width_iu,
+        "baseline_windows": tuple(wx.GetTopLevelWindows()),
+    }
+
+    # Queue the dialog observer before Q.  Q itself is a real OS keystroke so
+    # KiCad's TOOL_MANAGER, rather than MacroBK, owns the router state change.
+    call_later(25, _fill_native_routing_width_dialog, serial, 40)
+    try:
+        _send_native_q_hotkey(frame)
+    except Exception:
+        _routing_width_native_state = None
+        raise
+
+    return requested_mm
+
+def pcb_set_netclass_track_width():
+    """Return routing track width control to the netclass/rule setting.
+
+    This disables KiCad's custom track/via-size mode and selects track-width
+    index 0 ("use netclass width"). Existing routed tracks are not modified.
+    The return value is the effective current routing width in millimetres when
+    KiCad exposes it.
+
+    KiCad 9 exposes one shared custom track/via-size enable flag, so leaving
+    custom track-width mode also leaves custom via-size mode.
+    """
+    try:
+        import pcbnew
+    except Exception as exc:
+        raise RuntimeError("pcbnew module unavailable: {}".format(exc))
+
+    board = _pcb_board()
+    try:
+        settings = board.GetDesignSettings()
+    except Exception as exc:
+        raise RuntimeError("Could not access PCB design settings: {}".format(exc))
+
+    required = (
+        "UseCustomTrackViaSize",
+        "SetTrackWidthIndex",
+        "GetCurrentTrackWidth",
+    )
+    missing = [name for name in required if not callable(getattr(settings, name, None))]
+    if missing:
+        raise RuntimeError(
+            "KiCad netclass-width API unavailable: {}".format(", ".join(missing))
+        )
+
+    try:
+        # Track-width index 0 is KiCad's "use netclass width" entry.
+        settings.UseCustomTrackViaSize(False)
+        settings.SetTrackWidthIndex(0)
+        actual_iu = int(settings.GetCurrentTrackWidth())
+    except Exception as exc:
+        raise RuntimeError("Could not restore netclass track width: {}".format(exc))
+
+    # Match KiCad's normal routing-width UI refresh path as closely as the
+    # public Python bindings allow. This does not alter any existing track.
+    update_ui = getattr(pcbnew, "UpdateUserInterface", None)
+    if callable(update_ui):
+        update_ui()
+    _process_pending_gui_events()
+
+    try:
+        return float(pcbnew.ToMM(actual_iu))
+    except Exception:
+        return actual_iu
+
+
 def pcb_onoff_layer(name, value=None):
     """Read or change one PCB layer's visibility in Appearance > Layers.
 
