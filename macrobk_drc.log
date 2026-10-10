@@ -8138,3 +8138,74 @@ from=127.0.0.1:54156
 [11:24:59] [MacroBK] menu.ProcessEvent -> True
 [11:24:59] [MacroBK] menu path found: 'Preferences...', id=5022
 [11:25:01] [MacroBK] menu.ProcessEvent -> True
+[11:36:43] [MacroBK] MANAGER CLOSE
+[11:36:44] [MacroBK] PCB FRAME CLOSE DETECTED service=8cf94a466539 epoch=3 thread=52460
+[11:36:48] [MacroBK] PCB FRAME DESTROY DETECTED service=8cf94a466539 epoch=3 thread=52460
+[11:36:48] [MacroBK] SERVICE SHUTDOWN START service=8cf94a466539 epoch=4 thread=52460
+[11:36:48] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[11:36:48] [MacroBK] PLUGIN REGISTRATION RELEASED service=8cf94a466539 epoch=4 thread=52460
+[11:36:48] [MacroBK] WORKERS STOP REQUESTED count=0 service=8cf94a466539 epoch=4 thread=52460
+[11:36:48] [MacroBK] UDP LISTENER STOP service=8cf94a466539 epoch=4 thread=43004
+[11:36:48] [MacroBK] UDP SOCKET CLOSED service=8cf94a466539 epoch=4 thread=52460
+[11:36:48] [MacroBK] SERVICE SHUTDOWN COMPLETE service=8cf94a466539 epoch=4 thread=52460
+[11:47:17] [MacroBK] UDP SOCKET CREATED service=11c29da990ad epoch=1 thread=4904
+[11:47:17] [MacroBK] UDP LISTENER START service=11c29da990ad epoch=1 thread=53000
+[11:47:17] [MacroBK] SERVICE START service=11c29da990ad epoch=1 thread=4904
+[11:47:17] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=53504
+[11:47:18] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=11c29da990ad epoch=1 thread=4904
+[11:47:22] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:47:24] [MacroBK] menu.ProcessEvent -> True
+[11:47:44] [MacroBK] UDP SOCKET CREATED service=f0e0a4ffaa9c epoch=1 thread=24108
+[11:47:44] [MacroBK] UDP LISTENER START service=f0e0a4ffaa9c epoch=1 thread=43300
+[11:47:44] [MacroBK] SERVICE START service=f0e0a4ffaa9c epoch=1 thread=24108
+[11:47:44] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=48936
+[11:47:46] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=f0e0a4ffaa9c epoch=1 thread=24108
+[11:47:54] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:47:55] [MacroBK] menu.ProcessEvent -> True
+[11:48:41] [MacroBK] UDP SOCKET CREATED service=21b4dd2fc50a epoch=1 thread=48004
+[11:48:41] [MacroBK] UDP LISTENER START service=21b4dd2fc50a epoch=1 thread=38132
+[11:48:41] [MacroBK] SERVICE START service=21b4dd2fc50a epoch=1 thread=48004
+[11:48:41] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=52508
+[11:48:41] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=21b4dd2fc50a epoch=1 thread=48004
+[11:48:47] [MacroBK] MANAGER OPEN
+[11:49:11] [MacroBK] configuration saved path=C:\Users\sgkim\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\config.json
+[11:49:11] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[11:49:11] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=12672
+[11:49:13] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=1 thread=44380
+[11:49:13] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=1
+[11:49:16] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=2 thread=41852
+[11:49:16] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=2
+[11:49:17] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=3 thread=29172
+[11:49:17] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=3
+[11:49:33] [MacroBK] MANAGER CLOSE
+[11:49:35] [MacroBK] PCB FRAME CLOSE DETECTED service=21b4dd2fc50a epoch=1 thread=48004
+[11:49:38] [MacroBK] PCB FRAME DESTROY DETECTED service=21b4dd2fc50a epoch=1 thread=48004
+[11:49:38] [MacroBK] SERVICE SHUTDOWN START service=21b4dd2fc50a epoch=2 thread=48004
+[11:49:38] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[11:49:38] [MacroBK] PLUGIN REGISTRATION RELEASED service=21b4dd2fc50a epoch=2 thread=48004
+[11:49:38] [MacroBK] WORKERS STOP REQUESTED count=0 service=21b4dd2fc50a epoch=2 thread=48004
+[11:49:38] [MacroBK] UDP LISTENER STOP service=21b4dd2fc50a epoch=2 thread=38132
+[11:49:38] [MacroBK] UDP SOCKET CLOSED service=21b4dd2fc50a epoch=2 thread=48004
+[11:49:38] [MacroBK] SERVICE SHUTDOWN COMPLETE service=21b4dd2fc50a epoch=2 thread=48004
+[11:49:52] [MacroBK] UDP SOCKET CREATED service=589eb03af22e epoch=1 thread=18792
+[11:49:52] [MacroBK] UDP LISTENER START service=589eb03af22e epoch=1 thread=53168
+[11:49:52] [MacroBK] SERVICE START service=589eb03af22e epoch=1 thread=18792
+[11:49:52] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=53452
+[11:49:52] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=589eb03af22e epoch=1 thread=18792
+[11:49:58] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:50:00] [MacroBK] menu.ProcessEvent -> True
+[12:40:18] [MacroBK] UDP SOCKET CREATED service=aafc3b24ac59 epoch=1 thread=44324
+[12:40:18] [MacroBK] UDP LISTENER START service=aafc3b24ac59 epoch=1 thread=40272
+[12:40:18] [MacroBK] SERVICE START service=aafc3b24ac59 epoch=1 thread=44324
+[12:40:18] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=54300
+[12:40:18] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=aafc3b24ac59 epoch=1 thread=44324
+[12:40:26] [MacroBK] SNAP settings applied without Preferences popup: {'pads': 'Always'}
+[12:40:31] [MacroBK] SNAP settings applied without Preferences popup: {'graphics': 'Never'}
+[12:40:32] [MacroBK] SNAP settings applied without Preferences popup: {'tracks_vias': 'Never'}
+[12:40:34] [MacroBK] SNAP settings applied without Preferences popup: {'pads': 'Never'}
+[12:40:57] [MacroBK] SNAP settings applied without Preferences popup: {'pads': 'Always'}
+[12:40:59] [MacroBK] SNAP settings applied without Preferences popup: {'tracks_vias': 'Always'}
+[12:41:01] [MacroBK] SNAP settings applied without Preferences popup: {'graphics': 'Always'}
+[12:41:27] [MacroBK] SNAP settings applied without Preferences popup: {'pads': 'When routing tracks'}
+[12:41:30] [MacroBK] SNAP settings applied without Preferences popup: {'tracks_vias': 'When routing tracks'}
+[12:41:32] [MacroBK] SNAP settings applied without Preferences popup: {'graphics': 'Never'}

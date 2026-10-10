@@ -18,7 +18,7 @@
   },
   "action": {
     "type": "python",
-    "script": "pcb_set_routing_track_width(0.4)"
+    "script": "import runpy\r\n\r\nrunpy.run_path(\r\n    r\"C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\diagnostics\\snap-production\\live_test.py\",\r\n    run_name=\"__main__\",\r\n)"
   },
   "actions": [
     {
@@ -43,7 +43,7 @@
       },
       "action": {
         "type": "python",
-        "script": "pcb_set_routing_track_width(0.4)"
+        "script": "import runpy\r\n\r\nrunpy.run_path(\r\n    r\"C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\diagnostics\\snap-production\\live_test.py\",\r\n    run_name=\"__main__\",\r\n)"
       }
     },
     {

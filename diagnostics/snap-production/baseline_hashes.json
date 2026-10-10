@@ -1,0 +1,54 @@
+[
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\__init__.py",
+    "Hash": "69A6B4B1B55AA6DEC6ED6191741D9C41478B3E7F7B7FAE6F689BF36AC854BE67"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\bridge.py",
+    "Hash": "FD4054A9412AA7EDC636B5DBC50AD987CD1DBEE7FC32CB1D8AEEBD4D03A5FBFC"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\gui_helpers.py",
+    "Hash": "D545B5B3D7A9834C53A80A5E2C934E7D58E4DBA637CFE235B4238A13CA9EAD8F"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\key_picker.py",
+    "Hash": "A505826B17C6C2443458F5D80A1789544AF167583783B172D07C2B3442E1BC7C"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\kicad_controls.py",
+    "Hash": "2B21581AD5CC716DC3F3CB60B264F21AF73E602A3CFF3F1C4AF9B3B7CD33BE2B"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\layer_diagnostics.py",
+    "Hash": "5BB6266C7ED179274F1B464136352EA6C4A79814507F0516BF3F3A44E4124965"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\layer_function_test.py",
+    "Hash": "48DF5BC869823728A25E8A3B2D1B6AD3B7F10A5C9ACD27C7123325B22BF145E8"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\layer_updown_test.py",
+    "Hash": "A34741148517B90E08FE1D78DA5E6D8E0B221CB130425FF80C42513D76FD9512"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\lifecycle.py",
+    "Hash": "88A26092BC900A334E5304D2D4E9502BAE74F542ECEE6FC57F913C10A31D0646"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\phone_trigger_test.py",
+    "Hash": "E92A8E4030FD50625FC7721A6976E061B3E8A450CE66CECECA7899AC205139B8"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\track_width_test.py",
+    "Hash": "4CCBAC31387C94F0067C741839747CF312F5AD12CE9F62E599F9C61F7D223B47"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\trigger_core.py",
+    "Hash": "4E9BC18125956B385839F56D3E31651D0D97345891F66D08F7CAE75698918E0B"
+  },
+  {
+    "Path": "C:\\Users\\sgkim\\Documents\\KiCad\\9.0\\scripting\\plugins\\macrobk_drc_bridge\\ui_manager.py",
+    "Hash": "D0C23F1524DC8282E9E1B85DA02CA211163A7ADE21275157183C7BBEE35D3BF1"
+  }
+]

@@ -89,11 +89,12 @@ class MacroBKService:
         self.discovery_timer = None
         self.ui_module = None
         self.gui_cleanup_pending = False
+        self.snap_attempts = 0
         atexit.register(self.shutdown)
 
     def remember_modules(self):
         for suffix in ("bridge", "trigger_core", "kicad_controls", "gui_helpers",
-                       "ui_manager", "key_picker", "lifecycle"):
+                       "ui_manager", "key_picker", "lifecycle", "snap_panel", "snap_preferences"):
             name = self.core.__package__ + "." + suffix
             module = sys.modules.get(name)
             if module is not None:
@@ -167,6 +168,7 @@ class MacroBKService:
             self.discovery_timer.Stop()
             self.discovery_timer = None
         if self.frame is not None and bool(self.frame) and not self.frame.IsBeingDeleted():
+            self.attach_snap_tab()
             return
         frame = self.core.kc.find_pcb_frame()
         if frame is None:
@@ -174,11 +176,25 @@ class MacroBKService:
             return
         self.discovery_timer = None
         self.frame = frame
+        self.snap_attempts = 0
         self.frame_id = frame.GetId()
         frame.Bind(wx.EVT_CLOSE, self.on_frame_close)
         frame.Bind(wx.EVT_WINDOW_DESTROY, self.on_frame_destroy)
         self.log("PCB FRAME ATTACHED name={!r} class={!r}".format(
             frame.GetName(), frame.GetClassInfo().GetClassName()))
+        self.attach_snap_tab()
+
+    def attach_snap_tab(self):
+        import wx
+        try:
+            from .snap_panel import attach_snap_tab
+            page = attach_snap_tab(self.frame)
+            self.remember_modules()
+            if page is None and self.snap_attempts < 20:
+                self.snap_attempts += 1
+                self.discovery_timer = wx.CallLater(500, self.attach_frame)
+        except Exception as exc:
+            self.log("SNAP attachment error: " + repr(exc))
 
     def on_frame_close(self, event):
         # KiCad can veto Close during its save prompt. Destruction is the
@@ -230,6 +246,9 @@ class MacroBKService:
                 self.discovery_timer = None
             frame, self.frame = self.frame, None
             self.frame_id = None
+            snap = sys.modules.get(self.core.__package__ + ".snap_panel")
+            if snap is not None:
+                cleanup("SNAP panel", lambda: snap.remove_snap_tab(frame))
             if frame is not None and bool(frame):
                 cleanup("Close binding", lambda: frame.Unbind(wx.EVT_CLOSE, handler=self.on_frame_close))
                 cleanup("Destroy binding", lambda: frame.Unbind(wx.EVT_WINDOW_DESTROY, handler=self.on_frame_destroy))

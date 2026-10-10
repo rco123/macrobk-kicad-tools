@@ -113,6 +113,27 @@ def get_control_info(control):
     }
 
 
+def pcb_get_snap_settings(include_choices=False):
+    """Read KiCad Magnetic Points without opening Preferences.
+
+    The read side uses KiCad's own saved pcbnew.json values.  The SNAP panel can
+    therefore enter/refresh safely without creating a modal window.
+    """
+    from .snap_preferences import request
+    return request(include_choices=include_choices)
+
+
+def pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None):
+    """Apply provided Magnetic Points values without opening Preferences.
+
+    Only non-None fields are changed.  The backend patches KiCad's own saved
+    Magnetic Points scalars and uses SETTINGS_MANAGER.Load() to reload the live
+    registered settings; no dialog/menu automation is used.
+    """
+    from .snap_preferences import request
+    return request({"pads": pads, "tracks_vias": tracks_vias, "graphics": graphics})
+
+
 def is_drc_label(label):
     value = norm_label(label)
     exact = {
