@@ -33,27 +33,35 @@ class SnapPanel(wx.Panel):
         self.verified = None
         self.choices = {}
 
+        # Match KiCad Preferences > PCB Editor > Editing Options > Magnetic Points.
+        # UI-only layout: the SNAP read/write behavior below is unchanged.
         sizer = wx.BoxSizer(wx.VERTICAL)
-        title = wx.StaticText(self, label="Magnetic Points")
-        font = title.GetFont()
-        font.SetWeight(wx.FONTWEIGHT_BOLD)
-        title.SetFont(font)
-        sizer.Add(title, 0, wx.ALL, 10)
+        magnetic_box = wx.StaticBoxSizer(wx.VERTICAL, self, "Magnetic Points")
+        grid = wx.FlexGridSizer(rows=3, cols=2, vgap=4, hgap=12)
+        grid.AddGrowableCol(1, 1)
 
         for key, label in (
-            ("pads", "Snap to pads"),
-            ("tracks_vias", "Snap to tracks and vias"),
-            ("graphics", "Snap to graphics"),
+            ("pads", "Snap to pads:"),
+            ("tracks_vias", "Snap to tracks and vias:"),
+            ("graphics", "Snap to graphics:"),
         ):
-            sizer.Add(wx.StaticText(self, label=label), 0, wx.LEFT | wx.RIGHT | wx.TOP, 10)
-            choice = wx.Choice(self)
+            grid.Add(
+                wx.StaticText(self, label=label),
+                0,
+                wx.ALIGN_CENTER_VERTICAL | wx.LEFT,
+                2,
+            )
+            choice = wx.Choice(self, size=(136, -1))
             choice.Enable(False)
             choice.Bind(
                 wx.EVT_CHOICE,
                 lambda event, setting=key: self.on_snap_choice_changed(event, setting),
             )
             self.choices[key] = choice
-            sizer.Add(choice, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
+            grid.Add(choice, 1, wx.EXPAND)
+
+        magnetic_box.Add(grid, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
+        sizer.Add(magnetic_box, 0, wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP, 8)
 
         self.status = wx.StaticText(self, label="")
         self.status_text = ""

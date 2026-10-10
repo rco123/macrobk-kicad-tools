@@ -8209,3 +8209,18 @@ from=127.0.0.1:54156
 [12:41:27] [MacroBK] SNAP settings applied without Preferences popup: {'pads': 'When routing tracks'}
 [12:41:30] [MacroBK] SNAP settings applied without Preferences popup: {'tracks_vias': 'When routing tracks'}
 [12:41:32] [MacroBK] SNAP settings applied without Preferences popup: {'graphics': 'Never'}
+[12:46:50] [MacroBK] UDP SOCKET CREATED service=989dd55f373c epoch=1 thread=33828
+[12:46:50] [MacroBK] UDP LISTENER START service=989dd55f373c epoch=1 thread=37128
+[12:46:50] [MacroBK] SERVICE START service=989dd55f373c epoch=1 thread=33828
+[12:46:50] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=20648
+[12:46:50] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=989dd55f373c epoch=1 thread=33828
+[12:47:02] [MacroBK] SNAP settings applied without Preferences popup: {'graphics': 'Always'}
+[12:52:02] [MacroBK] PCB FRAME CLOSE DETECTED service=989dd55f373c epoch=1 thread=33828
+[12:52:02] [MacroBK] PCB FRAME DESTROY DETECTED service=989dd55f373c epoch=1 thread=33828
+[12:52:02] [MacroBK] SERVICE SHUTDOWN START service=989dd55f373c epoch=2 thread=33828
+[12:52:02] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[12:52:02] [MacroBK] PLUGIN REGISTRATION RELEASED service=989dd55f373c epoch=2 thread=33828
+[12:52:02] [MacroBK] WORKERS STOP REQUESTED count=0 service=989dd55f373c epoch=2 thread=33828
+[12:52:02] [MacroBK] UDP LISTENER STOP service=989dd55f373c epoch=2 thread=37128
+[12:52:02] [MacroBK] UDP SOCKET CLOSED service=989dd55f373c epoch=2 thread=33828
+[12:52:02] [MacroBK] SERVICE SHUTDOWN COMPLETE service=989dd55f373c epoch=2 thread=33828
