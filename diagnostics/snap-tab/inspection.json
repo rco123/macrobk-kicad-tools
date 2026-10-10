@@ -1,0 +1,156 @@
+{
+  "version": "9.0.9",
+  "frame": {
+    "python_class": "wx._core.Frame",
+    "native_class": "wxFrame",
+    "object": "<wx._core.Frame object at 0x0000028C022C0E50>",
+    "id": -31953,
+    "name": "PcbFrame",
+    "label": "*jjj — PCB Editor",
+    "title": "*jjj — PCB Editor",
+    "size": [
+      1401,
+      931
+    ],
+    "shown": true,
+    "being_deleted": false
+  },
+  "notebook": {
+    "python_class": "wx._core.Notebook",
+    "native_class": "wxNotebook",
+    "object": "<wx._core.Notebook object at 0x0000028C0237E440>",
+    "id": -31929,
+    "name": "notebook",
+    "label": "",
+    "title": null,
+    "size": [
+      352,
+      501
+    ],
+    "shown": true,
+    "being_deleted": false
+  },
+  "parent_chain": [
+    {
+      "python_class": "wx._core.Notebook",
+      "native_class": "wxNotebook",
+      "object": "<wx._core.Notebook object at 0x0000028C0237E440>",
+      "id": -31929,
+      "name": "notebook",
+      "label": "",
+      "title": null,
+      "size": [
+        352,
+        501
+      ],
+      "shown": true,
+      "being_deleted": false
+    },
+    {
+      "python_class": "wx._core.Panel",
+      "native_class": "wxPanel",
+      "object": "<wx._core.Panel object at 0x0000028C0237E7A0>",
+      "id": -31930,
+      "name": "",
+      "label": "",
+      "title": null,
+      "size": [
+        352,
+        605
+      ],
+      "shown": true,
+      "being_deleted": false
+    },
+    {
+      "python_class": "wx._core.Frame",
+      "native_class": "wxFrame",
+      "object": "<wx._core.Frame object at 0x0000028C022C0E50>",
+      "id": -31953,
+      "name": "PcbFrame",
+      "label": "*jjj — PCB Editor",
+      "title": "*jjj — PCB Editor",
+      "size": [
+        1401,
+        931
+      ],
+      "shown": true,
+      "being_deleted": false
+    }
+  ],
+  "pages": [
+    {
+      "index": 0,
+      "text": "Layers",
+      "page": {
+        "python_class": "wx._core.Panel",
+        "native_class": "wxPanel",
+        "object": "<wx._core.Panel object at 0x0000028C0237E7A0>",
+        "id": -31928,
+        "name": "panel",
+        "label": "panel",
+        "title": null,
+        "size": [
+          344,
+          473
+        ],
+        "shown": false,
+        "being_deleted": false
+      }
+    },
+    {
+      "index": 1,
+      "text": "Objects",
+      "page": {
+        "python_class": "wx._core.Panel",
+        "native_class": "wxPanel",
+        "object": "<wx._core.Panel object at 0x0000028C0237E7A0>",
+        "id": -31926,
+        "name": "panel",
+        "label": "panel",
+        "title": null,
+        "size": [
+          344,
+          473
+        ],
+        "shown": true,
+        "being_deleted": false
+      }
+    },
+    {
+      "index": 2,
+      "text": "Nets",
+      "page": {
+        "python_class": "wx._core.Panel",
+        "native_class": "wxPanel",
+        "object": "<wx._core.Panel object at 0x0000028C0237E7A0>",
+        "id": -31924,
+        "name": "panel",
+        "label": "panel",
+        "title": null,
+        "size": [
+          344,
+          473
+        ],
+        "shown": false,
+        "being_deleted": false
+      }
+    }
+  ],
+  "methods": {
+    "AddPage": true,
+    "InsertPage": true,
+    "RemovePage": true,
+    "DeletePage": true
+  },
+  "settings_manager": {
+    "class": "SETTINGS_MANAGER",
+    "GetAppSettings": false,
+    "GetPcbNewSettings": false,
+    "GetMagneticItemsSettings": false
+  },
+  "magnetic_bindings": {
+    "PCBNEW_SETTINGS": false,
+    "MAGNETIC_SETTINGS": false,
+    "MAGNETIC_OPTIONS": false
+  }
+}

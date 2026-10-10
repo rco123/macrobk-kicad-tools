@@ -8110,3 +8110,31 @@ from=127.0.0.1:54156
 [10:40:48] [MacroBK] PHONE worker start action_id=action-e17aa66b
 [10:40:48] [MacroBK] SUCCESS source=phone action=action-e17aa66b run_id=2
 [10:40:49] [MacroBK] native Q routing width applied: 0.4 mm
+[11:08:34] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=3 thread=40884
+[11:08:34] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=3
+[11:11:04] [MacroBK] MANAGER CLOSE
+[11:11:06] [MacroBK] PCB FRAME CLOSE DETECTED service=8cf94a466539 epoch=1 thread=52460
+[11:11:11] [MacroBK] PCB FRAME DESTROY DETECTED service=8cf94a466539 epoch=1 thread=52460
+[11:11:11] [MacroBK] SERVICE SHUTDOWN START service=8cf94a466539 epoch=2 thread=52460
+[11:11:11] [MacroBK] HOTKEY UNREGISTERED shortcut=Ctrl + Shift + F12
+[11:11:11] [MacroBK] PLUGIN REGISTRATION RELEASED service=8cf94a466539 epoch=2 thread=52460
+[11:11:11] [MacroBK] WORKERS STOP REQUESTED count=0 service=8cf94a466539 epoch=2 thread=52460
+[11:11:11] [MacroBK] UDP LISTENER STOP service=8cf94a466539 epoch=2 thread=47464
+[11:11:11] [MacroBK] UDP SOCKET CLOSED service=8cf94a466539 epoch=2 thread=52460
+[11:11:11] [MacroBK] SERVICE SHUTDOWN COMPLETE service=8cf94a466539 epoch=2 thread=52460
+[11:11:18] [MacroBK] UDP SOCKET CREATED service=8cf94a466539 epoch=3 thread=52460
+[11:11:18] [MacroBK] UDP LISTENER START service=8cf94a466539 epoch=3 thread=43004
+[11:11:18] [MacroBK] SERVICE START service=8cf94a466539 epoch=3 thread=52460
+[11:11:18] [MacroBK] RegisterHotKey success shortcut=Ctrl + Shift + F12 id=19778 thread_id=23736
+[11:11:18] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=8cf94a466539 epoch=3 thread=52460
+[11:11:39] [MacroBK] MANAGER OPEN
+[11:11:50] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=4 thread=5848
+[11:11:50] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=4
+[11:24:55] [MacroBK] ACTION START source=test action=action-e17aa66b run_id=5 thread=23588
+[11:24:55] [MacroBK] SUCCESS source=test action=action-e17aa66b run_id=5
+[11:24:55] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:24:57] [MacroBK] menu.ProcessEvent -> True
+[11:24:57] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:24:59] [MacroBK] menu.ProcessEvent -> True
+[11:24:59] [MacroBK] menu path found: 'Preferences...', id=5022
+[11:25:01] [MacroBK] menu.ProcessEvent -> True

@@ -1,0 +1,433 @@
+{
+  "verdict": "PASS",
+  "runtime_snap": "NOT TESTED",
+  "helpers": [
+    "open_menu",
+    "find_controls",
+    "iter_controls",
+    "get_control_info",
+    "get_control_value",
+    "set_control_value",
+    "_command_ok_button"
+  ],
+  "production_modified": false,
+  "stages": [
+    {
+      "phase": 0,
+      "read": {
+        "type": "wx.Choice",
+        "class": "Choice",
+        "name": "choice",
+        "label": "",
+        "id": -29315,
+        "value": "Always",
+        "enabled": true,
+        "visible": true,
+        "selection": 2,
+        "string_selection": "Always",
+        "choices": [
+          "Never",
+          "When routing tracks",
+          "Always"
+        ],
+        "native_class": "wxChoice"
+      },
+      "native_ok_dispatched": true
+    },
+    {
+      "phase": 1,
+      "read": {
+        "type": "wx.Choice",
+        "class": "Choice",
+        "name": "choice",
+        "label": "",
+        "id": -29061,
+        "value": "Never",
+        "enabled": true,
+        "visible": true,
+        "selection": 0,
+        "string_selection": "Never",
+        "choices": [
+          "Never",
+          "When routing tracks",
+          "Always"
+        ],
+        "native_class": "wxChoice"
+      },
+      "native_ok_dispatched": true
+    },
+    {
+      "phase": 2,
+      "read": {
+        "type": "wx.Choice",
+        "class": "Choice",
+        "name": "choice",
+        "label": "",
+        "id": -28807,
+        "value": "Always",
+        "enabled": true,
+        "visible": true,
+        "selection": 2,
+        "string_selection": "Always",
+        "choices": [
+          "Never",
+          "When routing tracks",
+          "Always"
+        ],
+        "native_class": "wxChoice"
+      },
+      "native_ok_dispatched": true
+    }
+  ],
+  "preferences_pages": [
+    {
+      "index": 0,
+      "text": "Common",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 1,
+      "text": "Mouse and Touchpad",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 2,
+      "text": "Hotkeys",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 3,
+      "text": "Version Control",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 4,
+      "text": "Data Collection",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 5,
+      "text": "Symbol Editor",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 6,
+      "text": "Display Options",
+      "parent": 5,
+      "parent_text": "Symbol Editor"
+    },
+    {
+      "index": 7,
+      "text": "Grids",
+      "parent": 5,
+      "parent_text": "Symbol Editor"
+    },
+    {
+      "index": 8,
+      "text": "Editing Options",
+      "parent": 5,
+      "parent_text": "Symbol Editor"
+    },
+    {
+      "index": 9,
+      "text": "Colors",
+      "parent": 5,
+      "parent_text": "Symbol Editor"
+    },
+    {
+      "index": 10,
+      "text": "Schematic Editor",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 11,
+      "text": "Display Options",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 12,
+      "text": "Grids",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 13,
+      "text": "Editing Options",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 14,
+      "text": "Annotation Options",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 15,
+      "text": "Colors",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 16,
+      "text": "Field Name Templates",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 17,
+      "text": "Simulator",
+      "parent": 10,
+      "parent_text": "Schematic Editor"
+    },
+    {
+      "index": 18,
+      "text": "Footprint Editor",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 19,
+      "text": "Display Options",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 20,
+      "text": "Grids",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 21,
+      "text": "Origins & Axes",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 22,
+      "text": "Editing Options",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 23,
+      "text": "Colors",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 24,
+      "text": "Footprint Defaults",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 25,
+      "text": "Graphics Defaults",
+      "parent": 18,
+      "parent_text": "Footprint Editor"
+    },
+    {
+      "index": 26,
+      "text": "PCB Editor",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 27,
+      "text": "Display Options",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 28,
+      "text": "Grids",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 29,
+      "text": "Origins & Axes",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 30,
+      "text": "Editing Options",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 31,
+      "text": "Colors",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 32,
+      "text": "Plugins",
+      "parent": 26,
+      "parent_text": "PCB Editor"
+    },
+    {
+      "index": 33,
+      "text": "3D Viewer",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 34,
+      "text": "General",
+      "parent": 33,
+      "parent_text": "3D Viewer"
+    },
+    {
+      "index": 35,
+      "text": "Realtime Renderer",
+      "parent": 33,
+      "parent_text": "3D Viewer"
+    },
+    {
+      "index": 36,
+      "text": "Raytracing Renderer",
+      "parent": 33,
+      "parent_text": "3D Viewer"
+    },
+    {
+      "index": 37,
+      "text": "Gerber Viewer",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 38,
+      "text": "Display Options",
+      "parent": 37,
+      "parent_text": "Gerber Viewer"
+    },
+    {
+      "index": 39,
+      "text": "Colors",
+      "parent": 37,
+      "parent_text": "Gerber Viewer"
+    },
+    {
+      "index": 40,
+      "text": "Grids",
+      "parent": 37,
+      "parent_text": "Gerber Viewer"
+    },
+    {
+      "index": 41,
+      "text": "Excellon Options",
+      "parent": 37,
+      "parent_text": "Gerber Viewer"
+    },
+    {
+      "index": 42,
+      "text": "Drawing Sheet Editor",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 43,
+      "text": "Display Options",
+      "parent": 42,
+      "parent_text": "Drawing Sheet Editor"
+    },
+    {
+      "index": 44,
+      "text": "Grids",
+      "parent": 42,
+      "parent_text": "Drawing Sheet Editor"
+    },
+    {
+      "index": 45,
+      "text": "Colors",
+      "parent": 42,
+      "parent_text": "Drawing Sheet Editor"
+    },
+    {
+      "index": 46,
+      "text": "Packages and Updates",
+      "parent": -1,
+      "parent_text": null
+    },
+    {
+      "index": 47,
+      "text": "Plugins",
+      "parent": -1,
+      "parent_text": null
+    }
+  ],
+  "original": "Always",
+  "initial_control": {
+    "type": "wx.Choice",
+    "class": "Choice",
+    "name": "choice",
+    "label": "",
+    "id": -29315,
+    "value": "Always",
+    "enabled": true,
+    "visible": true,
+    "selection": 2,
+    "string_selection": "Always",
+    "choices": [
+      "Never",
+      "When routing tracks",
+      "Always"
+    ],
+    "native_class": "wxChoice"
+  },
+  "requested": "Never",
+  "draft_after_set": {
+    "type": "wx.Choice",
+    "class": "Choice",
+    "name": "choice",
+    "label": "",
+    "id": -29315,
+    "value": "Never",
+    "enabled": true,
+    "visible": true,
+    "selection": 0,
+    "string_selection": "Never",
+    "choices": [
+      "Never",
+      "When routing tracks",
+      "Always"
+    ],
+    "native_class": "wxChoice"
+  },
+  "restore_required": false,
+  "after_reopen": "Never",
+  "changed_reopen_pass": true,
+  "restoration_draft": {
+    "type": "wx.Choice",
+    "class": "Choice",
+    "name": "choice",
+    "label": "",
+    "id": -29061,
+    "value": "Always",
+    "enabled": true,
+    "visible": true,
+    "selection": 2,
+    "string_selection": "Always",
+    "choices": [
+      "Never",
+      "When routing tracks",
+      "Always"
+    ],
+    "native_class": "wxChoice"
+  },
+  "restored_reopen": "Always",
+  "restore_pass": true
+}

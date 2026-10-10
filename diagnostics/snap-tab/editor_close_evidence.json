@@ -1,0 +1,19 @@
+{
+  "PageDestruction": {
+    "owned_page_destroyed": true,
+    "reason": "explicit remove or parent destruction",
+    "timer": false,
+    "frame_bindings": false
+  },
+  "Events": [
+    "[11:11:04] [MacroBK] MANAGER CLOSE",
+    "[11:11:06] [MacroBK] PCB FRAME CLOSE DETECTED service=8cf94a466539 epoch=1 thread=52460",
+    "[11:11:11] [MacroBK] PCB FRAME DESTROY DETECTED service=8cf94a466539 epoch=1 thread=52460",
+    "[11:11:11] [MacroBK] SERVICE SHUTDOWN START service=8cf94a466539 epoch=2 thread=52460",
+    "[11:11:11] [MacroBK] SERVICE SHUTDOWN COMPLETE service=8cf94a466539 epoch=2 thread=52460",
+    "[11:11:18] [MacroBK] PCB FRAME ATTACHED name='PcbFrame' class='wxFrame' service=8cf94a466539 epoch=3 thread=52460"
+  ],
+  "OldWindowId": 6231818,
+  "NewWindowId": 6559498,
+  "Scope": "Observed page destruction plus native plugin shutdown/restart; UI error dialogs not assessed"
+}
