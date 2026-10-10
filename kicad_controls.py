@@ -955,11 +955,6 @@ def pcb_get_selected_layer():
     return _pcb_selected_layer_from_indicator()
 
 
-def _pcb_active_layer_name(frame=None):
-    """Compatibility wrapper for the verified Appearance indicator reader."""
-    return _pcb_selected_layer_from_indicator(frame)
-
-
 def _pcb_copper_layers(frame=None):
     """Return enabled copper layer names in Appearance stack order.
 

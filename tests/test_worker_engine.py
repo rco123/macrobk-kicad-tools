@@ -4,6 +4,7 @@ Run from the plugin root: <KiCad>/bin/python.exe -B tests/test_worker_engine.py
 The hidden test PCB frame is a fixture, not an actual KiCad board.
 """
 import importlib
+import importlib.util
 import json
 import copy
 import pathlib
@@ -22,11 +23,23 @@ package = types.ModuleType("macrobk_integration")
 package.__path__ = [str(PLUGIN)]
 sys.modules[package.__name__] = package
 
-import wx
+try:
+    import wx
+    import pcbnew
+except ImportError as exc:
+    raise unittest.SkipTest("KiCad Python with wx and pcbnew is required: " + str(exc))
 
 APP = wx.App(False)
-core = importlib.import_module(package.__name__ + ".trigger_core")
-core.LOG_PATH = str(pathlib.Path(tempfile.mkdtemp(prefix="macrobk_tests_")) / "test.log")
+# Seed file paths before loading the engine; fixtures never read/write user config.
+_FIXTURE_DIRECTORY = tempfile.TemporaryDirectory(prefix="macrobk_tests_")
+_FIXTURE_ROOT = pathlib.Path(_FIXTURE_DIRECTORY.name)
+(_FIXTURE_ROOT / "config.json").write_text("{}", encoding="utf-8")
+_spec = importlib.util.spec_from_file_location(package.__name__ + ".trigger_core", PLUGIN / "trigger_core.py")
+core = importlib.util.module_from_spec(_spec)
+core.CONFIG_PATH = str(_FIXTURE_ROOT / "config.json")
+core.LOG_PATH = str(_FIXTURE_ROOT / "test.log")
+sys.modules[_spec.name] = core
+_spec.loader.exec_module(core)
 core.bind_gui_thread()
 ui = importlib.import_module(package.__name__ + ".ui_manager")
 helpers = importlib.import_module(package.__name__ + ".gui_helpers")

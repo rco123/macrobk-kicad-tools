@@ -6,8 +6,8 @@ import threading
 import unittest
 from unittest import mock
 
-import wx
 from test_worker_engine import APP
+import wx
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -19,8 +19,8 @@ def load(name, path):
     return module
 
 
-diag = load("diagnostic_fixture", ROOT / "layer_diagnostics.py")
-comparison = load("comparison_fixture", ROOT / "diagnostics" / "compare_layer_dumps.py")
+diag = load("diagnostic_fixture", ROOT / "tests" / "tools" / "layer_diagnostics.py")
+comparison = load("comparison_fixture", ROOT / "tests" / "tools" / "compare_layer_dumps.py")
 
 
 class DiagnosticTests(unittest.TestCase):

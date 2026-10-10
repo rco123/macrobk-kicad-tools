@@ -1,7 +1,0 @@
-{
-  "existing_kicad_controls_definitions_changed": [],
-  "new_definitions": [
-    "pcb_get_snap_settings",
-    "pcb_set_snap_settings"
-  ]
-}

@@ -104,7 +104,11 @@ class LifecycleTests(unittest.TestCase):
         package = types.ModuleType('macrobk_refresh_fixture')
         package.__path__ = [str(pathlib.Path(core.__file__).parent)]
         sys.modules[package.__name__] = package
-        new_core = importlib.import_module(package.__name__ + '.trigger_core')
+        spec = importlib.util.spec_from_file_location(package.__name__ + '.trigger_core', core.__file__)
+        new_core = importlib.util.module_from_spec(spec)
+        new_core.CONFIG_PATH, new_core.LOG_PATH = core.CONFIG_PATH, core.LOG_PATH
+        sys.modules[spec.name] = new_core
+        spec.loader.exec_module(new_core)
         self.assertIs(new_core.start_bridge(), self.service)
         self.assertEqual(len(self.sockets), 1); self.assertIs(self.service.thread, thread)
 

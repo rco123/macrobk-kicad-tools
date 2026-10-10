@@ -1,4 +1,11 @@
+# Python caches
+__pycache__/
+*.py[cod]
 
-/__pycache__
-
-*.pyc
+# Runtime output (keep the existing tracked config.json unchanged)
+*.log
+*.tmp
+/tests/latest-results.txt
+/tests/tools/evidence/
+/tests/tools/comparison.json
+/diagnostics/**/*.json
