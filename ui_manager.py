@@ -171,7 +171,7 @@ class MacroBKPluginManager(wx.Frame):
             monitor_box, monitor_sizer, "keyboard", "Keyboard", core.get_keyboard_status()
         )
         self.phone_led, self.phone_status_label = self.create_monitor_row(
-            monitor_box, monitor_sizer, "phone", "MacroBK", core.get_phone_status()
+            monitor_box, monitor_sizer, "macrobk", "MacroBK", core.get_phone_status()
         )
         self.signal_source = wx.StaticText(monitor_box, label="Waiting for input")
         self.signal_source.SetForegroundColour(muted_colour)
@@ -187,13 +187,28 @@ class MacroBKPluginManager(wx.Frame):
 
         trigger_row = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.trigger_text = wx.TextCtrl(
-            left_panel,
-            style=wx.TE_READONLY,
-        )
-        self.trigger_text.SetMinSize((-1, 32))
+        # A tall native single-line TextCtrl pins its text near the top.
+        # Center a naturally sized, borderless read-only TextCtrl inside
+        # a 32-pixel bordered container instead of stretching the text control.
+        trigger_box = wx.Panel(left_panel, style=wx.BORDER_SIMPLE)
+        trigger_box.SetMinSize((-1, 32))
+        trigger_box.SetBackgroundColour(system_colour(wx.SYS_COLOUR_WINDOW))
 
-        trigger_row.Add(self.trigger_text, 1, wx.EXPAND)
+        self.trigger_text = wx.TextCtrl(
+            trigger_box,
+            style=wx.TE_READONLY | wx.BORDER_NONE,
+        )
+        self.trigger_text.SetBackgroundColour(system_colour(wx.SYS_COLOUR_WINDOW))
+
+        trigger_box_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        trigger_box_sizer.Add(
+            self.trigger_text,
+            1,
+            wx.ALIGN_CENTER_VERTICAL | wx.LEFT | wx.RIGHT,
+            6,
+        )
+        trigger_box.SetSizer(trigger_box_sizer)
+        trigger_row.Add(trigger_box, 1, wx.EXPAND)
 
         left_sizer.Add(
             trigger_row,
@@ -404,7 +419,7 @@ class MacroBKPluginManager(wx.Frame):
 
     def create_monitor_row(self, parent, sizer, icon_name, label, status):
         row = wx.BoxSizer(wx.HORIZONTAL)
-        icon = wx.StaticBitmap(parent, bitmap=icon_bitmap(icon_name, 18))
+        icon = wx.StaticBitmap(parent, bitmap=icon_bitmap(icon_name, 20 if icon_name == "macrobk" else 18))
         led = wx.StaticText(parent, label="●")
         led_font = led.GetFont()
         led_font.SetPointSize(14)
