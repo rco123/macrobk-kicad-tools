@@ -171,7 +171,7 @@ class MacroBKPluginManager(wx.Frame):
             monitor_box, monitor_sizer, "keyboard", "Keyboard", core.get_keyboard_status()
         )
         self.phone_led, self.phone_status_label = self.create_monitor_row(
-            monitor_box, monitor_sizer, "phone", "Phone", core.get_phone_status()
+            monitor_box, monitor_sizer, "phone", "MacroBK", core.get_phone_status()
         )
         self.signal_source = wx.StaticText(monitor_box, label="Waiting for input")
         self.signal_source.SetForegroundColour(muted_colour)
@@ -418,7 +418,7 @@ class MacroBKPluginManager(wx.Frame):
             "Error": wx.Colour(192, 57, 43),
             "Port Error": wx.Colour(192, 57, 43),
             "Disabled": wx.Colour(127, 140, 141),
-            "Phone Only": wx.Colour(52, 152, 219),
+            "MacroBK Only": wx.Colour(52, 152, 219),
         }
         control.SetForegroundColour(colours.get(str(status), wx.Colour(127, 140, 141)))
 
@@ -573,7 +573,7 @@ class MacroBKPluginManager(wx.Frame):
         self.update_status_bar()
 
     def set_phone_status(self, status):
-        self.phone_status_label.SetLabel("Phone  " + str(status))
+        self.phone_status_label.SetLabel("MacroBK  " + str(status))
         self.set_led_colour(self.phone_led, status)
         self.update_status_bar()
 
@@ -599,7 +599,7 @@ class MacroBKPluginManager(wx.Frame):
             return
         self.status_bar.SetStatusText("●  Plugin Ready", 0)
         self.status_bar.SetStatusText("Keyboard {}".format(core.get_keyboard_status()), 1)
-        self.status_bar.SetStatusText("Phone {}".format(core.get_phone_status()), 2)
+        self.status_bar.SetStatusText("MacroBK {}".format(core.get_phone_status()), 2)
         self.status_bar.SetStatusText("{} Actions".format(len(self.actions)), 3)
 
     def show_result_tab(self):
@@ -609,7 +609,9 @@ class MacroBKPluginManager(wx.Frame):
     def blink_input_signal(self, source):
         led = self.keyboard_led if source == "keyboard" else self.phone_led
         led.SetForegroundColour(wx.Colour(52, 152, 219))
-        self.signal_source.SetLabel("Input received from {}".format(source.title()))
+        self.signal_source.SetLabel("Input received from {}".format(
+            "MacroBK" if source == "phone" else source.title()
+        ))
         if self._blink_timer is not None:
             self._blink_timer.Stop()
         self._blink_timer = wx.CallLater(400, self.reset_input_signal)
@@ -663,7 +665,7 @@ class MacroBKPluginManager(wx.Frame):
         core.log("Key Change applied shortcut={}".format(value))
 
         try:
-            # A multi-key Trigger is Phone-only; the listener reports that
+            # A multi-key Trigger is MacroBK-only; the listener reports that
             # status using the same existing keyboard registration rules.
             core.restart_hotkey_listener()
         except Exception as exc:

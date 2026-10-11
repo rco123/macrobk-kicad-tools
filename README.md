@@ -65,10 +65,12 @@ Result에서 결과를 확인하고 코드는 **Save**로 저장합니다. Trigg
 
 **키 변경 흐름:** `Key Change` → 키 선택 창 → `Apply` → 선택한 Action의 Trigger 표시·목록 업데이트 → `config.json` 저장 → 키보드 리스너 재등록. `Cancel`을 누르면 저장하거나 재등록하지 않습니다. 키를 변경할 때 별도의 `Register` 버튼은 사용하지 않습니다.
 
+**Input Monitor의 표시명:** `Keyboard`는 Windows 키보드 입력, `MacroBK`는 MacroBK Studio/Phone에서 UDP로 수신한 트리거를 의미합니다. 여러 일반 키를 조합한 Trigger의 Keyboard 상태는 `MacroBK Only`로 표시됩니다. 내부 설정 파일의 `phone` 필드 및 실행 소스명 `phone`은 호환성을 위해 유지합니다.
+
 ## 3. 트리거 사용법
 
 - **Keyboard**: **Key Change → Apply**에서 선택한 키를 저장하면 Windows 'RegisterHotKey' 등록을 갱신합니다. **수정키 + 일반 키 한 개**에만 대응합니다. 여러 일반 키를 동시에 지정한 경우는 Studio/Phone 트리거용입니다.
-- **Phone / MacroBK Studio**: UDP로 전달된 키 ID를 **등록된 전체 Action**과 대조합니다. 편집 화면에서 선택되지 않은 Action도 실행될 수 있습니다. 동일 ID가 둘 이상이면 설정 목록의 **첫 번째 활성 Action**을 실행합니다.
+- **MacroBK / Studio / Phone**: UDP로 전달된 키 ID를 **등록된 전체 Action**과 대조합니다. 편집 화면에서 선택되지 않은 Action도 실행될 수 있습니다. 동일 ID가 둘 이상이면 설정 목록의 **첫 번째 활성 Action**을 실행합니다.
 - 이 소스의 기본 UDP 포트는 **47831**, 트리거 멀티캐스트 주소는 **239.255.77.77**, 인터페이스는 **127.0.0.1**입니다. 다른 장치 또는 호스트 구성에서는 네트워크 설정을 별도로 확인해야 합니다.
 
 패킷 예:

@@ -525,7 +525,7 @@ def hotkey_worker(trigger, generation):
     # Windows RegisterHotKey supports modifiers + one ordinary key only.
     # Multi-key triggers are still valid for the phone/Studio UDP path.
     if len(keys) != 1:
-        set_keyboard_status("Phone Only")
+        set_keyboard_status("MacroBK Only")
         log(
             "RegisterHotKey skipped shortcut={} reason=multi-key phone-trigger".format(
                 shortcut
