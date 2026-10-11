@@ -83,7 +83,7 @@ class MacroBKPluginManager(wx.Frame):
         super().__init__(
             parent,
             title="MacroBK PCB Tools",
-            size=(1000, 660),
+            size=(1160, 660),
             style=wx.DEFAULT_FRAME_STYLE | wx.FRAME_FLOAT_ON_PARENT,
         )
         self.SetMinSize((960, 620))
@@ -287,6 +287,10 @@ class MacroBKPluginManager(wx.Frame):
         status_font = self.test_status_label.GetFont()
         status_font.SetWeight(wx.FONTWEIGHT_BOLD)
         self.test_status_label.SetFont(status_font)
+        # Reserve room for longer states such as STOPPING at initial layout.
+        self.test_status_label.SetMinSize((
+            self.test_status_label.GetTextExtent("STOPPING")[0] + 6, -1
+        ))
 
         execute_controls.Add(self.test_button, 0, wx.RIGHT, 8)
         execute_controls.Add(self.stop_button, 0, wx.RIGHT, 8)
@@ -351,12 +355,25 @@ class MacroBKPluginManager(wx.Frame):
             execute_panel,
             result_panel,
         )
-        self.work_splitter.SetSashGravity(0.5)
+        self.work_splitter.SetSashGravity(0.6)
 
         def set_initial_split():
+            # Give the Python editor enough room to display Run Test, Stop,
+            # Save and the entire status label, not just half the right panel.
             width = self.work_splitter.GetClientSize().GetWidth()
-            if width > 0:
-                self.work_splitter.SetSashPosition(width // 2)
+            if width <= 0:
+                return
+
+            # wx.Sizer.CalcMin() accounts for actual fonts and display scaling.
+            # Each editor toolbar also has 12 px padding at either side.
+            editor_min = execute_controls.CalcMin().GetWidth() + 32
+            result_min = result_controls.CalcMin().GetWidth() + 32
+            left_width = max(editor_min, round(width * 0.60))
+            right_width = max(210, result_min, self.work_splitter.GetMinimumPaneSize())
+            # Keep both panes visible on narrower displays.
+            left_width = min(left_width, width - right_width)
+            if left_width > 0:
+                self.work_splitter.SetSashPosition(left_width)
 
         wx.CallAfter(set_initial_split)
 
