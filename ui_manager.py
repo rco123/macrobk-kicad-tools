@@ -403,7 +403,7 @@ class MacroBKPluginManager(wx.Frame):
         led_font = led.GetFont()
         led_font.SetPointSize(14)
         led.SetFont(led_font)
-        status_label = wx.StaticText(parent, label="{}  {}".format(label, status))
+        status_label = wx.StaticText(parent, label=label)
         row.Add(icon, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 8)
         row.Add(led, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 6)
         row.Add(status_label, 1, wx.ALIGN_CENTER_VERTICAL)
@@ -568,12 +568,10 @@ class MacroBKPluginManager(wx.Frame):
         self.load_action(self.selected_index)
 
     def set_keyboard_status(self, status):
-        self.keyboard_status_label.SetLabel("Keyboard  " + str(status))
         self.set_led_colour(self.keyboard_led, status)
         self.update_status_bar()
 
     def set_phone_status(self, status):
-        self.phone_status_label.SetLabel("MacroBK  " + str(status))
         self.set_led_colour(self.phone_led, status)
         self.update_status_bar()
 
