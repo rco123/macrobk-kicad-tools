@@ -254,6 +254,10 @@ if track_checkbox is not None:
 
 기존 `config.json`에 `open_drc_window()`가 등록되어 있다면 해당 Action의 Python Script도 **`open_menu("Inspect -> Design Rules Checker")`로 수동 변경**하고 Save를 누르십시오. 사용자 설정은 Git에서 관리하지 않으므로 소스 업데이트만으로 기존 Action 내용은 바뀌지 않습니다.
 
+### Run Test 실행 시 Manager 창 위치
+
+Manager는 PCB Editor를 부모 창으로 가지며, `wx.FRAME_FLOAT_ON_PARENT` 스타일로 **PCB Editor 기본 창보다 앞에 유지**됩니다. 이것은 Windows의 전역 Always on Top 설정이 아니며, DRC 등 KiCad가 여는 대화상자는 필요할 때 Manager보다 앞에 나타날 수 있습니다. 새 설정은 **PCB Editor를 완전히 종료한 뒤 재실행**해야 적용됩니다.
+
 ## 8. 오류 해결
 
 - **메뉴에 안 보임**: '__init__.py'와 모듈들이 같은 설치 폴더에 있는지 확인하고 PCB Editor 재시작.

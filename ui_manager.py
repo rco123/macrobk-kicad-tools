@@ -78,7 +78,15 @@ def get_manager_frame():
 
 class MacroBKPluginManager(wx.Frame):
     def __init__(self, parent):
-        super().__init__(parent, title="MacroBK PCB Tools", size=(1000, 660))
+        # Keep the Manager above its own PCB Editor frame during Run Test.
+        # FLOAT_ON_PARENT does not make this window globally always-on-top;
+        # native KiCad dialogs must still be able to appear above it.
+        super().__init__(
+            parent,
+            title="MacroBK PCB Tools",
+            size=(1000, 660),
+            style=wx.DEFAULT_FRAME_STYLE | wx.FRAME_FLOAT_ON_PARENT,
+        )
         self.SetMinSize((960, 620))
         self.SetIcon(wx.Icon(icon_bitmap("plugin", 32)))
         self._blink_timer = None
