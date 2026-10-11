@@ -649,7 +649,7 @@ class MacroBKPluginManager(wx.Frame):
             self.action_trigger_summary.SetLabel(previous_text)
             core.log("Key Change save error: " + repr(exc))
             wx.MessageBox(
-                "Could not save the changed trigger:\\n{}".format(exc),
+                "Could not save the changed trigger:\n{}".format(exc),
                 "Key Change",
                 wx.OK | wx.ICON_ERROR,
                 self,
@@ -670,7 +670,7 @@ class MacroBKPluginManager(wx.Frame):
             self.set_keyboard_status("Error")
             core.log("Key Change keyboard registration error: " + repr(exc))
             wx.MessageBox(
-                "Trigger saved, but keyboard registration failed:\\n{}".format(exc),
+                "Trigger saved, but keyboard registration failed:\n{}".format(exc),
                 "Key Change",
                 wx.OK | wx.ICON_ERROR,
                 self,
