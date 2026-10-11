@@ -33,7 +33,7 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 
 3. **PCB Editor를 완전히 종료한 후 다시 실행**합니다. Python 모듈과 실행 중인 worker가 남아 있으므로 코드 변경 후 'Refresh Plugins'만으로 교체하지 마십시오.
 4. PCB Editor의 **Tools → External Plugins → MacroBK PCB Tools**를 실행합니다.
-5. 새 설치에서는 기본 **Open DRC** Action이 준비됩니다. Action을 등록하거나 저장하면 'config.json'에 사용자 설정이 기록됩니다.
+5. 새 설치에서는 `open_menu("Inspect -> Design Rules Checker")`를 실행하는 기본 **Open DRC** Action이 준비됩니다. Action을 등록하거나 저장하면 'config.json'에 사용자 설정이 기록됩니다.
 
 **기존 사용자 필독:** 개발 버전에서 추적하던 'config.json'에는 개인 PC 경로와 실험용 Action이 들어 있었습니다. 공개판은 이 파일을 Git에서 제외하며 'config.example.json'만 제공합니다. **기존 설치를 git pull로 갱신하기 전에 현재 'config.json'을 다른 폴더로 백업하고, 업데이트 후 복원**하세요. 기존 저장된 Actions를 잃지 않도록 주의하십시오.
 
@@ -179,22 +179,20 @@ print(pcb_get_snap_settings(include_choices=True))
 
 SNAP 탭은 Preferences 창을 열지 않고 KiCad 사용자 설정 'pcbnew.json'의 Magnetic Points 항목을 수정한 뒤 'SETTINGS_MANAGER.Load()'로 재로드하고 값을 검증합니다. 실패 시 원래 설정을 복원하려고 시도합니다. **초기 사용 전 KiCad 설정 파일을 백업하고, 변경 시 팝업/종료 현상이 없는지 확인**하십시오.
 
-### 5.5 메뉴/DRC
+### 5.5 메뉴 명령 실행 (DRC 예제)
 
 | 함수 | 파라미터 | 반환값/효과 |
 | --- | --- | --- |
 | 'find_menu_command(path)' | path: 메뉴 경로(str) | 메뉴 명령 스냅샷(path/id) 또는 None |
 | 'dispatch_menu_command(command)' | find_menu_command 결과(dict) | 명령 실행 결과(bool) |
 | 'open_menu(path)' | 메뉴 경로(str) | 명령 실행 결과(bool) |
-| 'find_drc_command()' | 없음 | DRC 메뉴 명령 스냅샷 또는 None |
-| 'open_drc_window()' | 없음 | DRC 창 열기 성공 여부(bool); 자동 검사 시작 아님 |
 
 ~~~python
-print(find_drc_command())
-open_drc_window()
+# 현재 PCB Editor의 Inspect 메뉴에서 DRC 창 열기
+open_menu("Inspect -> Design Rules Checker")
 ~~~
 
-**메뉴를 여는 함수는 실제 KiCad 창을 열 수 있으며** 일부 메뉴는 모달이므로 작업 중 호출 시 주의하십시오.
+**기존 전용 함수 `open_drc_window()`는 제거했습니다.** DRC 창은 위 `open_menu()` 예제로 실행합니다. 메뉴 텍스트는 **KiCad PCB Editor에 표시되는 메뉴 경로**를 사용하며, 한국어 메뉴를 쓰는 경우에는 해당 언어의 메뉴 경로를 입력해야 합니다. DRC 창을 열더라도 검사가 자동으로 시작되는 것은 아닙니다. 메뉴를 여는 함수는 실제 KiCad 창을 열 수 있으며 일부 메뉴는 모달이므로 작업 중 호출 시 주의하십시오.
 
 ## 6. GUI 컨트롤 Helper API
 
@@ -253,6 +251,8 @@ if track_checkbox is not None:
 흐름: '__init__.py' → 'register_plugin(MacroBKDRCBridge)' → 'start_bridge()' → 'MacroBKService.start()'. 사용자가 Run Test 또는 Trigger를 발생시키면 'trigger_core.execute_python_script(script, source, action_id=None)'가 별도의 worker에서 코드를 실행합니다. GUI 함수는 'gui_helpers.script_api(...)'에서 래핑되어 'call_gui_sync(...)'로 PCB Editor GUI 스레드에 전달됩니다.
 
 실행 중 worker 강제 종료, 명령 실행 중인 모달 창 자동 닫기, KiCad 내부 상태 복구를 보장하지 않습니다. 소스 변경 후 반드시 PCB Editor를 완전히 다시 시작하십시오.
+
+기존 `config.json`에 `open_drc_window()`가 등록되어 있다면 해당 Action의 Python Script도 **`open_menu("Inspect -> Design Rules Checker")`로 수동 변경**하고 Save를 누르십시오. 사용자 설정은 Git에서 관리하지 않으므로 소스 업데이트만으로 기존 Action 내용은 바뀌지 않습니다.
 
 ## 8. 오류 해결
 

@@ -120,19 +120,10 @@ def find_menu_command(path):
     return {"path": actual, "id": item.GetId()} if item is not None else None
 
 
-def find_drc_command():
-    _frame, _menu, item, path = kc.find_drc_command()
-    return {"path": path, "id": item.GetId()} if item is not None else None
-
-
 def dispatch_menu_command(command):
     if not isinstance(command, dict) or not isinstance(command.get("path"), str):
         raise TypeError("Use the snapshot returned by find_menu_command")
     return bool(kc.open_menu(command["path"]))
-
-
-def open_drc_window():
-    return bool(kc.open_drc_window("script", False))
 
 
 def _plain(value):
@@ -167,8 +158,6 @@ def script_api(call_sync, check_stop):
         "get_pcb_selection_filter_panel": get_pcb_selection_filter_panel,
         "find_menu_command": find_menu_command,
         "dispatch_menu_command": dispatch_menu_command,
-        "find_drc_command": find_drc_command,
-        "open_drc_window": open_drc_window,
         "open_menu": kc.open_menu,
         "pcb_select_filter": kc.pcb_select_filter,
         "pcb_select_filter_state": kc.pcb_select_filter_state,

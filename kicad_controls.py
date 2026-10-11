@@ -1,5 +1,4 @@
 import os
-import traceback
 
 import wx
 
@@ -132,21 +131,6 @@ def pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None):
     """
     from .snap_preferences import request
     return request({"pads": pads, "tracks_vias": tracks_vias, "graphics": graphics})
-
-
-def is_drc_label(label):
-    value = norm_label(label)
-    exact = {
-        "design rules checker",
-        "design rule checker",
-        "drc",
-        "설계 규칙 검사",
-        "설계규칙 검사",
-        "디자인 규칙 검사",
-    }
-    return value in exact or (
-        "design" in value and "rule" in value and "checker" in value
-    )
 
 
 def candidate_frames():
@@ -1362,38 +1346,6 @@ def pcb_onoff_layer(name, value=None):
     return actual
 
 
-def find_drc_command():
-    for frame in candidate_frames():
-        menu_bar = frame.GetMenuBar()
-        if menu_bar is None:
-            continue
-        try:
-            title = frame.GetTitle()
-        except Exception:
-            title = "?"
-
-        for menu_position in range(menu_bar.GetMenuCount()):
-            menu = menu_bar.GetMenu(menu_position)
-            try:
-                top_label = menu_bar.GetMenuLabelText(menu_position)
-            except Exception:
-                top_label = ""
-
-            for owner_menu, item, path in iter_menu(menu, top_label):
-                try:
-                    label = item.GetItemLabelText()
-                except Exception:
-                    label = ""
-                if is_drc_label(label):
-                    log(
-                        "DRC menu found: frame={!r}, path={!r}, id={}".format(
-                            title, path, item.GetId()
-                        )
-                    )
-                    return frame, owner_menu, item, path
-    return None, None, None, None
-
-
 def dispatch_menu_command(owner_menu, item, frame=None):
     cmd_id = item.GetId()
     try:
@@ -1420,37 +1372,3 @@ def dispatch_menu_command(owner_menu, item, frame=None):
         event.SetEventObject(frame)
         return bool(frame.GetEventHandler().ProcessEvent(event))
     return False
-
-
-def open_drc_window(source="unknown", show_error=True):
-    try:
-        _frame, owner_menu, item, _path = find_drc_command()
-        if item is None:
-            log("DRC menu not found")
-            if show_error:
-                wx.MessageBox(
-                    "KiCad의 Design Rules Checker 메뉴를 찾지 못했습니다.\n\n로그:\n"
-                    + LOG_PATH,
-                    "MacroBK DRC",
-                    wx.OK | wx.ICON_ERROR,
-                )
-            return False
-
-        ok = dispatch_menu_command(owner_menu, item, _frame)
-        log("request source={} id={} result={}".format(source, item.GetId(), ok))
-        if not ok and show_error:
-            wx.MessageBox(
-                "DRC 메뉴를 찾았지만 실행하지 못했습니다.\n\n로그:\n" + LOG_PATH,
-                "MacroBK DRC",
-                wx.OK | wx.ICON_ERROR,
-            )
-        return ok
-    except Exception:
-        log(traceback.format_exc())
-        if show_error:
-            wx.MessageBox(
-                "MacroBK DRC 실행 중 예외가 발생했습니다.\n\n로그:\n" + LOG_PATH,
-                "MacroBK DRC",
-                wx.OK | wx.ICON_ERROR,
-            )
-        return False

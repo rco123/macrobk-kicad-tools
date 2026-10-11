@@ -46,7 +46,7 @@ DEFAULT_CONFIG = {
         "port": 47831,
         "command": "KICAD_DRC",
     },
-    "action": {"type": "python", "script": "open_drc_window()"},
+    "action": {"type": "python", "script": "open_menu(\"Inspect -> Design Rules Checker\")"},
 }
 
 HOTKEY_ID = 0x4D42

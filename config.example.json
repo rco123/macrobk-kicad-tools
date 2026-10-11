@@ -18,6 +18,6 @@
   },
   "action": {
     "type": "python",
-    "script": "open_drc_window()"
+    "script": "open_menu(\"Inspect -> Design Rules Checker\")"
   }
 }
