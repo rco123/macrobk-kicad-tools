@@ -436,8 +436,12 @@ class MacroBKPluginManager(wx.Frame):
         editor.StyleSetSpec(stc.STC_P_WORD, "fore:#569CD6,bold")
         editor.SetKeyWords(0, "and as assert async await break class continue def del elif else except False finally for from global if import in is lambda None nonlocal not or pass raise return True try while with yield")
         editor.SetMarginType(0, stc.STC_MARGIN_NUMBER)
-        editor.SetMarginWidth(0, 42)
+        editor.SetMarginWidth(1, 0)
+        editor.SetMarginWidth(2, 0)
+        editor.SetMarginLeft(2)
         editor.StyleSetSpec(stc.STC_STYLE_LINENUMBER, "face:Consolas,size:9,fore:#7F8792,back:{}".format(background))
+        self.update_python_line_number_margin(editor)
+        editor.Bind(stc.EVT_STC_MODIFIED, self.on_python_editor_modified)
         editor.SetTabWidth(4)
         editor.SetUseTabs(False)
         editor.SetIndent(4)
@@ -445,6 +449,19 @@ class MacroBKPluginManager(wx.Frame):
         editor.SetCaretLineVisible(True)
         editor.SetCaretLineBackground("#2A3038" if dark else "#EEF3FA")
         editor.SetScrollWidthTracking(True)
+
+    def update_python_line_number_margin(self, editor):
+        """Fit the line-number gutter to the current number of digits."""
+        digits = len(str(max(1, editor.GetLineCount())))
+        width = max(14, editor.TextWidth(stc.STC_STYLE_LINENUMBER, "9" * digits) + 6)
+        if editor.GetMarginWidth(0) != width:
+            editor.SetMarginWidth(0, width)
+
+    def on_python_editor_modified(self, event):
+        # Recalculate when typing, pasting, deleting, or loading a script.
+        if event.GetModificationType() & (stc.STC_MOD_INSERTTEXT | stc.STC_MOD_DELETETEXT):
+            self.update_python_line_number_margin(event.GetEventObject())
+        event.Skip()
 
     def configure_log_editor(self, editor):
         dark = is_dark_theme()
