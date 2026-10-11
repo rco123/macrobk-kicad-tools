@@ -1,284 +1,335 @@
 # MacroBK PCB Tools
 
-**KiCad 9 PCB Editor용 PCB 설계 및 자동화 플러그인**  
-개발: **BK Systems** · 라이선스: **MIT** · 소스: https://github.com/rco123/macrobk-kicad-tools
+**KiCad 9 PCB Editor용 Python 자동화 플러그인**  
+개발: **BK Systems** · 라이선스: [MIT](LICENSE) · [GitHub 저장소](https://github.com/rco123/macrobk-kicad-tools)
 
-MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키보드 또는 MacroBK Studio/Phone UDP 트리거로 실행하고, KiCad의 PCB 편집 기능을 함수로 제어합니다.
+KiCad PCB Editor에서 사용하는 기능을 **Python Script**로 작성한 다음 **Run Test**, 키보드 단축키 또는 **MacroBK 트리거**로 실행할 수 있습니다. DRC 창 열기, 레이어 변경, 선택 필터, 트랙 폭, SNAP 설정 등을 지원합니다.
 
-주요 기능: 선택 필터, PCB 레이어 선택·표시·순환, 선택한 트랙 및 라우팅 트랙 폭, SNAP(Magnetic Points), DRC 창 호출, GUI 컨트롤 탐색, 액션 저장·시험 실행·중지.
+> 이 README는 **사용자를 위한 사용설명서**입니다. 새로운 자동화 활용 사례는 아래 **[사용 사례 예제](#6-사용-사례-예제)**에 계속 추가할 예정입니다.
 
-> **주의:** Python 스크립트는 해당 Windows 사용자 권한으로 실행됩니다. 신뢰할 수 있는 스크립트만 등록하십시오. 이 저장소는 KiCad **PCM 배포 ZIP이 아니라 소스 설치판**입니다. 내부 클래스 이름 'MacroBKDRCBridge'와 설치 폴더명 'macrobk_drc_bridge'는 기존 설치와 호환되도록 남겨 두었습니다.
+## 목차
 
-## 1. 설치 및 시작
+1. [설치 및 플러그인 실행](#1-설치-및-플러그인-실행)
+2. [메인 화면과 버튼 설명](#2-메인-화면과-버튼-설명)
+3. [Action과 Python Script 작성 방법](#3-action과-python-script-작성-방법)
+4. [DRC 검사 창 열기](#4-drc-검사-창-열기)
+5. [SNAP 설정](#5-snap-설정)
+6. [사용 사례 예제](#6-사용-사례-예제)
+7. [사용자가 호출하는 함수](#7-사용자가-호출하는-함수)
+8. [문제 해결 및 주의사항](#8-문제-해결-및-주의사항)
 
-대상 환경: Windows / KiCad 9.x PCB Editor. KiCad 내장 pcbnew 및 wxPython을 사용합니다. 일반 Python 인터프리터에서 단독 실행하는 프로그램이 아닙니다.
+## 1. 설치 및 플러그인 실행
 
-1. 이 저장소를 Clone/다운로드합니다.
-2. Python 파일들과 'icons' 폴더가 함께 들어 있는 전체 폴더를 다음 경로에 배치합니다.
+**대상 환경:** Windows의 KiCad 9 PCB Editor
 
-~~~text
-%USERPROFILE%\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\
-    __init__.py
-    bridge.py
-    lifecycle.py
-    trigger_core.py
-    ui_manager.py
-    key_picker.py
-    kicad_controls.py
-    gui_helpers.py
-    snap_panel.py
-    snap_preferences.py
-    icons\
-~~~
+1. 이 저장소를 내려받거나 Git으로 복제합니다.
+2. 소스 파일과 `icons` 폴더 전체가 다음 위치에 있도록 설치합니다.
 
-3. **PCB Editor를 완전히 종료한 후 다시 실행**합니다. Python 모듈과 실행 중인 worker가 남아 있으므로 코드 변경 후 'Refresh Plugins'만으로 교체하지 마십시오.
-4. PCB Editor의 **Tools → External Plugins → MacroBK PCB Tools**를 실행합니다.
-5. 새 설치에서는 `open_menu("Inspect -> Design Rules Checker")`를 실행하는 기본 **Open DRC** Action이 준비됩니다. Action을 등록하거나 저장하면 'config.json'에 사용자 설정이 기록됩니다.
+   ```text
+   %USERPROFILE%\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\
+   ```
 
-**기존 사용자 필독:** 개발 버전에서 추적하던 'config.json'에는 개인 PC 경로와 실험용 Action이 들어 있었습니다. 공개판은 이 파일을 Git에서 제외하며 'config.example.json'만 제공합니다. **기존 설치를 git pull로 갱신하기 전에 현재 'config.json'을 다른 폴더로 백업하고, 업데이트 후 복원**하세요. 기존 저장된 Actions를 잃지 않도록 주의하십시오.
+   Git으로 설치한다면 다음처럼 폴더명을 지정할 수 있습니다.
 
-## 2. 플러그인 화면 사용
+   ```powershell
+   cd "$env:USERPROFILE\Documents\KiCad\9.0\scripting\plugins"
+   git clone https://github.com/rco123/macrobk-kicad-tools.git macrobk_drc_bridge
+   ```
 
-| 메뉴/버튼 | 사용법 |
+3. **KiCad PCB Editor를 완전히 종료한 뒤 다시 실행**합니다.
+4. 메뉴에서 **Tools → External Plugins → MacroBK PCB Tools**를 선택합니다.
+
+![Tools > External Plugins > MacroBK PCB Tools 메뉴](docs/images/external-plugin-menu.png)
+
+**업데이트할 때:** 기존에 등록한 Action과 Script는 플러그인 폴더의 `config.json`에 저장됩니다. 업데이트 전에 이 파일을 별도로 백업하세요. GitHub의 `config.example.json`은 설명용 예시이며 기존 설정을 대신하지 않습니다.
+
+## 2. 메인 화면과 버튼 설명
+
+![MacroBK PCB Tools 메인 화면](docs/images/main-window.png)
+
+| 화면 영역 | 기능과 사용 방법 |
 | --- | --- |
-| Registered Actions | Action 선택, 추가(Add), 이름 변경, 삭제(Delete) |
-| Key Change | 기존 키 선택 창을 열어 Ctrl/Alt/Shift/Win 및 일반 키 1~4개 선택. **Apply 시 즉시 Action·config.json 업데이트 및 키보드 재등록** |
-| Python Script | 실행할 Python 코드 작성 |
-| **Run Test** | 현재 스크립트를 시험 실행; 배포판에서도 제공되는 정상 기능 |
-| **Stop** | 실행 중인 Run Test에 중지 요청 |
-| Save | 스크립트 및 Action 저장 |
-| Result | print 출력과 예외 확인; Copy/Clear 지원 |
-| Appearance → SNAP | Pads/Tracks and vias/Graphics의 Magnetic Points 조회·설정 |
+| **Registered Actions** | 저장할 자동화 항목 목록. 항목을 선택하고 **Add**로 추가하거나 **Delete**로 삭제. **이름을 더블클릭**하면 이름 변경 |
+| **Input Monitor** | **Keyboard**, **MacroBK** 중 어느 경로에서 트리거 입력이 수신되었는지 표시등으로 확인 |
+| **Trigger Key** | 선택한 Action에 할당된 키 조합 표시 |
+| **Key Change** | 키 선택 창을 열어 Trigger 수정. 창 안의 **Apply**로 즉시 적용, **Cancel**로 취소 |
+| **Python Script** | Action 실행 시 사용할 Python 코드 입력 |
+| **Run Test / Stop / Save** | 실행 테스트 / 실행 중지 요청 / Action 저장 |
+| **Result** | `print()` 출력 및 스크립트 오류 확인. **Copy**로 복사, **Clear**로 지우기 |
 
-**Add 기본값:** Add를 누르면 새 ID를 가진 `New Action`이 추가되고, 기본 Trigger는 **Ctrl + Win + F12**입니다. Python Script에는 입력 안내 주석만 채워집니다. 이전 Action의 설정이나 스크립트를 복사하지 않습니다. 원하는 코드를 작성한 뒤 **Save**로 저장하십시오. 키를 변경할 때는 **Key Change → Apply**를 사용하면 별도 Register 없이 즉시 저장·재등록됩니다. Action 이름은 목록 항목을 더블클릭해 변경할 수 있습니다.
+**실행 상태**는 Python Script 아래 버튼 옆에 `IDLE`, `RUNNING`, `SUCCESS`, `ERROR`, `STOPPING` 등으로 표시됩니다. Python Script와 Result 사이의 구분선은 마우스로 드래그하여 너비를 조절할 수 있습니다.
 
-Python Script와 Result는 좌우 분할 화면입니다. Manager는 처음에 가로 1160 크기로 열리고 **Python Script : Result = 50:50**으로 나뉩니다. 버튼이나 상태 표시 너비 때문에 초기 분할 비율을 강제로 넓히지 않으며, 전체 창 크기는 사용자가 조절할 수 있습니다. 가운데 분할선도 직접 드래그하여 변경할 수 있습니다. 창이 좁으면 아래쪽 실행 버튼이나 상태 텍스트가 잘릴 수 있으므로 창을 넓혀 주세요.
+### 2.1 Registered Actions
 
-### 처음 사용하는 예제
+- **Add:** 이름이 `New Action`이고 기본 키가 `Ctrl + Win + F12`인 새 항목을 만듭니다. Python Script에는 안내 주석이 들어 있습니다.
+- **이름 변경:** 변경할 항목을 더블클릭합니다.
+- **Delete:** 선택한 항목을 삭제합니다. 삭제 전에 확인 창이 표시됩니다.
+- 동일한 이름을 사용해도 각 Action은 별도로 저장되지만, 구별하기 쉬운 이름을 권장합니다.
 
-Python Script 영역에 아래 코드를 입력하고 **Run Test**를 누릅니다.
+### 2.2 Input Monitor
 
-~~~python
-print("Current layer:", pcb_get_selected_layer())
-print("Selection filter:", pcb_select_filter_state())
-~~~
+- **Keyboard:** 플러그인이 처리한 키보드 트리거 입력이 들어오면 표시등이 반응합니다.
+- **MacroBK:** MacroBK 트리거 메시지가 들어오면 표시등이 반응합니다.
+- **Waiting for input:** 입력 대기 중이라는 뜻입니다.
 
-Result에서 결과를 확인하고 코드는 **Save**로 저장합니다. Trigger는 **Key Change**를 누른 뒤 선택 창에서 **Apply**하면 즉시 반영됩니다. **Cancel**은 변경하지 않습니다.
+`MacroBK Ready`는 메시지를 **수신할 준비가 되었다**는 상태이지, 장치가 실제로 연결되었음을 보장하는 표시는 아닙니다. 일반적인 모든 키 입력이 아니라 **등록된 트리거**에 반응합니다.
 
-**키 변경 흐름:** `Key Change` → 키 선택 창 → `Apply` → 선택한 Action의 Trigger 표시·목록 업데이트 → `config.json` 저장 → 키보드 리스너 재등록. `Cancel`을 누르면 저장하거나 재등록하지 않습니다. 키를 변경할 때 별도의 `Register` 버튼은 사용하지 않습니다.
+### 2.3 Key Change
 
-**Input Monitor의 표시명:** `Keyboard`는 Windows 키보드 입력, `MacroBK`는 MacroBK Studio/Phone에서 UDP로 수신한 트리거를 의미합니다. 여러 일반 키를 조합한 Trigger의 Keyboard 상태는 `MacroBK Only`로 표시됩니다. 내부 설정 파일의 `phone` 필드 및 실행 소스명 `phone`은 호환성을 위해 유지합니다.
+1. Registered Actions에서 변경할 Action을 선택합니다.
+2. **Key Change**를 누릅니다.
+3. Ctrl / Alt / Shift / Win 및 일반 키를 선택합니다.
+4. **Apply**를 누르면 키가 즉시 저장·갱신됩니다. **Cancel**은 변경 없이 닫습니다.
 
-## 3. 트리거 사용법
+키보드 단축키는 수정키와 일반 키 **한 개** 조합을 지원합니다. 일반 키를 2~4개 함께 선택한 조합은 **MacroBK 입력 전용**입니다. 동일한 Trigger가 여러 Action에 할당된 경우, **MacroBK 입력은 목록에서 가장 위에 있는 활성 Action 하나**를 실행합니다.
 
-- **Keyboard**: **Key Change → Apply**에서 선택한 키를 저장하면 Windows 'RegisterHotKey' 등록을 갱신합니다. **수정키 + 일반 키 한 개**에만 대응합니다. 여러 일반 키를 동시에 지정한 경우는 Studio/Phone 트리거용입니다.
-- **MacroBK / Studio / Phone**: UDP로 전달된 키 ID를 **등록된 전체 Action**과 대조합니다. 편집 화면에서 선택되지 않은 Action도 실행될 수 있습니다. 동일 ID가 둘 이상이면 설정 목록의 **첫 번째 활성 Action**을 실행합니다.
-- 이 소스의 기본 UDP 포트는 **47831**, 트리거 멀티캐스트 주소는 **239.255.77.77**, 인터페이스는 **127.0.0.1**입니다. 다른 장치 또는 호스트 구성에서는 네트워크 설정을 별도로 확인해야 합니다.
+## 3. Action과 Python Script 작성 방법
 
-패킷 예:
+1. **Add**를 눌러 새 Action을 만듭니다.
+2. 목록 항목을 더블클릭해 `New Action`을 원하는 이름으로 변경합니다.
+3. **Python Script** 영역에 필요한 코드를 입력합니다.
+4. **Run Test**를 눌러 동작과 Result 출력을 확인합니다.
+5. 문제가 없으면 **Save**로 Action과 스크립트를 저장합니다.
+6. 필요한 경우 **Key Change → Apply**로 Trigger를 설정합니다.
 
-~~~text
-TRIGGER|CTRL+WIN:F12
-TRIGGER|CTRL+SHIFT:F12
-~~~
+예를 들어 현재 PCB 레이어를 알아보려면 다음과 같이 작성합니다.
 
-트리거 ID는 수정키(ALT/CTRL/SHIFT/WIN)와 일반 키들을 정렬해서 결합합니다. 일반 키 다수는 쉼표로 구분합니다. 이전의 평문 'KICAD_DRC'만 보내는 패킷은 현 리스너가 처리하지 않습니다.
-
-**config.example.json**은 공개용 기본 설정 예시이며 실제 사용자 설정은 **config.json**에 저장됩니다.
-
-## 4. Python Action의 실행 방식
-
-Action 스크립트에는 아래 5~7절의 Helper 함수를 **import 없이 직접 사용**할 수 있습니다. Python 코드는 worker thread에서 실행되며 Helper가 wx GUI 접근을 GUI thread로 전달합니다. 고급 코드용 'wx'/'pcbnew' 객체는 제공되지만 **worker에서 wx 위젯에 직접 접근하지 마십시오**.
-
-- 최상위 코드가 실행된 후 스크립트 내 'run()' 함수가 존재하면 추가로 호출합니다.
-- 'print(...)' 결과는 Result에 표시됩니다. 스크립트 최상위에 **DEBUG = True**를 적으면 내부 실행 로그도 Result에 표시됩니다.
-- **stop_requested()** → bool: Stop 요청 여부
-- **wait_or_stop(seconds)** → bool: 최대 seconds초 기다리고 Stop 요청 시 True
-- Stop은 스크립트의 실행 줄 및 Helper 호출 전후에서 확인됩니다. 'time.sleep()', 외부 모듈, 네이티브 호출, 모달 창을 강제 종료하지는 못합니다.
-- GUI 작업은 중지 또는 시간 제한 이후에도 이미 시작되었다면 취소·롤백되지 않을 수 있습니다.
-
-~~~python
-DEBUG = False
-
-def run():
-    for n in range(5):
-        if wait_or_stop(0.5):
-            print("Stopped")
-            return
-        print("Step", n)
-~~~
-
-## 5. PCB 기능별 함수 목록
-
-이 표의 함수는 **Python Script 입력란에서 그대로 호출하는 공개 Helper**입니다.
-
-### 5.1 선택 필터
-
-| 함수 | 파라미터 | 반환값/효과 |
-| --- | --- | --- |
-| 'pcb_select_filter(name, value=None)' | name: 필터명(str); value: None/True/False | None이면 현재 bool 조회, bool 지정 시 상태 변경 |
-| 'pcb_select_filter_state()' | 없음 | 모든 항목의 현재 상태 dict |
-
-지원 name: 'All items', 'Locked items', 'Footprints', 'Text', 'Tracks', 'Vias', 'Pads', 'Graphics', 'Zones', 'Rule Areas', 'Dimensions', 'Other items'. 'All items' 변경은 'Locked items'에 영향을 주지 않습니다.
-
-~~~python
-print(pcb_select_filter("Tracks"))
-pcb_select_filter("Tracks", False)
-print(pcb_select_filter_state())
-pcb_select_filter("Tracks", True)
-~~~
-
-### 5.2 PCB 레이어
-
-| 함수 | 파라미터 | 반환값/효과 |
-| --- | --- | --- |
-| 'pcb_select_layer(name)' | KiCad 레이어 이름(str), 예: 'F.Cu' | 지정 레이어 선택 |
-| 'pcb_get_selected_layer()' | 없음 | 현재 활성 레이어명(str) |
-| 'pcb_onoff_layer(name, value=None)' | name: 레이어명; value: None/True/False | 레이어 표시 상태 bool 조회/변경 |
-| 'pcb_layer_up()' | 없음 | 이전 활성 Cu 레이어로 이동; 새 레이어명 |
-| 'pcb_layer_down()' | 없음 | 다음 활성 Cu 레이어로 이동; 새 레이어명 |
-
-~~~python
-pcb_select_layer("F.Cu")
+```python
 print(pcb_get_selected_layer())
-pcb_onoff_layer("B.SilkS", True)
-pcb_layer_down()
-~~~
+```
 
-'pcb_layer_up/down'은 **활성 *.Cu 레이어만 순환**하며, 비구리 레이어에서는 UP → 마지막 구리층, DOWN → 첫 구리층으로 이동합니다. KiCad Appearance 패널 구조·언어가 변경되면 UI 조회 방식에 영향을 줄 수 있습니다.
+**Run Test**를 누르면 Result에 `F.Cu`, `B.Cu` 등의 현재 레이어 이름이 표시됩니다. 아래 [함수 목록](#7-사용자가-호출하는-함수)에 있는 함수는 **별도의 import 없이** Python Script에서 직접 호출할 수 있습니다.
 
-### 5.3 배선 폭
-
-| 함수 | 파라미터 | 반환값/효과 |
-| --- | --- | --- |
-| 'pcb_set_selected_track_width(width_mm)' | width_mm: 양수(float), mm | **선택된 트랙 세그먼트**의 폭 변경; 변경 건수(int) |
-| 'pcb_set_routing_track_width(width_mm)' | width_mm: 양수(float), mm | 현재 라우팅의 사용자 폭 설정을 요청; 요청값 반환 |
-| 'pcb_set_netclass_track_width()' | 없음 | 사용자 폭 해제·Netclass 폭 사용; 사용 가능 시 현재 폭(mm) |
-
-~~~python
-count = pcb_set_selected_track_width(0.30)
-print("Changed:", count)
-
-pcb_set_routing_track_width(0.40)
-pcb_set_netclass_track_width()
-~~~
-
-- 라우팅 폭 변경은 KiCad 네이티브 **Q → Custom Track/Via Size → OK** 경로를 사용합니다. 함수 반환 직후 내부 대화상자 처리가 계속될 수 있으므로 연속 요청을 피하십시오.
-- 선택된 트랙 폭 변경은 PCB_VIA 및 선택되지 않은 연결 세그먼트에 적용되지 않습니다. **KiCad Ctrl+Z(Undo) 작동은 실환경에서 검증 후 사용**하십시오.
-- 라우팅 중 폭 변경은 **PCB Editor가 포커스를 유지하는 Phone 트리거** 방식으로 먼저 확인하는 것이 좋습니다.
-
-### 5.4 SNAP (Magnetic Points)
-
-| 함수 | 파라미터 | 반환값/효과 |
-| --- | --- | --- |
-| 'pcb_get_snap_settings(include_choices=False)' | include_choices: bool | 현재 'pads'/'tracks_vias'/'graphics' 상태 dict. True이면 values/choices/source 포함 |
-| 'pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)' | 각 인수: 문자열 또는 None(변경 없음) | 변경 후 확인된 상태 dict |
-
-선택 값:
-- 'pads', 'tracks_vias': **Never**, **When routing tracks**, **Always**
-- 'graphics': **Always**, **Never**
-
-~~~python
-print(pcb_get_snap_settings())
-pcb_set_snap_settings(pads="Always", graphics="Never")
-print(pcb_get_snap_settings(include_choices=True))
-~~~
-
-SNAP 탭은 Preferences 창을 열지 않고 KiCad 사용자 설정 'pcbnew.json'의 Magnetic Points 항목을 수정한 뒤 'SETTINGS_MANAGER.Load()'로 재로드하고 값을 검증합니다. 실패 시 원래 설정을 복원하려고 시도합니다. **초기 사용 전 KiCad 설정 파일을 백업하고, 변경 시 팝업/종료 현상이 없는지 확인**하십시오.
-
-### 5.5 메뉴 명령 실행 (DRC 예제)
-
-| 함수 | 파라미터 | 반환값/효과 |
-| --- | --- | --- |
-| 'find_menu_command(path)' | path: 메뉴 경로(str) | 메뉴 명령 스냅샷(path/id) 또는 None |
-| 'dispatch_menu_command(command)' | find_menu_command 결과(dict) | 명령 실행 결과(bool) |
-| 'open_menu(path)' | 메뉴 경로(str) | 명령 실행 결과(bool) |
-
-~~~python
-# 현재 PCB Editor의 Inspect 메뉴에서 DRC 창 열기
-open_menu("Inspect -> Design Rules Checker")
-~~~
-
-**기존 전용 함수 `open_drc_window()`는 제거했습니다.** DRC 창은 위 `open_menu()` 예제로 실행합니다. 메뉴 텍스트는 **KiCad PCB Editor에 표시되는 메뉴 경로**를 사용하며, 한국어 메뉴를 쓰는 경우에는 해당 언어의 메뉴 경로를 입력해야 합니다. DRC 창을 열더라도 검사가 자동으로 시작되는 것은 아닙니다. 메뉴를 여는 함수는 실제 KiCad 창을 열 수 있으며 일부 메뉴는 모달이므로 작업 중 호출 시 주의하십시오.
-
-## 6. GUI 컨트롤 Helper API
-
-GUI 함수는 **실제 wx 객체가 아닌 dict 형태 스냅샷**을 반환합니다. 'root'는 None(기본 PCB Editor), 창 제목(str), 또는 앞서 얻은 스냅샷입니다. 스냅샷은 현재 창 세션에서만 유효하며 닫힌 창의 참조는 만료됩니다.
-
-| 함수 | 인수 | 반환값/용도 |
-| --- | --- | --- |
-| 'list_controls(root=None)' | root: 창 제목/스냅샷 | 자식 컨트롤 스냅샷 리스트 |
-| 'find_control_info(root=None, control_type=None, label=None, name=None, id=None)' | type은 'CheckBox'/'wx.CheckBox' 형태 | 유일한 매치 스냅샷 또는 None; 다중 매치는 오류 |
-| 'find_controls_info(root=None, control_type=None, label=None, name=None, id=None)' | 위와 동일 | 일치하는 모든 스냅샷 리스트 |
-| 'get_control_info(control)' | control: 스냅샷(dict) | 최신 정보 dict |
-| 'get_control_value(control)' | control: 스냅샷 | 현재 값 |
-| 'set_control_value(control, value)' | 스냅샷, 변경 값 | 변경 후 값 |
-| 'get_control_value_by_label(label, root=None)' | 라벨, 선택적 root | 값 |
-| 'set_control_value_by_label(label, value, root=None)' | 라벨, 값, 선택적 root | 변경 후 값 |
-| 'get_control_value_by_name(name, root=None)' | 이름, 선택적 root | 값 |
-| 'set_control_value_by_name(name, value, root=None)' | 이름, 값, 선택적 root | 변경 후 값 |
-| 'get_control_value_by_id(id, root=None)' | 컨트롤 ID, 선택적 root | 값 |
-| 'set_control_value_by_id(id, value, root=None)' | ID, 값, 선택적 root | 변경 후 값 |
-| 'candidate_frames()' | 없음 | PCB 후보 Frame 스냅샷 리스트 |
-| 'get_pcb_selection_filter_panel()' | 없음 | Selection Filter 패널 스냅샷 또는 None |
-
-하위 호환 이름 **'iter_controls'**, **'find_control'**, **'find_controls'**는 각각 list_controls, find_control_info, find_controls_info와 동일한 **스냅샷**을 반환합니다. 과거 코드처럼 wx 원본 메서드를 호출하면 안 됩니다.
-
-~~~python
-panel = get_pcb_selection_filter_panel()
-for item in list_controls(panel):
-    print(item.get("type"), item.get("label"), item.get("value"))
-
-track_checkbox = find_control_info(
-    root=panel,
-    control_type="CheckBox",
-    label="Tracks",
-)
-if track_checkbox is not None:
-    print(get_control_value(track_checkbox))
-~~~
-
-## 7. 개발자용 구성 및 함수 흐름
-
-| 파일 | 주요 책임 |
+| 버튼 | 의미 |
 | --- | --- |
-| '__init__.py' | KiCad 로더, 등록 및 서비스 시작 |
-| 'bridge.py' | ActionPlugin 진입점, Manager 열기 |
-| 'lifecycle.py' | PCB Editor 수명주기, 등록/Worker 소유권 |
-| 'trigger_core.py' | 설정·Hotkey·Phone UDP·Python Action 실행·Stop |
-| 'ui_manager.py' | Registered Actions, 편집기, Result UI |
-| 'key_picker.py' | 단축키 선택 대화상자 |
-| 'kicad_controls.py' | KiCad PCB, 레이어, 배선 폭, SNAP 제어 |
-| 'gui_helpers.py' | 스냅샷 함수, worker→GUI thread 래핑 |
-| 'snap_panel.py' | Appearance 안의 SNAP 탭 |
-| 'snap_preferences.py' | KiCad 'pcbnew.json' Magnetic Points 제어 |
-| 'icons/' | UI 이미지 |
-| 'config.example.json' | 깨끗한 초기 설정 참고 파일 |
+| **Run Test** | 작성 중인 Python Script 즉시 실행 |
+| **Stop** | 실행 중인 Script에 중지 요청 |
+| **Save** | 현재 Action과 Script 저장 |
+| **Copy / Clear** | Result 출력 복사 / 지우기 |
 
-흐름: '__init__.py' → 'register_plugin(MacroBKDRCBridge)' → 'start_bridge()' → 'MacroBKService.start()'. 사용자가 Run Test 또는 Trigger를 발생시키면 'trigger_core.execute_python_script(script, source, action_id=None)'가 별도의 worker에서 코드를 실행합니다. GUI 함수는 'gui_helpers.script_api(...)'에서 래핑되어 'call_gui_sync(...)'로 PCB Editor GUI 스레드에 전달됩니다.
+> **Stop**은 강제 종료 버튼이 아닙니다. 이미 실행된 KiCad 메뉴 명령이나 열린 창을 자동으로 취소하지는 않습니다.
 
-실행 중 worker 강제 종료, 명령 실행 중인 모달 창 자동 닫기, KiCad 내부 상태 복구를 보장하지 않습니다. 소스 변경 후 반드시 PCB Editor를 완전히 다시 시작하십시오.
+## 4. DRC 검사 창 열기
 
-기존 `config.json`에 `open_drc_window()`가 등록되어 있다면 해당 Action의 Python Script도 **`open_menu("Inspect -> Design Rules Checker")`로 수동 변경**하고 Save를 누르십시오. 사용자 설정은 Git에서 관리하지 않으므로 소스 업데이트만으로 기존 Action 내용은 바뀌지 않습니다.
+PCB 설계 규칙 검사를 실행할 때 사용하는 기본 예제입니다.
 
-### Run Test 실행 시 Manager 창 위치
+### 4.1 Python Script 입력 및 Run Test
 
-Manager는 PCB Editor를 부모 창으로 가지며, `wx.FRAME_FLOAT_ON_PARENT` 스타일로 **PCB Editor 기본 창보다 앞에 유지**됩니다. 이것은 Windows의 전역 Always on Top 설정이 아니며, DRC 등 KiCad가 여는 대화상자는 필요할 때 Manager보다 앞에 나타날 수 있습니다. 새 설정은 **PCB Editor를 완전히 종료한 뒤 재실행**해야 적용됩니다.
+1. `Open DRC` Action을 선택하거나 새 Action을 만듭니다.
+2. Python Script에 다음 코드를 입력합니다.
 
-## 8. 오류 해결
+   ```python
+   open_menu("Inspect -> Design Rules Checker")
+   ```
 
-- **메뉴에 안 보임**: '__init__.py'와 모듈들이 같은 설치 폴더에 있는지 확인하고 PCB Editor 재시작.
-- **키보드 트리거 안 됨**: 키 조합 충돌 여부, Windows RegisterHotKey, 'enabled' 설정 확인. 복수 일반 키는 Phone용입니다.
-- **Phone 트리거 안 됨**: UDP 47831, 'TRIGGER|' 접두사, 트리거 ID 및 등록 Action 활성화 확인.
-- **스크립트가 멈추지 않음**: 'wait_or_stop(seconds)' 사용; time.sleep/네이티브 함수는 강제 중단 불가.
-- **SNAP 설정 오류**: KiCad 'pcbnew.json' 값과 KiCad 9 버전을 확인. 작업 전 설정 백업 권장.
-- **업데이트 중 설정 분실 우려**: 기존 'config.json'을 Git 작업 전에 백업하고 복구.
-- 내부 동작 로그는 호환성 유지를 위해 여전히 'macrobk_drc.log'에 기록됩니다. 이 실행 로그는 GitHub 배포에서 제외합니다.
+3. **Run Test**를 누릅니다.
+4. **Design Rules Checker** 창이 열리면 메뉴 호출이 정상 동작한 것입니다.
 
-## 9. 라이선스
+### 4.2 DRC 검사 실행
 
-Copyright (c) 2026 **BK Systems**.
+![Design Rules Checker 창](docs/images/drc-window.png)
 
-본 소프트웨어의 코드는 **MIT License**로 배포합니다. 라이선스 전문은 [LICENSE](LICENSE)를 참조하세요. 외부 라이브러리/ KiCad 자체에는 각각의 저작권과 라이선스가 적용됩니다.
+1. DRC 창에서 검사 옵션을 확인합니다.
+2. 오른쪽 아래 **Run DRC** 버튼을 누릅니다.
+3. `Violations`, `Unconnected Items` 등 결과 탭에서 내용을 확인합니다.
+4. 검사를 마친 뒤 창을 닫습니다.
 
-이 프로젝트는 BK Systems의 독립 프로젝트이며 KiCad 공식 프로젝트와 제휴·인증을 의미하지 않습니다.
+**중요:** `open_menu("Inspect -> Design Rules Checker")`는 **DRC 창만 여는 코드**입니다. 실제 검사는 창 안에서 **Run DRC**를 눌러 시작합니다. KiCad 메뉴 언어가 다른 경우 실제 표시된 메뉴명에 맞춰 경로 문자열을 변경해야 합니다.
+
+## 5. SNAP 설정
+
+PCB Editor 오른쪽의 **Appearance → SNAP** 탭에서 Magnetic Points(자석 스냅) 설정을 확인할 수 있습니다.
+
+![Appearance 패널의 SNAP 탭](docs/images/appearance-snap.png)
+
+| 화면 항목 | Script 파라미터 | 사용할 수 있는 값 |
+| --- | --- | --- |
+| **Snap to pads** | `pads` | `Never`, `When routing tracks`, `Always` |
+| **Snap to tracks and vias** | `tracks_vias` | `Never`, `When routing tracks`, `Always` |
+| **Snap to graphics** | `graphics` | `Never`, `Always` |
+
+현재 상태 확인:
+
+```python
+print(pcb_get_snap_settings())
+```
+
+설정 변경:
+
+```python
+pcb_set_snap_settings(
+    pads="Always",
+    tracks_vias="When routing tracks",
+    graphics="Never"
+)
+```
+
+변경하지 않을 항목은 생략할 수 있습니다. 예를 들어 `pcb_set_snap_settings(pads="Always")`는 Pads 설정만 변경합니다.
+
+> SNAP을 처음 사용하기 전 KiCad 설정을 백업하거나 기존 값을 기록하고, 한 항목씩 변경하여 확인하는 것을 권장합니다.
+
+## 6. 사용 사례 예제
+
+새 활용 사례가 나오면 **이 절에 번호를 이어서 추가**합니다. 각 예제는 **사용 목적 → 코드 → 확인 방법** 순서로 정리합니다.
+
+### 예제 1. 현재 레이어 확인 및 변경
+
+현재 선택된 레이어를 출력합니다.
+
+```python
+print(pcb_get_selected_layer())
+```
+
+앞면 구리층으로 이동:
+
+```python
+pcb_select_layer("F.Cu")
+```
+
+뒷면 구리층으로 이동:
+
+```python
+pcb_select_layer("B.Cu")
+```
+
+### 예제 2. 레이어 표시 / 숨기기
+
+`B.SilkS` 레이어를 숨기고 다시 표시합니다.
+
+```python
+pcb_onoff_layer("B.SilkS", False)  # 숨기기
+pcb_onoff_layer("B.SilkS", True)   # 표시
+```
+
+### 예제 3. 선택된 트랙 폭 변경
+
+PCB Editor에서 폭을 변경할 **트랙 세그먼트를 먼저 선택**합니다.
+
+```python
+changed = pcb_set_selected_track_width(0.30)
+print("Changed tracks:", changed)
+```
+
+선택된 트랙의 폭을 `0.30 mm`로 변경하고 변경 개수를 출력합니다.
+
+### 예제 4. 라우팅 폭 변경과 기본값 복귀
+
+현재 라우팅 폭을 `0.40 mm`로 설정합니다.
+
+```python
+pcb_set_routing_track_width(0.40)
+```
+
+Netclass 폭을 다시 사용하려면 다음 코드를 실행합니다.
+
+```python
+pcb_set_netclass_track_width()
+```
+
+이 기능은 기존에 그려진 트랙 전체의 폭을 변경하는 기능은 아닙니다.
+
+### 예제 5. 선택 필터 변경
+
+트랙 선택을 끄고, 다시 켭니다.
+
+```python
+pcb_select_filter("Tracks", False)
+pcb_select_filter("Tracks", True)
+```
+
+전체 선택 필터 설정을 출력합니다.
+
+```python
+print(pcb_select_filter_state())
+```
+
+### 예제 6. SNAP 항목 하나만 변경
+
+```python
+pcb_set_snap_settings(pads="Always")
+print(pcb_get_snap_settings())
+```
+
+## 7. 사용자가 호출하는 함수
+
+아래는 **Python Script에서 실제로 사용할 수 있는 함수**만 정리한 목록입니다. 괄호 안의 문자열·숫자는 필요한 값으로 바꾸어 사용합니다.
+
+### 7.1 메뉴 실행
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `open_menu(path)` | `path`: KiCad 메뉴 경로 문자열 | 메뉴 명령을 실행하고 성공 여부(`bool`) 반환 |
+
+```python
+open_menu("Inspect -> Design Rules Checker")
+```
+
+### 7.2 레이어
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `pcb_select_layer(name)` | `name`: 레이어명, 예: `"F.Cu"` | 해당 레이어 선택 |
+| `pcb_get_selected_layer()` | 없음 | 현재 레이어명 반환 |
+| `pcb_onoff_layer(name, value=None)` | `name`: 레이어명, `value`: `True` 표시 / `False` 숨김 / 생략 시 조회 | 레이어 표시 상태 확인·변경 |
+| `pcb_layer_up()` | 없음 | 이전 활성 구리 레이어로 이동 |
+| `pcb_layer_down()` | 없음 | 다음 활성 구리 레이어로 이동 |
+
+### 7.3 선택 필터
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `pcb_select_filter(name, value=None)` | `name`: 항목명, `value`: `True` 활성 / `False` 비활성 / 생략 시 조회 | 선택 필터 확인·변경 |
+| `pcb_select_filter_state()` | 없음 | 모든 선택 필터 상태 조회 |
+
+사용 가능한 항목 이름: `All items`, `Locked items`, `Footprints`, `Text`, `Tracks`, `Vias`, `Pads`, `Graphics`, `Zones`, `Rule Areas`, `Dimensions`, `Other items`.
+
+### 7.4 트랙 폭
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `pcb_set_selected_track_width(width_mm)` | `width_mm`: 양수(mm) | **선택된 트랙 세그먼트** 폭 변경, 변경 개수 반환 |
+| `pcb_set_routing_track_width(width_mm)` | `width_mm`: 양수(mm) | 앞으로 사용할 라우팅 폭 지정 |
+| `pcb_set_netclass_track_width()` | 없음 | Netclass 기본 라우팅 폭 사용 |
+
+### 7.5 SNAP
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `pcb_get_snap_settings(include_choices=False)` | `include_choices=True`로 가능한 값도 조회 | 현재 SNAP 값 조회 |
+| `pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)` | 변경할 항목에 설정 문자열 입력, 나머지는 생략 가능 | SNAP 값 변경 및 결과 반환 |
+
+설정값은 [SNAP 설정표](#5-snap-설정)를 참고하세요.
+
+### 7.6 스크립트 중지 확인
+
+| 함수 | 파라미터 | 역할 |
+| --- | --- | --- |
+| `stop_requested()` | 없음 | Stop 요청 여부 반환 |
+| `wait_or_stop(seconds)` | `seconds`: 대기 시간(초) | 대기 중 Stop이 요청되면 `True` 반환 |
+
+반복 작업은 다음처럼 중지 요청을 확인할 수 있습니다.
+
+```python
+for n in range(10):
+    if wait_or_stop(0.5):
+        break
+    print(n)
+```
+
+## 8. 문제 해결 및 주의사항
+
+- **플러그인이 보이지 않음:** 설치 경로와 폴더 구조를 확인하고 PCB Editor를 완전히 종료한 후 다시 실행합니다.
+- **DRC 창만 열리고 검사는 안 됨:** DRC 창에서 **Run DRC**를 눌러야 합니다.
+- **`open_menu()` 동작 안 함:** 실제 KiCad 메뉴의 언어와 경로가 Script 문자열과 일치하는지 확인합니다.
+- **키보드 Trigger가 동작하지 않음:** Windows 키 조합 중복 또는 일반 키 2개 이상 선택 여부를 확인합니다. 여러 일반 키 조합은 MacroBK 입력용입니다.
+- **MacroBK가 Ready인데 입력이 없음:** Ready는 수신 대기 상태이며 장치 연결을 의미하지 않습니다. 장치/Studio에서 설정한 Trigger가 전달되는지 확인합니다.
+- **Stop이 즉시 멈추지 않음:** Stop은 중지 요청이며 이미 실행한 KiCad 명령과 대화상자를 강제 종료하지 않습니다.
+- **저장했던 Action을 찾지 못함:** 업데이트 전에 백업한 `config.json`을 확인합니다.
+- **기존 `open_drc_window()`가 오류를 냄:** 해당 함수는 제거되었으므로 `open_menu("Inspect -> Design Rules Checker")`를 사용합니다.
+
+Python Script는 사용자 PC에서 실행됩니다. **신뢰할 수 있는 코드만 사용**하고, PCB나 환경 설정을 변경하기 전에 프로젝트를 저장하거나 백업한 후 시험하세요.
+
+---
+
+**Copyright © 2026 BK Systems.** [MIT License](LICENSE).  
+KiCad 및 외부 라이브러리의 저작권과 라이선스는 각각의 소유자에게 있습니다. 이 플러그인은 KiCad 공식 프로젝트의 인증 제품이 아닙니다.
