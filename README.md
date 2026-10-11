@@ -25,25 +25,25 @@ MacroBK KiCAD Tools lets you write Python scripts for KiCad PCB Editor operation
 **Supported environment:** KiCad 9 PCB Editor on Windows.
 
 1. Download this repository or clone it with Git.
-2. Install all plugin source files along with the entire \`icons\` folder in:
+2. Install all plugin source files along with the entire `icons` folder in:
 
-   \`\`\`text
+   ```text
    %USERPROFILE%\Documents\KiCad\9.0\scripting\plugins\macrobk_drc_bridge\
-   \`\`\`
+   ```
 
    To install using Git and name the destination directory correctly:
 
-   \`\`\`powershell
+   ```powershell
    cd "$env:USERPROFILE\Documents\KiCad\9.0\scripting\plugins"
    git clone https://github.com/rco123/macrobk-kicad-tools.git macrobk_drc_bridge
-   \`\`\`
+   ```
 
 3. **Completely close KiCad PCB Editor and launch it again.**
 4. Open **Tools → External Plugins → MacroBK KiCAD Tools**.
 
 ![Selecting MacroBK KiCAD Tools from the External Plugins menu](docs/images/external-plugin-menu.png)
 
-**Before updating:** Your Actions and scripts are stored in \`config.json\` inside the plugin folder. Back up this file before updating. The repository's \`config.example.json\` is only a sample; it does not replace your saved settings.
+**Before updating:** Your Actions and scripts are stored in `config.json` inside the plugin folder. Back up this file before updating. The repository's `config.example.json` is only a sample; it does not replace your saved settings.
 
 ## 2. Main Window and Controls
 
@@ -57,13 +57,13 @@ MacroBK KiCAD Tools lets you write Python scripts for KiCad PCB Editor operation
 | **Key Change** | Opens the key selection dialog. **Apply** saves the change; **Cancel** discards it. |
 | **Python Script** | Enter the Python code to execute for the selected Action. |
 | **Run Test / Stop / Save** | Test the script / request that execution stop / save the Action. |
-| **Result** | Shows \`print()\` output and script errors; use **Copy** or **Clear**. |
+| **Result** | Shows `print()` output and script errors; use **Copy** or **Clear**. |
 
-The status beside the buttons below Python Script can show \`IDLE\`, \`RUNNING\`, \`SUCCESS\`, \`ERROR\`, or \`STOPPING\`. Drag the divider between **Python Script** and **Result** to adjust the panel widths.
+The status beside the buttons below Python Script can show `IDLE`, `RUNNING`, `SUCCESS`, `ERROR`, or `STOPPING`. Drag the divider between **Python Script** and **Result** to adjust the panel widths.
 
 ### 2.1 Registered Actions
 
-- **Add:** Creates an Action named \`New Action\` with the default trigger \`Ctrl + Win + F12\`. The script field initially contains an instructional comment.
+- **Add:** Creates an Action named `New Action` with the default trigger `Ctrl + Win + F12`. The script field initially contains an instructional comment.
 - **Rename:** Double-click the Action you want to rename.
 - **Delete:** Deletes the selected Action after confirmation.
 - Duplicate Action names are permitted, but distinct names are recommended for clarity.
@@ -74,7 +74,7 @@ The status beside the buttons below Python Script can show \`IDLE\`, \`RUNNING\`
 - **MacroBK:** Flashes when a MacroBK trigger message is received.
 - **Waiting for input:** The plugin is waiting for input.
 
-\`MacroBK Ready\` indicates that the message receiver is ready. It **does not confirm that a hardware device is connected**. The monitor reacts to registered triggers, not every key pressed on the PC.
+`MacroBK Ready` indicates that the message receiver is ready. It **does not confirm that a hardware device is connected**. The monitor reacts to registered triggers, not every key pressed on the PC.
 
 ### 2.3 Key Change
 
@@ -88,7 +88,7 @@ A PC keyboard shortcut supports modifier keys plus **one ordinary key**. A combi
 ## 3. Creating Actions and Python Scripts
 
 1. Click **Add** to create an Action.
-2. Double-click \`New Action\` in the list and enter a meaningful name.
+2. Double-click `New Action` in the list and enter a meaningful name.
 3. Write the desired code in **Python Script**.
 4. Click **Run Test** and check the behavior and output under Result.
 5. If everything works, click **Save** to store the Action and script.
@@ -96,11 +96,11 @@ A PC keyboard shortcut supports modifier keys plus **one ordinary key**. A combi
 
 For example, to display the currently selected PCB layer, enter:
 
-\`\`\`python
+```python
 print(pcb_get_selected_layer())
-\`\`\`
+```
 
-Click **Run Test**. Result will display a layer name such as \`F.Cu\` or \`B.Cu\`. The functions listed in [Functions Available to Users](#7-functions-available-to-users) can be called directly in Python Script **without an import statement**.
+Click **Run Test**. Result will display a layer name such as `F.Cu` or `B.Cu`. The functions listed in [Functions Available to Users](#7-functions-available-to-users) can be called directly in Python Script **without an import statement**.
 
 | Button | Action |
 | --- | --- |
@@ -117,12 +117,12 @@ This example opens KiCad's **Design Rules Checker (DRC)** window.
 
 ### 4.1 Enter the Script and Run Test
 
-1. Select the \`Open DRC\` Action or create a new Action.
+1. Select the `Open DRC` Action or create a new Action.
 2. Enter the following in Python Script:
 
-   \`\`\`python
+   ```python
    open_menu("Inspect -> Design Rules Checker")
-   \`\`\`
+   ```
 
 3. Click **Run Test**.
 4. If the **Design Rules Checker** window appears, the menu command was executed successfully.
@@ -136,7 +136,7 @@ This example opens KiCad's **Design Rules Checker (DRC)** window.
 3. Review the results under **Violations**, **Unconnected Items**, and other tabs.
 4. Close the dialog when finished.
 
-**Important:** \`open_menu("Inspect -> Design Rules Checker")\` **opens the DRC window only**. The check itself does not start until you click **Run DRC** inside that window. If your KiCad menu uses another language, adjust the menu-path string to match the labels shown in your installation.
+**Important:** `open_menu("Inspect -> Design Rules Checker")` **opens the DRC window only**. The check itself does not start until you click **Run DRC** inside that window. If your KiCad menu uses another language, adjust the menu-path string to match the labels shown in your installation.
 
 ## 5. SNAP Settings
 
@@ -146,27 +146,27 @@ Open the **Appearance → SNAP** tab on the right side of KiCad PCB Editor to vi
 
 | Setting in KiCad | Python parameter | Accepted values |
 | --- | --- | --- |
-| **Snap to pads** | \`pads\` | \`Never\`, \`When routing tracks\`, \`Always\` |
-| **Snap to tracks and vias** | \`tracks_vias\` | \`Never\`, \`When routing tracks\`, \`Always\` |
-| **Snap to graphics** | \`graphics\` | \`Never\`, \`Always\` |
+| **Snap to pads** | `pads` | `Never`, `When routing tracks`, `Always` |
+| **Snap to tracks and vias** | `tracks_vias` | `Never`, `When routing tracks`, `Always` |
+| **Snap to graphics** | `graphics` | `Never`, `Always` |
 
 To display the current settings:
 
-\`\`\`python
+```python
 print(pcb_get_snap_settings())
-\`\`\`
+```
 
 To change them:
 
-\`\`\`python
+```python
 pcb_set_snap_settings(
     pads="Always",
     tracks_vias="When routing tracks",
     graphics="Never"
 )
-\`\`\`
+```
 
-Omit a parameter to leave that setting unchanged. For example, \`pcb_set_snap_settings(pads="Always")\` changes only the Pads setting.
+Omit a parameter to leave that setting unchanged. For example, `pcb_set_snap_settings(pads="Always")` changes only the Pads setting.
 
 > Before using SNAP control for the first time, back up your KiCad settings or record their current values. Check each change individually.
 
@@ -178,39 +178,39 @@ New examples can be **appended to this section with consecutive numbers**. Use t
 
 Print the currently selected layer:
 
-\`\`\`python
+```python
 print(pcb_get_selected_layer())
-\`\`\`
+```
 
 Switch to the front copper layer:
 
-\`\`\`python
+```python
 pcb_select_layer("F.Cu")
-\`\`\`
+```
 
 Switch to the back copper layer:
 
-\`\`\`python
+```python
 pcb_select_layer("B.Cu")
-\`\`\`
+```
 
 ### Example 2. Show or Hide a Layer
 
-Hide and then show the \`B.SilkS\` layer:
+Hide and then show the `B.SilkS` layer:
 
-\`\`\`python
+```python
 pcb_onoff_layer("B.SilkS", False)  # Hide
 pcb_onoff_layer("B.SilkS", True)   # Show
-\`\`\`
+```
 
 ### Example 3. Change the Width of Selected Tracks
 
 First select the **track segments** whose widths you want to change in PCB Editor:
 
-\`\`\`python
+```python
 changed = pcb_set_selected_track_width(0.30)
 print("Changed tracks:", changed)
-\`\`\`
+```
 
 This sets the selected track segments to **0.30 mm** and prints the number changed.
 
@@ -218,15 +218,15 @@ This sets the selected track segments to **0.30 mm** and prints the number chang
 
 Set the current routing width to **0.40 mm**:
 
-\`\`\`python
+```python
 pcb_set_routing_track_width(0.40)
-\`\`\`
+```
 
 Restore the default Netclass routing width:
 
-\`\`\`python
+```python
 pcb_set_netclass_track_width()
-\`\`\`
+```
 
 This does **not** change the width of every track that has already been routed.
 
@@ -234,23 +234,23 @@ This does **not** change the width of every track that has already been routed.
 
 Disable track selection, then enable it again:
 
-\`\`\`python
+```python
 pcb_select_filter("Tracks", False)
 pcb_select_filter("Tracks", True)
-\`\`\`
+```
 
 Print the complete selection-filter state:
 
-\`\`\`python
+```python
 print(pcb_select_filter_state())
-\`\`\`
+```
 
 ### Example 6. Change Only One SNAP Setting
 
-\`\`\`python
+```python
 pcb_set_snap_settings(pads="Always")
 print(pcb_get_snap_settings())
-\`\`\`
+```
 
 ## 7. Functions Available to Users
 
@@ -260,45 +260,45 @@ The following functions can be **called directly from Python Script**. Replace a
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`open_menu(path)\` | \`path\`: string containing a KiCad menu path | Runs the menu command and returns a success flag (\`bool\`). |
+| `open_menu(path)` | `path`: string containing a KiCad menu path | Runs the menu command and returns a success flag (`bool`). |
 
-\`\`\`python
+```python
 open_menu("Inspect -> Design Rules Checker")
-\`\`\`
+```
 
 ### 7.2 Layers
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`pcb_select_layer(name)\` | \`name\`: layer name, e.g. \`"F.Cu"\` | Selects a layer. |
-| \`pcb_get_selected_layer()\` | None | Returns the active layer name. |
-| \`pcb_onoff_layer(name, value=None)\` | \`name\`: layer name; \`value\`: \`True\` show, \`False\` hide, omitted to read | Gets or changes layer visibility. |
-| \`pcb_layer_up()\` | None | Moves to the previous enabled copper layer. |
-| \`pcb_layer_down()\` | None | Moves to the next enabled copper layer. |
+| `pcb_select_layer(name)` | `name`: layer name, e.g. `"F.Cu"` | Selects a layer. |
+| `pcb_get_selected_layer()` | None | Returns the active layer name. |
+| `pcb_onoff_layer(name, value=None)` | `name`: layer name; `value`: `True` show, `False` hide, omitted to read | Gets or changes layer visibility. |
+| `pcb_layer_up()` | None | Moves to the previous enabled copper layer. |
+| `pcb_layer_down()` | None | Moves to the next enabled copper layer. |
 
 ### 7.3 Selection Filters
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`pcb_select_filter(name, value=None)\` | \`name\`: filter item; \`value\`: \`True\` enable, \`False\` disable, omitted to read | Gets or changes a selection filter. |
-| \`pcb_select_filter_state()\` | None | Reads all selection-filter states. |
+| `pcb_select_filter(name, value=None)` | `name`: filter item; `value`: `True` enable, `False` disable, omitted to read | Gets or changes a selection filter. |
+| `pcb_select_filter_state()` | None | Reads all selection-filter states. |
 
-Accepted filter item names: \`All items\`, \`Locked items\`, \`Footprints\`, \`Text\`, \`Tracks\`, \`Vias\`, \`Pads\`, \`Graphics\`, \`Zones\`, \`Rule Areas\`, \`Dimensions\`, \`Other items\`.
+Accepted filter item names: `All items`, `Locked items`, `Footprints`, `Text`, `Tracks`, `Vias`, `Pads`, `Graphics`, `Zones`, `Rule Areas`, `Dimensions`, `Other items`.
 
 ### 7.4 Track Widths
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`pcb_set_selected_track_width(width_mm)\` | \`width_mm\`: positive number (mm) | Changes **selected track segments** and returns the number changed. |
-| \`pcb_set_routing_track_width(width_mm)\` | \`width_mm\`: positive number (mm) | Sets the width used for subsequent routing. |
-| \`pcb_set_netclass_track_width()\` | None | Restores the Netclass routing width. |
+| `pcb_set_selected_track_width(width_mm)` | `width_mm`: positive number (mm) | Changes **selected track segments** and returns the number changed. |
+| `pcb_set_routing_track_width(width_mm)` | `width_mm`: positive number (mm) | Sets the width used for subsequent routing. |
+| `pcb_set_netclass_track_width()` | None | Restores the Netclass routing width. |
 
 ### 7.5 SNAP
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`pcb_get_snap_settings(include_choices=False)\` | Set \`include_choices=True\` to also retrieve available choices. | Reads the current SNAP settings. |
-| \`pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)\` | Supply setting strings for the fields you wish to change; omit the rest. | Updates SNAP and returns the resulting settings. |
+| `pcb_get_snap_settings(include_choices=False)` | Set `include_choices=True` to also retrieve available choices. | Reads the current SNAP settings. |
+| `pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)` | Supply setting strings for the fields you wish to change; omit the rest. | Updates SNAP and returns the resulting settings. |
 
 See the [SNAP settings table](#5-snap-settings) for accepted values.
 
@@ -306,28 +306,28 @@ See the [SNAP settings table](#5-snap-settings) for accepted values.
 
 | Function | Parameters | Purpose |
 | --- | --- | --- |
-| \`stop_requested()\` | None | Returns whether Stop has been requested. |
-| \`wait_or_stop(seconds)\` | \`seconds\`: duration in seconds | Waits for the specified duration, returning \`True\` if Stop is requested while waiting. |
+| `stop_requested()` | None | Returns whether Stop has been requested. |
+| `wait_or_stop(seconds)` | `seconds`: duration in seconds | Waits for the specified duration, returning `True` if Stop is requested while waiting. |
 
 For a repeating script, check for Stop like this:
 
-\`\`\`python
+```python
 for n in range(10):
     if wait_or_stop(0.5):
         break
     print(n)
-\`\`\`
+```
 
 ## 8. Troubleshooting and Precautions
 
 - **Plugin does not appear:** Check the installation folder and restart PCB Editor completely.
 - **The DRC dialog opens, but no check runs:** Click **Run DRC** inside the dialog.
-- **\`open_menu()\` does not work:** Make sure the script path matches the actual KiCad menu text and language.
+- **`open_menu()` does not work:** Make sure the script path matches the actual KiCad menu text and language.
 - **Keyboard trigger is not working:** Check for Windows shortcut conflicts or multiple ordinary keys. Multi-key combinations are intended for MacroBK input.
 - **MacroBK reports Ready but no input is received:** Ready means listening, not necessarily that a device is connected. Confirm that the device or Studio sends the expected trigger.
 - **Stop does not interrupt immediately:** Stop requests termination; it does not force-close KiCad dialogs or cancel commands already issued.
-- **Saved Actions are missing:** Check the \`config.json\` backup you made before updating.
-- **Old \`open_drc_window()\` script fails:** That function has been removed. Use \`open_menu("Inspect -> Design Rules Checker")\` instead.
+- **Saved Actions are missing:** Check the `config.json` backup you made before updating.
+- **Old `open_drc_window()` script fails:** That function has been removed. Use `open_menu("Inspect -> Design Rules Checker")` instead.
 
 Python Script runs on your computer. **Use only scripts you trust**, and save or back up your PCB project before testing changes to the board or KiCad settings.
 
