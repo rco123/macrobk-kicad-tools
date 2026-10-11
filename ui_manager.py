@@ -37,7 +37,6 @@ def icon_bitmap(name, size=20):
             return wx.Bitmap(image)
     fallback = {
         "add": wx.ART_PLUS,
-        "duplicate": wx.ART_COPY,
         "delete": wx.ART_DELETE,
         "play": wx.ART_GO_FORWARD,
         "save": wx.ART_FILE_SAVE,
@@ -158,16 +157,11 @@ class MacroBKPluginManager(wx.Frame):
 
         action_buttons = wx.BoxSizer(wx.HORIZONTAL)
         add_button = style_button(wx.Button(left_panel, label="Add"), "add", 72)
-        duplicate_button = style_button(
-            wx.Button(left_panel, label="Duplicate"), "duplicate", 94
-        )
         delete_button = style_button(wx.Button(left_panel, label="Delete"), "delete", 78)
         delete_button.SetForegroundColour(wx.Colour(170, 55, 55))
         add_button.Bind(wx.EVT_BUTTON, self.on_add_action)
-        duplicate_button.Bind(wx.EVT_BUTTON, self.on_duplicate_action)
         delete_button.Bind(wx.EVT_BUTTON, self.on_delete_action)
         action_buttons.Add(add_button, 0, wx.RIGHT, 6)
-        action_buttons.Add(duplicate_button, 0, wx.RIGHT, 6)
         action_buttons.Add(delete_button, 0)
         left_sizer.Add(action_buttons, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 10)
 
@@ -554,21 +548,12 @@ class MacroBKPluginManager(wx.Frame):
             "id": "action-" + uuid.uuid4().hex[:8],
             "name": "New Action",
             "icon": "execute",
+            # New Actions start with Ctrl + Win + F12; existing Actions are unchanged.
             "trigger": copy.deepcopy(core.DEFAULT_CONFIG["trigger"]),
             "phone": copy.deepcopy(core.DEFAULT_CONFIG["phone"]),
             "action": {"type": "python", "script": "# Enter KiCad Python here\n"},
         }
         self.actions.append(new_action)
-        self.refresh_action_list()
-        self.action_list.Select(len(self.actions) - 1)
-        self.load_action(len(self.actions) - 1)
-
-    def on_duplicate_action(self, _event):
-        self.store_current_action()
-        duplicate = copy.deepcopy(self.actions[self.selected_index])
-        duplicate["id"] = "action-" + uuid.uuid4().hex[:8]
-        duplicate["name"] = duplicate["name"] + " Copy"
-        self.actions.append(duplicate)
         self.refresh_action_list()
         self.action_list.Select(len(self.actions) - 1)
         self.load_action(len(self.actions) - 1)

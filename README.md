@@ -41,7 +41,7 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 
 | 메뉴/버튼 | 사용법 |
 | --- | --- |
-| Registered Actions | Action 선택, 추가, 복제, 이름 변경, 삭제 |
+| Registered Actions | Action 선택, 추가(Add), 이름 변경, 삭제(Delete) |
 | Select Key | 수정키(Ctrl/Alt/Shift/Win) 및 일반 키 1~4개 선택 |
 | Register | 현재 Action 설정 저장 후 키보드 트리거 재등록 |
 | Python Script | 실행할 Python 코드 작성 |
@@ -50,6 +50,8 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 | Save | 스크립트 및 Action 저장 |
 | Result | print 출력과 예외 확인; Copy/Clear 지원 |
 | Appearance → SNAP | Pads/Tracks and vias/Graphics의 Magnetic Points 조회·설정 |
+
+**Add 기본값:** Add를 누르면 새 ID를 가진 `New Action`이 추가되고, 기본 Trigger는 **Ctrl + Win + F12**입니다. Python Script에는 입력 안내 주석만 채워집니다. 이전 Action의 설정이나 스크립트를 복사하지 않습니다. 원하는 내용을 작성한 뒤 **Save** 또는 **Register**로 저장하십시오. Action 이름은 목록 항목을 더블클릭해 변경할 수 있습니다.
 
 ### 처음 사용하는 예제
 
