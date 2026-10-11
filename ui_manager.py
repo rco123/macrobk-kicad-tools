@@ -82,7 +82,7 @@ class MacroBKPluginManager(wx.Frame):
         # native KiCad dialogs must still be able to appear above it.
         super().__init__(
             parent,
-            title="MacroBK PCB Tools",
+            title="MacroBK KiCAD Tools",
             size=(1160, 660),
             style=wx.DEFAULT_FRAME_STYLE | wx.FRAME_FLOAT_ON_PARENT,
         )
@@ -109,7 +109,7 @@ class MacroBKPluginManager(wx.Frame):
         header_icon = wx.StaticBitmap(header, bitmap=icon_bitmap("plugin", 28))
         header_sizer.Add(header_icon, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 16)
         title_stack = wx.BoxSizer(wx.VERTICAL)
-        product_title = wx.StaticText(header, label="MacroBK PCB Tools")
+        product_title = wx.StaticText(header, label="MacroBK KiCAD Tools")
         product_font = product_title.GetFont()
         product_font.SetPointSize(13)
         product_font.SetWeight(wx.FONTWEIGHT_BOLD)
@@ -589,7 +589,7 @@ class MacroBKPluginManager(wx.Frame):
 
     def on_delete_action(self, _event):
         if len(self.actions) <= 1:
-            wx.MessageBox("At least one action must remain.", "MacroBK PCB Tools", wx.OK | wx.ICON_INFORMATION)
+            wx.MessageBox("At least one action must remain.", "MacroBK KiCAD Tools", wx.OK | wx.ICON_INFORMATION)
             return
         action = self.actions[self.selected_index]
         answer = wx.MessageBox(

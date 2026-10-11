@@ -1,4 +1,4 @@
-# MacroBK PCB Tools
+# MacroBK KiCAD Tools
 
 **KiCad 9 PCB Editor용 Python 자동화 플러그인**  
 개발: **BK Systems** · 라이선스: [MIT](LICENSE) · [GitHub 저장소](https://github.com/rco123/macrobk-kicad-tools)
@@ -37,15 +37,15 @@ KiCad PCB Editor에서 사용하는 기능을 **Python Script**로 작성한 다
    ```
 
 3. **KiCad PCB Editor를 완전히 종료한 뒤 다시 실행**합니다.
-4. 메뉴에서 **Tools → External Plugins → MacroBK PCB Tools**를 선택합니다.
+4. 메뉴에서 **Tools → External Plugins → MacroBK KiCAD Tools**를 선택합니다.
 
-![Tools > External Plugins > MacroBK PCB Tools 메뉴](docs/images/external-plugin-menu.png)
+![Tools > External Plugins > MacroBK KiCAD Tools 메뉴](docs/images/external-plugin-menu.png)
 
 **업데이트할 때:** 기존에 등록한 Action과 Script는 플러그인 폴더의 `config.json`에 저장됩니다. 업데이트 전에 이 파일을 별도로 백업하세요. GitHub의 `config.example.json`은 설명용 예시이며 기존 설정을 대신하지 않습니다.
 
 ## 2. 메인 화면과 버튼 설명
 
-![MacroBK PCB Tools 메인 화면](docs/images/main-window.png)
+![MacroBK KiCAD Tools 메인 화면](docs/images/main-window.png)
 
 | 화면 영역 | 기능과 사용 방법 |
 | --- | --- |
