@@ -7,18 +7,19 @@ Developed by **BK Systems** · License: [MIT](LICENSE) · [GitHub Repository](ht
 
 MacroBK KiCAD Tools lets you write Python scripts for KiCad PCB Editor operations and run them through **Run Test**, keyboard shortcuts, or **MacroBK triggers**. Supported operations include opening the DRC window, switching layers, changing selection filters and track widths, and adjusting SNAP settings.
 
-> This README is a **user guide**. Additional automation examples will be added to [Use Case Examples](#6-use-case-examples) as they become available.
+> This README is a **user guide**. Additional automation examples will be added to [Use Case Examples](#7-use-case-examples) as they become available.
 
 ## Contents
 
 1. [Installation and Launch](#1-installation-and-launch)
 2. [Main Window and Controls](#2-main-window-and-controls)
-3. [Creating Actions and Python Scripts](#3-creating-actions-and-python-scripts)
-4. [Opening the DRC Checker](#4-opening-the-drc-checker)
-5. [SNAP Settings](#5-snap-settings)
-6. [Use Case Examples](#6-use-case-examples)
-7. [Functions Available to Users](#7-functions-available-to-users)
-8. [Troubleshooting and Precautions](#8-troubleshooting-and-precautions)
+3. [Macro Keyboards and Smartphone Control](#3-macro-keyboards-and-smartphone-control-with-macrobk)
+4. [Creating Actions and Python Scripts](#4-creating-actions-and-python-scripts)
+5. [Opening the DRC Checker](#5-opening-the-drc-checker)
+6. [SNAP Settings](#6-snap-settings)
+7. [Use Case Examples](#7-use-case-examples)
+8. [Functions Available to Users](#8-functions-available-to-users)
+9. [Troubleshooting and Precautions](#9-troubleshooting-and-precautions)
 
 ## 1. Installation and Launch
 
@@ -85,7 +86,40 @@ The status beside the buttons below Python Script can show `IDLE`, `RUNNING`, `S
 
 A PC keyboard shortcut supports modifier keys plus **one ordinary key**. A combination with **2–4 ordinary keys** is for **MacroBK input only**. If multiple Actions use the same trigger, a **MacroBK trigger executes only the first enabled matching Action in the list**.
 
-## 3. Creating Actions and Python Scripts
+## 3. Macro Keyboards and Smartphone Control with MacroBK
+
+### What are a macro keyboard and MacroBK?
+
+A **macro keyboard** lets you assign frequently used commands or keyboard shortcuts to dedicated buttons. Instead of opening menus repeatedly, you press a button to perform a task.
+
+**MacroBK** brings this button-based workflow to a **smartphone**. A button on the MacroBK phone interface can send a trigger to the PC, where a registered Action runs inside KiCad. MacroBK macro-keyboard controls can also be used as a trigger source when configured with the MacroBK system.
+
+**How smartphone control works**
+
+```text
+Tap a button in the MacroBK smartphone interface
+    → MacroBK connection / Studio on the Windows PC
+    → MacroBK KiCAD Tools receives the matching trigger
+    → Registered Action executes its Python Script
+    → KiCad PCB Editor performs the command
+```
+
+For comparison, a Windows keyboard shortcut can also activate the currently registered keyboard Action. **The smartphone does not execute KiCad or Python directly**; the PC running KiCad and the MacroBK connection handle the command.
+
+### Example: Open DRC from your phone
+
+1. Open KiCad PCB Editor and **MacroBK KiCAD Tools** on the Windows PC.
+2. Select **Open DRC**. Confirm its Python Script contains `open_menu("Inspect -> Design Rules Checker")`.
+3. Use **Key Change → Apply** to set a trigger such as `Ctrl + Win + F12`, then **Save** the Action.
+4. In the MacroBK smartphone interface (and MacroBK Studio/PC connection as applicable), assign a button to send **the same trigger** to this PC.
+5. Tap that phone button. The **MacroBK** indicator in **Input Monitor** responds, and KiCad opens the **Design Rules Checker** dialog.
+6. Click **Run DRC** inside that dialog to start the actual design rule check.
+
+You can use the same approach for layer selection, track width changes, or SNAP commands by changing the Action's Python Script.
+
+> **Connection note:** The MacroBK app/Studio and PC-side forwarding must be configured separately; this plugin does not provide smartphone pairing. **MacroBK Ready** means the plugin is ready to receive a trigger, not that the phone is connected. If two enabled Actions use the same MacroBK trigger, the first matching Action in the list runs.
+
+## 4. Creating Actions and Python Scripts
 
 1. Click **Add** to create an Action.
 2. Double-click `New Action` in the list and enter a meaningful name.
@@ -100,7 +134,7 @@ For example, to display the currently selected PCB layer, enter:
 print(pcb_get_selected_layer())
 ```
 
-Click **Run Test**. Result will display a layer name such as `F.Cu` or `B.Cu`. The functions listed in [Functions Available to Users](#7-functions-available-to-users) can be called directly in Python Script **without an import statement**.
+Click **Run Test**. Result will display a layer name such as `F.Cu` or `B.Cu`. The functions listed in [Functions Available to Users](#8-functions-available-to-users) can be called directly in Python Script **without an import statement**.
 
 | Button | Action |
 | --- | --- |
@@ -111,7 +145,7 @@ Click **Run Test**. Result will display a layer name such as `F.Cu` or `B.Cu`. T
 
 > **Stop** is not a force-quit command. It does not automatically undo KiCad operations or close dialogs that have already opened.
 
-## 4. Opening the DRC Checker
+## 5. Opening the DRC Checker
 
 This example opens KiCad's **Design Rules Checker (DRC)** window.
 
@@ -138,7 +172,7 @@ This example opens KiCad's **Design Rules Checker (DRC)** window.
 
 **Important:** `open_menu("Inspect -> Design Rules Checker")` **opens the DRC window only**. The check itself does not start until you click **Run DRC** inside that window. If your KiCad menu uses another language, adjust the menu-path string to match the labels shown in your installation.
 
-## 5. SNAP Settings
+## 6. SNAP Settings
 
 Open the **Appearance → SNAP** tab on the right side of KiCad PCB Editor to view the Magnetic Points settings.
 
@@ -170,7 +204,7 @@ Omit a parameter to leave that setting unchanged. For example, `pcb_set_snap_set
 
 > Before using SNAP control for the first time, back up your KiCad settings or record their current values. Check each change individually.
 
-## 6. Use Case Examples
+## 7. Use Case Examples
 
 New examples can be **appended to this section with consecutive numbers**. Use the same format: **goal → script → how to verify**.
 
@@ -252,7 +286,7 @@ pcb_set_snap_settings(pads="Always")
 print(pcb_get_snap_settings())
 ```
 
-## 7. Functions Available to Users
+## 8. Functions Available to Users
 
 The following functions can be **called directly from Python Script**. Replace argument strings and numbers with the values needed for your project.
 
@@ -300,7 +334,7 @@ Accepted filter item names: `All items`, `Locked items`, `Footprints`, `Text`, `
 | `pcb_get_snap_settings(include_choices=False)` | Set `include_choices=True` to also retrieve available choices. | Reads the current SNAP settings. |
 | `pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)` | Supply setting strings for the fields you wish to change; omit the rest. | Updates SNAP and returns the resulting settings. |
 
-See the [SNAP settings table](#5-snap-settings) for accepted values.
+See the [SNAP settings table](#6-snap-settings) for accepted values.
 
 ### 7.6 Stopping a Script
 
@@ -318,7 +352,7 @@ for n in range(10):
     print(n)
 ```
 
-## 8. Troubleshooting and Precautions
+## 9. Troubleshooting and Precautions
 
 - **Plugin does not appear:** Check the installation folder and restart PCB Editor completely.
 - **The DRC dialog opens, but no check runs:** Click **Run DRC** inside the dialog.

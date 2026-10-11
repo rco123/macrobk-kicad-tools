@@ -7,18 +7,19 @@
 
 KiCad PCB Editor에서 사용하는 기능을 **Python Script**로 작성한 다음 **Run Test**, 키보드 단축키 또는 **MacroBK 트리거**로 실행할 수 있습니다. DRC 창 열기, 레이어 변경, 선택 필터, 트랙 폭, SNAP 설정 등을 지원합니다.
 
-> 이 README는 **사용자를 위한 사용설명서**입니다. 새로운 자동화 활용 사례는 아래 **[사용 사례 예제](#6-사용-사례-예제)**에 계속 추가할 예정입니다.
+> 이 README는 **사용자를 위한 사용설명서**입니다. 새로운 자동화 활용 사례는 아래 **[사용 사례 예제](#7-사용-사례-예제)**에 계속 추가할 예정입니다.
 
 ## 목차
 
 1. [설치 및 플러그인 실행](#1-설치-및-플러그인-실행)
 2. [메인 화면과 버튼 설명](#2-메인-화면과-버튼-설명)
-3. [Action과 Python Script 작성 방법](#3-action과-python-script-작성-방법)
-4. [DRC 검사 창 열기](#4-drc-검사-창-열기)
-5. [SNAP 설정](#5-snap-설정)
-6. [사용 사례 예제](#6-사용-사례-예제)
-7. [사용자가 호출하는 함수](#7-사용자가-호출하는-함수)
-8. [문제 해결 및 주의사항](#8-문제-해결-및-주의사항)
+3. [매크로 키보드와 MacroBK 스마트폰 제어](#3-매크로-키보드와-macrobk-스마트폰-제어)
+4. [Action과 Python Script 작성 방법](#4-action과-python-script-작성-방법)
+5. [DRC 검사 창 열기](#5-drc-검사-창-열기)
+6. [SNAP 설정](#6-snap-설정)
+7. [사용 사례 예제](#7-사용-사례-예제)
+8. [사용자가 호출하는 함수](#8-사용자가-호출하는-함수)
+9. [문제 해결 및 주의사항](#9-문제-해결-및-주의사항)
 
 ## 1. 설치 및 플러그인 실행
 
@@ -85,7 +86,40 @@ KiCad PCB Editor에서 사용하는 기능을 **Python Script**로 작성한 다
 
 키보드 단축키는 수정키와 일반 키 **한 개** 조합을 지원합니다. 일반 키를 2~4개 함께 선택한 조합은 **MacroBK 입력 전용**입니다. 동일한 Trigger가 여러 Action에 할당된 경우, **MacroBK 입력은 목록에서 가장 위에 있는 활성 Action 하나**를 실행합니다.
 
-## 3. Action과 Python Script 작성 방법
+## 3. 매크로 키보드와 MacroBK 스마트폰 제어
+
+### 매크로 키보드와 MacroBK란?
+
+**매크로 키보드(Macro Keyboard)**는 자주 사용하는 명령이나 단축키를 전용 버튼에 할당하여, 메뉴를 여러 번 조작하지 않고 **버튼 한 번으로 실행**하는 입력 장치입니다.
+
+**MacroBK**는 이러한 매크로 버튼의 사용 방식을 **스마트폰 화면**으로도 확장한 시스템입니다. 스마트폰의 MacroBK 버튼을 누르면 설정된 트리거가 PC로 전달되고, **MacroBK KiCAD Tools**가 그 트리거에 대응하는 Action을 실행합니다. MacroBK 키보드 장치의 버튼도 연동 환경에 맞게 사용할 수 있습니다.
+
+**스마트폰으로 KiCad를 제어하는 흐름**
+
+```text
+스마트폰 MacroBK 화면에서 버튼 터치
+    → Windows PC의 MacroBK 연결 / Studio
+    → MacroBK KiCAD Tools에서 트리거 수신
+    → 일치하는 Action의 Python Script 실행
+    → KiCad PCB Editor 기능 동작
+```
+
+일반 PC 키보드의 등록된 단축키로도 Action을 실행할 수 있습니다. **스마트폰이 KiCad나 Python을 직접 실행하는 것은 아니며**, PC에 실행 중인 KiCad 플러그인이 해당 명령을 처리합니다.
+
+### 사용 예제: 스마트폰 버튼으로 DRC 창 열기
+
+1. Windows PC에서 **KiCad PCB Editor**와 **MacroBK KiCAD Tools**를 실행합니다.
+2. **Open DRC** Action을 선택하고, Python Script에 `open_menu("Inspect -> Design Rules Checker")`가 있는지 확인합니다.
+3. **Key Change → Apply**로 `Ctrl + Win + F12` 같은 트리거를 할당한 다음 Action을 **Save**합니다.
+4. 스마트폰 MacroBK 화면(필요한 경우 MacroBK Studio/PC 연결 설정 포함)에서 버튼 하나에 **동일한 트리거**를 지정하고 PC로 전달되도록 설정합니다.
+5. 휴대폰에서 해당 버튼을 누르면 **Input Monitor의 MacroBK 표시등**이 반응하고 **Design Rules Checker** 창이 열립니다.
+6. 실제 DRC 검사는 열린 창 안에서 **Run DRC** 버튼을 눌러 시작합니다.
+
+DRC 대신 레이어 선택, 배선 폭 변경, SNAP 설정 등 다른 Action을 등록하여 스마트폰 버튼으로 실행할 수도 있습니다.
+
+> **연결 안내:** 스마트폰 MacroBK와 Windows PC 사이의 연결·Studio 전달 설정은 별도로 준비해야 합니다. 이 플러그인이 휴대폰 연결을 직접 설정하지는 않습니다. **MacroBK Ready**는 트리거 수신 준비 상태이지 휴대폰 연결 완료를 뜻하지 않습니다. MacroBK 트리거가 여러 Action에 중복되면 목록에서 **가장 위의 일치하는 활성 Action 하나**만 실행합니다.
+
+## 4. Action과 Python Script 작성 방법
 
 1. **Add**를 눌러 새 Action을 만듭니다.
 2. 목록 항목을 더블클릭해 `New Action`을 원하는 이름으로 변경합니다.
@@ -100,7 +134,7 @@ KiCad PCB Editor에서 사용하는 기능을 **Python Script**로 작성한 다
 print(pcb_get_selected_layer())
 ```
 
-**Run Test**를 누르면 Result에 `F.Cu`, `B.Cu` 등의 현재 레이어 이름이 표시됩니다. 아래 [함수 목록](#7-사용자가-호출하는-함수)에 있는 함수는 **별도의 import 없이** Python Script에서 직접 호출할 수 있습니다.
+**Run Test**를 누르면 Result에 `F.Cu`, `B.Cu` 등의 현재 레이어 이름이 표시됩니다. 아래 [함수 목록](#8-사용자가-호출하는-함수)에 있는 함수는 **별도의 import 없이** Python Script에서 직접 호출할 수 있습니다.
 
 | 버튼 | 의미 |
 | --- | --- |
@@ -111,7 +145,7 @@ print(pcb_get_selected_layer())
 
 > **Stop**은 강제 종료 버튼이 아닙니다. 이미 실행된 KiCad 메뉴 명령이나 열린 창을 자동으로 취소하지는 않습니다.
 
-## 4. DRC 검사 창 열기
+## 5. DRC 검사 창 열기
 
 PCB 설계 규칙 검사를 실행할 때 사용하는 기본 예제입니다.
 
@@ -138,7 +172,7 @@ PCB 설계 규칙 검사를 실행할 때 사용하는 기본 예제입니다.
 
 **중요:** `open_menu("Inspect -> Design Rules Checker")`는 **DRC 창만 여는 코드**입니다. 실제 검사는 창 안에서 **Run DRC**를 눌러 시작합니다. KiCad 메뉴 언어가 다른 경우 실제 표시된 메뉴명에 맞춰 경로 문자열을 변경해야 합니다.
 
-## 5. SNAP 설정
+## 6. SNAP 설정
 
 PCB Editor 오른쪽의 **Appearance → SNAP** 탭에서 Magnetic Points(자석 스냅) 설정을 확인할 수 있습니다.
 
@@ -170,7 +204,7 @@ pcb_set_snap_settings(
 
 > SNAP을 처음 사용하기 전 KiCad 설정을 백업하거나 기존 값을 기록하고, 한 항목씩 변경하여 확인하는 것을 권장합니다.
 
-## 6. 사용 사례 예제
+## 7. 사용 사례 예제
 
 새 활용 사례가 나오면 **이 절에 번호를 이어서 추가**합니다. 각 예제는 **사용 목적 → 코드 → 확인 방법** 순서로 정리합니다.
 
@@ -252,7 +286,7 @@ pcb_set_snap_settings(pads="Always")
 print(pcb_get_snap_settings())
 ```
 
-## 7. 사용자가 호출하는 함수
+## 8. 사용자가 호출하는 함수
 
 아래는 **Python Script에서 실제로 사용할 수 있는 함수**만 정리한 목록입니다. 괄호 안의 문자열·숫자는 필요한 값으로 바꾸어 사용합니다.
 
@@ -300,7 +334,7 @@ open_menu("Inspect -> Design Rules Checker")
 | `pcb_get_snap_settings(include_choices=False)` | `include_choices=True`로 가능한 값도 조회 | 현재 SNAP 값 조회 |
 | `pcb_set_snap_settings(pads=None, tracks_vias=None, graphics=None)` | 변경할 항목에 설정 문자열 입력, 나머지는 생략 가능 | SNAP 값 변경 및 결과 반환 |
 
-설정값은 [SNAP 설정표](#5-snap-설정)를 참고하세요.
+설정값은 [SNAP 설정표](#6-snap-설정)를 참고하세요.
 
 ### 7.6 스크립트 중지 확인
 
@@ -318,7 +352,7 @@ for n in range(10):
     print(n)
 ```
 
-## 8. 문제 해결 및 주의사항
+## 9. 문제 해결 및 주의사항
 
 - **플러그인이 보이지 않음:** 설치 경로와 폴더 구조를 확인하고 PCB Editor를 완전히 종료한 후 다시 실행합니다.
 - **DRC 창만 열리고 검사는 안 됨:** DRC 창에서 **Run DRC**를 눌러야 합니다.
