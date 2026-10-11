@@ -52,7 +52,7 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 
 **Add 기본값:** Add를 누르면 새 ID를 가진 `New Action`이 추가되고, 기본 Trigger는 **Ctrl + Win + F12**입니다. Python Script에는 입력 안내 주석만 채워집니다. 이전 Action의 설정이나 스크립트를 복사하지 않습니다. 원하는 코드를 작성한 뒤 **Save**로 저장하십시오. 키를 변경할 때는 **Key Change → Apply**를 사용하면 별도 Register 없이 즉시 저장·재등록됩니다. Action 이름은 목록 항목을 더블클릭해 변경할 수 있습니다.
 
-Python Script와 Result는 좌우 분할 화면입니다. Manager는 처음에 가로 1160 크기로 열리고 **Python Script 영역을 약 60%로 배치**하여 아래의 **Run Test / Stop / Save / 실행 상태(IDLE·RUNNING 등)**가 보이도록 합니다. 실제 버튼·폰트 크기에 맞춰 필요한 폭을 계산하며, 가운데 분할선은 이후에도 직접 드래그하여 조절할 수 있습니다.
+Python Script와 Result는 좌우 분할 화면입니다. Manager는 처음에 가로 1160 크기로 열리고 **Python Script : Result = 50:50**으로 나뉩니다. 버튼이나 상태 표시 너비 때문에 초기 분할 비율을 강제로 넓히지 않으며, 전체 창 크기는 사용자가 조절할 수 있습니다. 가운데 분할선도 직접 드래그하여 변경할 수 있습니다. 창이 좁으면 아래쪽 실행 버튼이나 상태 텍스트가 잘릴 수 있으므로 창을 넓혀 주세요.
 
 ### 처음 사용하는 예제
 

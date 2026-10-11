@@ -355,25 +355,14 @@ class MacroBKPluginManager(wx.Frame):
             execute_panel,
             result_panel,
         )
-        self.work_splitter.SetSashGravity(0.6)
+        # Initial layout is always 50:50. Users can resize the whole
+        # Manager or drag the divider to change the balance afterwards.
+        self.work_splitter.SetSashGravity(0.5)
 
         def set_initial_split():
-            # Give the Python editor enough room to display Run Test, Stop,
-            # Save and the entire status label, not just half the right panel.
             width = self.work_splitter.GetClientSize().GetWidth()
-            if width <= 0:
-                return
-
-            # wx.Sizer.CalcMin() accounts for actual fonts and display scaling.
-            # Each editor toolbar also has 12 px padding at either side.
-            editor_min = execute_controls.CalcMin().GetWidth() + 32
-            result_min = result_controls.CalcMin().GetWidth() + 32
-            left_width = max(editor_min, round(width * 0.60))
-            right_width = max(210, result_min, self.work_splitter.GetMinimumPaneSize())
-            # Keep both panes visible on narrower displays.
-            left_width = min(left_width, width - right_width)
-            if left_width > 0:
-                self.work_splitter.SetSashPosition(left_width)
+            if width > 0:
+                self.work_splitter.SetSashPosition(width // 2)
 
         wx.CallAfter(set_initial_split)
 
