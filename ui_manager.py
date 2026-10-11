@@ -187,21 +187,12 @@ class MacroBKPluginManager(wx.Frame):
 
         trigger_row = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.trigger_picker_button = style_button(
-            wx.Button(left_panel, label=""),
-            "keyboard",
-            44,
-        )
-        self.trigger_picker_button.SetToolTip("Select trigger key")
-        self.trigger_picker_button.Bind(wx.EVT_BUTTON, self.on_select_trigger_key)
-
         self.trigger_text = wx.TextCtrl(
             left_panel,
             style=wx.TE_READONLY,
         )
         self.trigger_text.SetMinSize((-1, 32))
 
-        trigger_row.Add(self.trigger_picker_button, 0, wx.RIGHT, 6)
         trigger_row.Add(self.trigger_text, 1, wx.EXPAND)
 
         left_sizer.Add(
@@ -211,13 +202,13 @@ class MacroBKPluginManager(wx.Frame):
             10,
         )
 
-        register_button = style_button(
-            wx.Button(left_panel, label="Register"),
+        change_key_button = style_button(
+            wx.Button(left_panel, label="Key Change"),
             "keyboard",
             100,
         )
-        register_button.Bind(wx.EVT_BUTTON, self.on_register)
-        left_sizer.Add(register_button, 0, wx.EXPAND | wx.ALL, 10)
+        change_key_button.Bind(wx.EVT_BUTTON, self.on_change_trigger_key)
+        left_sizer.Add(change_key_button, 0, wx.EXPAND | wx.ALL, 10)
         left_panel.SetSizer(left_sizer)
 
         right_panel = wx.Panel(root_panel)
@@ -628,16 +619,62 @@ class MacroBKPluginManager(wx.Frame):
         self.set_led_colour(self.phone_led, core.get_phone_status())
         self.signal_source.SetLabel("Waiting for input")
 
-    def on_select_trigger_key(self, _event):
+    def on_change_trigger_key(self, _event):
+        """Apply a selected key immediately: update the Action, persist, re-register."""
         dialog = TriggerKeyPickerDialog(self, self.trigger_text.GetValue())
         try:
-            if dialog.ShowModal() == wx.ID_OK:
-                trigger = dialog.get_trigger()
-                value = core.hotkey_description(trigger)
-                self.trigger_text.SetValue(value)
-                self.action_trigger_summary.SetLabel(value)
+            if dialog.ShowModal() != wx.ID_OK:
+                return
+            trigger = dialog.get_trigger()
         finally:
             dialog.Destroy()
+
+        value = core.hotkey_description(trigger)
+        previous_text = self.trigger_text.GetValue()
+        previous_action = copy.deepcopy(self.actions[self.selected_index])
+        previous_config = copy.deepcopy(core.CONFIG)
+
+        try:
+            # The current Script is saved together with the new Trigger.
+            self.trigger_text.SetValue(value)
+            self.apply_selected_to_config()
+            core.save_config()
+        except Exception as exc:
+            # Do not leave the UI and in-memory configuration claiming a
+            # successful key change if saving the configuration failed.
+            self.actions[self.selected_index] = previous_action
+            core.CONFIG.clear()
+            core.CONFIG.update(previous_config)
+            self.trigger_text.SetValue(previous_text)
+            self.action_trigger_summary.SetLabel(previous_text)
+            core.log("Key Change save error: " + repr(exc))
+            wx.MessageBox(
+                "Could not save the changed trigger:\\n{}".format(exc),
+                "Key Change",
+                wx.OK | wx.ICON_ERROR,
+                self,
+            )
+            return
+
+        self.action_trigger_summary.SetLabel(value)
+        self.refresh_action_list()
+        self.action_list.Select(self.selected_index)
+        self.action_list.Focus(self.selected_index)
+        core.log("Key Change applied shortcut={}".format(value))
+
+        try:
+            # A multi-key Trigger is Phone-only; the listener reports that
+            # status using the same existing keyboard registration rules.
+            core.restart_hotkey_listener()
+        except Exception as exc:
+            self.set_keyboard_status("Error")
+            core.log("Key Change keyboard registration error: " + repr(exc))
+            wx.MessageBox(
+                "Trigger saved, but keyboard registration failed:\\n{}".format(exc),
+                "Key Change",
+                wx.OK | wx.ICON_ERROR,
+                self,
+            )
 
     def read_trigger(self):
         return core.parse_hotkey_description(self.trigger_text.GetValue())
@@ -651,27 +688,6 @@ class MacroBKPluginManager(wx.Frame):
         core.CONFIG["trigger"] = copy.deepcopy(selected["trigger"])
         core.CONFIG["phone"] = copy.deepcopy(selected["phone"])
         core.CONFIG["action"] = copy.deepcopy(selected["action"])
-
-    def on_register(self, _event):
-        try:
-            self.apply_selected_to_config()
-            core.save_config()
-
-            value = core.hotkey_description(core.CONFIG["trigger"])
-            self.trigger_text.SetValue(value)
-            self.action_trigger_summary.SetLabel(value)
-
-            # Immediately update the Trigger column in REGISTERED ACTIONS.
-            self.refresh_action_list()
-            self.action_list.Select(self.selected_index)
-            self.action_list.Focus(self.selected_index)
-
-            core.log("Register requested shortcut={}".format(value))
-            core.restart_hotkey_listener()
-        except Exception as exc:
-            self.set_keyboard_status("Error")
-            core.log("Register error: " + str(exc))
-            self.show_result_tab()
 
     def begin_test_run(self, action_id, run_id):
         self.running_test_action_id = action_id

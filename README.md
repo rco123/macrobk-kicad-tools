@@ -42,8 +42,7 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 | 메뉴/버튼 | 사용법 |
 | --- | --- |
 | Registered Actions | Action 선택, 추가(Add), 이름 변경, 삭제(Delete) |
-| Select Key | 수정키(Ctrl/Alt/Shift/Win) 및 일반 키 1~4개 선택 |
-| Register | 현재 Action 설정 저장 후 키보드 트리거 재등록 |
+| Key Change | 기존 키 선택 창을 열어 Ctrl/Alt/Shift/Win 및 일반 키 1~4개 선택. **Apply 시 즉시 Action·config.json 업데이트 및 키보드 재등록** |
 | Python Script | 실행할 Python 코드 작성 |
 | **Run Test** | 현재 스크립트를 시험 실행; 배포판에서도 제공되는 정상 기능 |
 | **Stop** | 실행 중인 Run Test에 중지 요청 |
@@ -51,7 +50,7 @@ MacroBK PCB Tools는 KiCad PCB Editor에서 **등록된 Python Action**을 키�
 | Result | print 출력과 예외 확인; Copy/Clear 지원 |
 | Appearance → SNAP | Pads/Tracks and vias/Graphics의 Magnetic Points 조회·설정 |
 
-**Add 기본값:** Add를 누르면 새 ID를 가진 `New Action`이 추가되고, 기본 Trigger는 **Ctrl + Win + F12**입니다. Python Script에는 입력 안내 주석만 채워집니다. 이전 Action의 설정이나 스크립트를 복사하지 않습니다. 원하는 내용을 작성한 뒤 **Save** 또는 **Register**로 저장하십시오. Action 이름은 목록 항목을 더블클릭해 변경할 수 있습니다.
+**Add 기본값:** Add를 누르면 새 ID를 가진 `New Action`이 추가되고, 기본 Trigger는 **Ctrl + Win + F12**입니다. Python Script에는 입력 안내 주석만 채워집니다. 이전 Action의 설정이나 스크립트를 복사하지 않습니다. 원하는 코드를 작성한 뒤 **Save**로 저장하십시오. 키를 변경할 때는 **Key Change → Apply**를 사용하면 별도 Register 없이 즉시 저장·재등록됩니다. Action 이름은 목록 항목을 더블클릭해 변경할 수 있습니다.
 
 ### 처음 사용하는 예제
 
@@ -62,11 +61,13 @@ print("Current layer:", pcb_get_selected_layer())
 print("Selection filter:", pcb_select_filter_state())
 ~~~
 
-Result에서 결과를 확인한 후, 원하는 Action 이름과 Trigger를 지정하고 **Save / Register**합니다.
+Result에서 결과를 확인하고 코드는 **Save**로 저장합니다. Trigger는 **Key Change**를 누른 뒤 선택 창에서 **Apply**하면 즉시 반영됩니다. **Cancel**은 변경하지 않습니다.
+
+**키 변경 흐름:** `Key Change` → 키 선택 창 → `Apply` → 선택한 Action의 Trigger 표시·목록 업데이트 → `config.json` 저장 → 키보드 리스너 재등록. `Cancel`을 누르면 저장하거나 재등록하지 않습니다. 키를 변경할 때 별도의 `Register` 버튼은 사용하지 않습니다.
 
 ## 3. 트리거 사용법
 
-- **Keyboard**: Windows 'RegisterHotKey' 사용. **수정키 + 일반 키 한 개**에만 대응합니다. 여러 일반 키를 동시에 지정한 경우는 Studio/Phone 트리거용입니다.
+- **Keyboard**: **Key Change → Apply**에서 선택한 키를 저장하면 Windows 'RegisterHotKey' 등록을 갱신합니다. **수정키 + 일반 키 한 개**에만 대응합니다. 여러 일반 키를 동시에 지정한 경우는 Studio/Phone 트리거용입니다.
 - **Phone / MacroBK Studio**: UDP로 전달된 키 ID를 **등록된 전체 Action**과 대조합니다. 편집 화면에서 선택되지 않은 Action도 실행될 수 있습니다. 동일 ID가 둘 이상이면 설정 목록의 **첫 번째 활성 Action**을 실행합니다.
 - 이 소스의 기본 UDP 포트는 **47831**, 트리거 멀티캐스트 주소는 **239.255.77.77**, 인터페이스는 **127.0.0.1**입니다. 다른 장치 또는 호스트 구성에서는 네트워크 설정을 별도로 확인해야 합니다.
 
